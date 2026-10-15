@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-function roundedPanel(
+import { SphereGeometry } from "three";
+import { MeshStandardMaterial } from "three";function roundedPanel(
   THREE_NS: typeof THREE,
   group: THREE.Group,
   x: number,
@@ -86,6 +87,38 @@ export function HeroScene() {
   const hostRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  const light = new SpotLight(0xffffff, 1);
+  light.position.set(5, 5, 5);
+  scene.add(light);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+
+  const animate = () => {
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene, camera);
+  };
+  animate();
+
+  const onWindowResize = () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  };
+  window.addEventListener('resize', onWindowResize);
+
+  return () => {
+    window.removeEventListener('resize', onWindowResize);
+    renderer.dispose();
+  };
+
     const host = hostRef.current;
     if (!host) return;
 

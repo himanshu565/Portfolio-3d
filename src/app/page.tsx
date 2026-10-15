@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { useRef, useEffect, useState } from 'react';
+import * as THREE from 'three';
 
 export function HeroScene() {
   const sceneRef = useRef<HTMLDivElement>(null);
@@ -32,22 +33,25 @@ export function HeroScene() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     sceneRef.current?.appendChild(renderer.domElement);
 
-    // Add light (already imported from three)
-    const light = new THREE.SpotLight(0xffffff, 1);
-    light.position.set(5, 5, 5);
-    scene.add(light);
-
-    // Create a simple 3D globe (sphere)
-    const geometry = new THREE.SphereGeometry(1, 32, 32);
-    const material = new THREE.MeshStandardMaterial({ color: 0x44bbff });
+    // Texture loader for Earth
+    const textureLoader = new THREE.TextureLoader();
+    const earthTexture = textureLoader.load('/earth.jpg'); // Ensure this file exists in your public folder
+    
+    // Create a realistic globe with texture
+    const geometry = new THREE.SphereGeometry(1, 64, 64);
+    const material = new THREE.MeshStandardMaterial({ map: earthTexture });
     const globe = new THREE.Mesh(geometry, material);
     scene.add(globe);
 
-    // Position camera
-    camera.position.z = 3;
+    // Add realistic lighting
+    const ambientLight = new THREE.AmbientLight(0x333333); // Soft light
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(5, 5, 5);
+    scene.add(ambientLight, directionalLight);
 
-    // Add OrbitControls for smoother interaction
+    // Add OrbitControls for interactive 3D experience
     import { OrbitControls } from 'three/addons/controls/OrbitControls';
+import { SpotLight } from 'three';
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
@@ -55,10 +59,19 @@ export function HeroScene() {
     controls.enablePan = false;
     controls.target.set(0, 0, 0);
 
-    // Animation loop
+    // Position camera for optimal view
+    camera.position.z = 3;
+
+    // Animation loop with performance monitoring
+    const clock = new THREE.Clock();
+
     const animate = () => {
       requestAnimationFrame(animate);
+      
+      // Update controls
       controls.update();
+      
+      // Render scene
       renderer.render(scene, camera);
     };
     animate();
