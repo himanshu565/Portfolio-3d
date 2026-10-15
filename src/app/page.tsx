@@ -46,9 +46,19 @@ export function HeroScene() {
     // Position camera
     camera.position.z = 3;
 
+    // Add OrbitControls for smoother interaction
+    import { OrbitControls } from 'three/addons/controls/OrbitControls';
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.enableZoom = true;
+    controls.enablePan = false;
+    controls.target.set(0, 0, 0);
+
     // Animation loop
     const animate = () => {
       requestAnimationFrame(animate);
+      controls.update();
       renderer.render(scene, camera);
     };
     animate();
@@ -64,7 +74,7 @@ export function HeroScene() {
       window.removeEventListener('resize', handleResize);
     };
 
-    // Add mouse interaction
+    // Add mouse interaction (optional)
     const handleMouseMove = (e: MouseEvent) => {
       if (!isDragging) return;
       
