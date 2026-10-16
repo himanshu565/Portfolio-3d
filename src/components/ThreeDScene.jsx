@@ -1,7 +1,9 @@
+"use client";
+
 // src/components/ThreeDScene.jsx
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Html, Environment, useGLTF } from '@react-three/drei'
-import { useGLTF } from '@react-three/drei/loaders'
+import { OrbitControls, Box, Sphere, Text } from '@react-three/drei'
+
 
 export default function ThreeDScene() {
   return (

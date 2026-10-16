@@ -1,7 +1,8 @@
+"use client";
+
 // src/components/ProjectGallery.jsx
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, Html, Environment } from '@react-three/drei'
-import { useGLTF } from '@react-three/drei/loaders'
 
 export default function ProjectGallery() {
   const projects = [
