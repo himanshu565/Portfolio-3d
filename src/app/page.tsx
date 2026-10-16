@@ -9,19 +9,19 @@ import {
   Check,
   Code2,
   Layers3,
-  Mail,
   MapPin,
-  MoveUpRight,
   RadioTower,
   Sparkles,
-  Terminal,
 } from "lucide-react";
 import { SiteHeader } from "@/components/site-header";
 import { HeroScene } from "@/components/hero-scene";
 import { ProjectCard } from "@/components/project-card";
 import { Interactive3DLab } from "@/components/interactive-3d-lab";
+import { SpecsStrip } from "@/components/specs-strip";
+import { ContactCard } from "@/components/contact-card";
+import { AmbientLight } from "@/components/ambient-light";
 import { SectionHeading } from "@/components/section-heading";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import { principles, projects, siteConfig, skillGroups } from "@/data/site";
 
 const focusAreas = [
@@ -33,6 +33,7 @@ const focusAreas = [
 export default function HomePage() {
   return (
     <>
+      <AmbientLight />
       <a className="skip-link" href="#main">
         Skip to content
       </a>
@@ -167,6 +168,9 @@ export default function HomePage() {
             <i>✳</i>
           </div>
         </section>
+
+        {/* LUXURY HARDWARE SPECIFICATIONS STRIP */}
+        <SpecsStrip />
 
         {/* SELECTED WORK */}
         <section className="work-section section-shell" id="work">
@@ -367,63 +371,10 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* CONTACT SECTION */}
+        {/* LUXURY CONTACT SECTION */}
         <section className="contact-section section-shell" id="contact">
-          <div className="container contact-container">
-            <div className="contact-content">
-              <div className="section-kicker">
-                <span>06</span>
-                <span className="kicker-line" />
-                <span>START A CONVERSATION</span>
-              </div>
-              <h2>
-                Have a real problem
-                <br />
-                worth <em>solving?</em>
-              </h2>
-              <p>
-                I&apos;m interested in full-stack engineering roles, ambitious teams, and projects where thoughtful software solves meaningful challenges.
-              </p>
-              <div className="contact-actions">
-                {siteConfig.email ? (
-                  <a className="button button-primary" href={`mailto:${siteConfig.email}`}>
-                    <Mail size={16} /> Get in touch <ArrowUpRight size={14} />
-                  </a>
-                ) : null}
-                <a className="button button-primary" href={siteConfig.github} target="_blank" rel="noreferrer">
-                  <FaGithub size={16} /> Connect on GitHub <ArrowUpRight size={14} />
-                </a>
-                {siteConfig.linkedin ? (
-                  <a className="button button-quiet" href={siteConfig.linkedin} target="_blank" rel="noreferrer">
-                    <FaLinkedin size={16} /> LinkedIn <ArrowUpRight size={14} />
-                  </a>
-                ) : null}
-                {siteConfig.resumePath ? (
-                  <a className="button button-quiet" href={siteConfig.resumePath} target="_blank" rel="noreferrer">
-                    Resume <MoveUpRight size={14} />
-                  </a>
-                ) : null}
-              </div>
-            </div>
-
-            <div className="contact-side-card">
-              <span className="contact-card-icon">
-                <Terminal size={18} />
-              </span>
-              <span className="contact-card-eyebrow">SYSTEM STATUS</span>
-              <strong>
-                BUILD.
-                <br />
-                LEARN.
-                <br />
-                SHIP BETTER.
-              </strong>
-              <p>One thoughtful iteration at a time.</p>
-              <div className="contact-card-line" />
-              <span className="contact-card-signature">
-                HIMANSHU BISHT <b>© {new Date().getFullYear()}</b>
-              </span>
-            </div>
+          <div className="container">
+            <ContactCard />
           </div>
         </section>
       </main>
@@ -433,7 +384,7 @@ export default function HomePage() {
           <Link href="#top" className="footer-brand">
             HB<span>.</span>
           </Link>
-          <span>ENGINEERED WITH REACT, NEXT.JS & THREE.JS · DARK GLASS THEME</span>
+          <span>ENGINEERED WITH REACT, NEXT.JS & THREE.JS · APPLE & NOTHING LIGHT GLASS</span>
           <a href="#top">Back to top ↑</a>
         </div>
       </footer>
