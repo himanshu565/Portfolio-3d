@@ -8,8 +8,8 @@ export const siteConfig = {
   location: "India · Open to remote opportunities",
   github: "https://github.com/himanshu565",
   // Add your real contact details before publishing. Empty values stay hidden in the UI.
-  email: "",
-  linkedin: "",
+  email: "himanshusinghbisht71@gmail.com",
+  linkedin: "https://www.linkedin.com/in/hbisht881/",
   resumePath: "", // Example: "/Himanshu-Bisht-Resume.pdf" after adding the file to /public.
 };
 
