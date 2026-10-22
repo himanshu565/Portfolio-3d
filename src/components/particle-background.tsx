@@ -20,10 +20,14 @@ export function ParticleBackground() {
   const mouseRef = useRef<{ x: number | null; y: number | null; radius: number }>({
     x: null,
     y: null,
-    radius: 160,
+    radius: 150,
   });
 
   useEffect(() => {
+    // Honor reduced motion
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -43,7 +47,6 @@ export function ParticleBackground() {
 
     window.addEventListener("resize", handleResize);
 
-    // Track mouse coordinates for interactive particles.js hover effect
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current.x = e.clientX;
       mouseRef.current.y = e.clientY;
@@ -57,34 +60,33 @@ export function ParticleBackground() {
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     document.addEventListener("mouseleave", handleMouseLeave);
 
-    // High-tech cyber neon color palette
+    // Obsidian / Acid Lime Atmospheric Palette
     const colors = [
-      "rgba(0, 240, 255, ",   // Electric Cyan
-      "rgba(168, 85, 247, ",  // Cyber Violet
-      "rgba(16, 185, 129, ",  // Signal Emerald
-      "rgba(255, 42, 85, ",   // Neon Crimson
-      "rgba(56, 189, 248, ",  // Sky Blue
+      "rgba(198, 255, 0, ",   // Acid Lime #C6FF00
+      "rgba(124, 255, 138, ", // Neon Glow #7CFF8A
+      "rgba(86, 227, 159, ",  // Mint #56E39F
+      "rgba(163, 230, 0, ",   // Acid Hover #A3E600
     ];
 
     let particles: Particle[] = [];
 
     const initParticles = () => {
       particles = [];
-      // Calculate responsive density
-      const count = Math.min(Math.floor((width * height) / 14000), 85);
+      // Restrained, modest density
+      const count = Math.min(Math.floor((width * height) / 18000), 55);
 
       for (let i = 0; i < count; i++) {
-        const radius = Math.random() * 2 + 1.2;
+        const radius = Math.random() * 1.8 + 1.0;
         particles.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.7,
-          vy: (Math.random() - 0.5) * 0.7,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
           radius,
           baseRadius: radius,
           color: colors[Math.floor(Math.random() * colors.length)],
-          alpha: Math.random() * 0.5 + 0.35,
-          pulseSpeed: Math.random() * 0.02 + 0.01,
+          alpha: Math.random() * 0.4 + 0.2,
+          pulseSpeed: Math.random() * 0.015 + 0.01,
           pulsePhase: Math.random() * Math.PI * 2,
         });
       }
@@ -92,9 +94,8 @@ export function ParticleBackground() {
 
     initParticles();
 
-    // Render loop
-    const maxDistance = 140;
-    const mouseMaxDistance = 170;
+    const maxDistance = 125;
+    const mouseMaxDistance = 150;
     let tick = 0;
 
     const render = () => {
@@ -106,44 +107,39 @@ export function ParticleBackground() {
 
       const mouse = mouseRef.current;
 
-      // Update and draw particles
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
-        // Move
         p.x += p.vx;
         p.y += p.vy;
 
-        // Bounce or wrap edges
         if (p.x < -10) p.x = width + 10;
         else if (p.x > width + 10) p.x = -10;
         if (p.y < -10) p.y = height + 10;
         else if (p.y > height + 10) p.y = -10;
 
-        // Mouse interaction: soft push and connection
+        // Interactive mouse connection
         if (mouse.x !== null && mouse.y !== null) {
           const dx = mouse.x - p.x;
           const dy = mouse.y - p.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < mouseMaxDistance) {
-            // Interactive connection line to cursor
-            const mouseAlpha = (1 - dist / mouseMaxDistance) * 0.45;
+            const mouseAlpha = (1 - dist / mouseMaxDistance) * 0.35;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(mouse.x, mouse.y);
-            ctx.strokeStyle = `rgba(0, 240, 255, ${mouseAlpha})`;
-            ctx.lineWidth = 0.9;
+            ctx.strokeStyle = `rgba(198, 255, 0, ${mouseAlpha})`;
+            ctx.lineWidth = 0.8;
             ctx.stroke();
 
-            // Gentle repulsion
             const force = (mouseMaxDistance - dist) / mouseMaxDistance;
-            p.x -= (dx / dist) * force * 1.2;
-            p.y -= (dy / dist) * force * 1.2;
+            p.x -= (dx / dist) * force * 0.8;
+            p.y -= (dy / dist) * force * 0.8;
           }
         }
 
-        // Connect nearby particles with subtle laser lines (classic particles.js)
+        // Connect nearby particles
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dx = p.x - p2.x;
@@ -151,26 +147,18 @@ export function ParticleBackground() {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < maxDistance) {
-            const lineAlpha = (1 - dist / maxDistance) * 0.22;
+            const lineAlpha = (1 - dist / maxDistance) * 0.15;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(148, 163, 184, ${lineAlpha})`;
-            ctx.lineWidth = 0.7;
+            ctx.strokeStyle = `rgba(124, 255, 138, ${lineAlpha})`;
+            ctx.lineWidth = 0.6;
             ctx.stroke();
           }
         }
 
-        // Draw particle node with pulsing glow
-        const currentAlpha = p.alpha + Math.sin(tick * p.pulseSpeed + p.pulsePhase) * 0.15;
-        
-        // Outer glow
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius * 2.2, 0, Math.PI * 2);
-        ctx.fillStyle = `${p.color}${Math.max(0, currentAlpha * 0.25)})`;
-        ctx.fill();
+        const currentAlpha = p.alpha + Math.sin(tick * p.pulseSpeed + p.pulsePhase) * 0.12;
 
-        // Inner core
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = `${p.color}${Math.max(0, currentAlpha)})`;
@@ -196,4 +184,3 @@ export function ParticleBackground() {
     />
   );
 }
-

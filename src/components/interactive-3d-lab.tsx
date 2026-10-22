@@ -75,21 +75,21 @@ export function Interactive3DLab() {
     controls.maxDistance = 10;
     controls.target.set(0, 0.4, 0);
 
-    // Studio Lights for Cyber Obsidian Mode
-    const ambLight = new THREE.AmbientLight(0x0f172a, 2.2);
+    // Studio Lights for Obsidian / Acid Lime Mode
+    const ambLight = new THREE.AmbientLight(0x050705, 1.8);
     scene.add(ambLight);
 
-    const dirLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    const dirLight = new THREE.DirectionalLight(0xc6ff00, 2.5);
     dirLight.position.set(5, 8, 4);
     scene.add(dirLight);
 
-    const redLight = new THREE.PointLight(0xff2a55, 28, 12);
-    redLight.position.set(-3, 2, 2);
-    scene.add(redLight);
+    const rimLight = new THREE.DirectionalLight(0x7cff8a, 3.5);
+    rimLight.position.set(-4, 3, -4);
+    scene.add(rimLight);
 
-    const cyanLight = new THREE.PointLight(0x00f0ff, 32, 12);
-    cyanLight.position.set(3, 2, -2);
-    scene.add(cyanLight);
+    const fillLight = new THREE.DirectionalLight(0x304b36, 0.8);
+    fillLight.position.set(0, -2, 3);
+    scene.add(fillLight);
 
     // Dynamic model container
     const modeGroup = new THREE.Group();
@@ -121,21 +121,21 @@ export function Interactive3DLab() {
 
     const wireGlobe = new THREE.Mesh(
       new THREE.SphereGeometry(1.18, 18, 18),
-      new THREE.MeshBasicMaterial({ color: 0x00f0ff, wireframe: true, transparent: true, opacity: 0.45 }),
+      new THREE.MeshBasicMaterial({ color: 0xc6ff00, wireframe: true, transparent: true, opacity: 0.4 }),
     );
     telemetryGroup.add(wireGlobe);
 
     // Latitude & Longitude rings
     const ring1 = new THREE.Mesh(
       new THREE.TorusGeometry(1.42, 0.015, 12, 80),
-      new THREE.MeshBasicMaterial({ color: 0xff2a55 }),
+      new THREE.MeshBasicMaterial({ color: 0x7cff8a }),
     );
     ring1.rotation.x = Math.PI / 3;
     telemetryGroup.add(ring1);
 
     const ring2 = new THREE.Mesh(
       new THREE.TorusGeometry(1.65, 0.01, 12, 80),
-      new THREE.MeshBasicMaterial({ color: 0x00f0ff }),
+      new THREE.MeshBasicMaterial({ color: 0xc6ff00 }),
     );
     ring2.rotation.y = Math.PI / 4;
     telemetryGroup.add(ring2);
@@ -165,8 +165,8 @@ export function Interactive3DLab() {
     for (let t = 0; t < tierCount; t++) {
       const tierGeo = new THREE.CylinderGeometry(1.2 - t * 0.12, 1.25 - t * 0.12, 0.28, 36);
       const tierMat = new THREE.MeshStandardMaterial({
-        color: 0x1e293b,
-        metalness: 0.75,
+        color: 0x0d120d,
+        metalness: 0.85,
         roughness: 0.2,
       });
       const tierMesh = new THREE.Mesh(tierGeo, tierMat);
@@ -177,7 +177,7 @@ export function Interactive3DLab() {
       // Status indicator ring
       const statusRing = new THREE.Mesh(
         new THREE.TorusGeometry(1.22 - t * 0.12, 0.018, 12, 60),
-        new THREE.MeshBasicMaterial({ color: t === 1 ? 0xff2a55 : 0x00f0ff }),
+        new THREE.MeshBasicMaterial({ color: t === 1 ? 0xc6ff00 : 0x7cff8a }),
       );
       statusRing.rotation.x = Math.PI / 2;
       statusRing.position.y = tierMesh.position.y;
@@ -189,9 +189,9 @@ export function Interactive3DLab() {
     for (let i = 0; i < 6; i++) {
       const bGeo = new THREE.BoxGeometry(0.24, 0.18, 0.12);
       const bMat = new THREE.MeshStandardMaterial({
-        color: 0x059669,
-        emissive: 0x059669,
-        emissiveIntensity: 0.6,
+        color: 0xc6ff00,
+        emissive: 0xc6ff00,
+        emissiveIntensity: 0.5,
       });
       const bMesh = new THREE.Mesh(bGeo, bMat);
       backendGroup.add(bMesh);
@@ -208,14 +208,14 @@ export function Interactive3DLab() {
           const vGeo = new THREE.BoxGeometry(0.38, 0.38, 0.38);
           const isAccent = (x + y + z) % 3 === 0;
           const vMat = new THREE.MeshPhysicalMaterial({
-            color: isAccent ? 0xff2a55 : 0x0284c7,
-            transmission: 0.8,
-            roughness: 0.1,
-            metalness: 0.1,
+            color: isAccent ? 0xc6ff00 : 0x7cff8a,
+            transmission: 0.75,
+            roughness: 0.15,
+            metalness: 0.2,
             transparent: true,
-            opacity: 0.88,
-            emissive: isAccent ? 0xff2a55 : 0x0284c7,
-            emissiveIntensity: 0.35,
+            opacity: 0.85,
+            emissive: isAccent ? 0xc6ff00 : 0x7cff8a,
+            emissiveIntensity: 0.3,
           });
           const vMesh = new THREE.Mesh(vGeo, vMat);
           vMesh.position.set(x * spacing, y * spacing + 0.4, z * spacing);
@@ -225,8 +225,8 @@ export function Interactive3DLab() {
       }
     }
 
-    // Star dust (Light Theme slate-blue)
-    const dustCount = 180;
+    // Atmospheric Stardust in neon mint
+    const dustCount = 140;
     const dustGeo = new THREE.BufferGeometry();
     const dustPos = new Float32Array(dustCount * 3);
     for (let i = 0; i < dustCount; i++) {
@@ -237,7 +237,7 @@ export function Interactive3DLab() {
     dustGeo.setAttribute("position", new THREE.BufferAttribute(dustPos, 3));
     const dustPoints = new THREE.Points(
       dustGeo,
-      new THREE.PointsMaterial({ color: 0x64748b, size: 0.02, transparent: true, opacity: 0.35 }),
+      new THREE.PointsMaterial({ color: 0x7cff8a, size: 0.02, transparent: true, opacity: 0.4 }),
     );
     scene.add(dustPoints);
 

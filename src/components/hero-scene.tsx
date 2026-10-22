@@ -18,29 +18,28 @@ function createHoloPanel(
   panel.position.set(x, y, z);
   panel.rotation.set(-0.04, x > 0 ? -0.25 : 0.25, 0);
 
-  // Dark obsidian frosted glass
+  // Dark obsidian surface with subtle transmission
   const glassMat = new THREE_NS.MeshPhysicalMaterial({
-    color: 0x0f172a,
-    roughness: 0.12,
-    metalness: 0.2,
-    transmission: 0.75,
+    color: 0x0d120d,
+    roughness: 0.18,
+    metalness: 0.82,
+    transmission: 0.65,
     ior: 1.52,
     transparent: true,
-    opacity: 0.75,
-    reflectivity: 0.9,
-    clearcoat: 1.0,
-    clearcoatRoughness: 0.05,
+    opacity: 0.85,
+    clearcoat: 0.9,
+    clearcoatRoughness: 0.08,
   });
 
   const body = new THREE_NS.Mesh(new THREE_NS.BoxGeometry(1.45, 0.9, 0.03), glassMat);
   panel.add(body);
 
-  // Hairline neon edge
+  // Subtle border hairline
   const edgeGeo = new THREE_NS.EdgesGeometry(new THREE_NS.BoxGeometry(1.45, 0.9, 0.03));
   const edgeMat = new THREE_NS.LineBasicMaterial({
     color: accentColor,
     transparent: true,
-    opacity: 0.85,
+    opacity: 0.65,
   });
   const edges = new THREE_NS.LineSegments(edgeGeo, edgeMat);
   panel.add(edges);
@@ -51,13 +50,13 @@ function createHoloPanel(
   headerBar.position.set(-0.45, 0.33, 0.02);
   panel.add(headerBar);
 
-  const dimMat = new THREE_NS.MeshBasicMaterial({ color: 0x475569 });
+  const dimMat = new THREE_NS.MeshBasicMaterial({ color: 0x263326 });
   const subBar = new THREE_NS.Mesh(new THREE_NS.BoxGeometry(0.42, 0.012, 0.005), dimMat);
   subBar.position.set(-0.04, 0.33, 0.02);
   panel.add(subBar);
 
   if (type === "telemetry") {
-    // Dynamic waveform curve
+    // Waveform curve
     const points = [
       new THREE_NS.Vector3(-0.58, -0.12, 0.025),
       new THREE_NS.Vector3(-0.38, 0.12, 0.025),
@@ -72,39 +71,36 @@ function createHoloPanel(
     const tubeMat = new THREE_NS.MeshBasicMaterial({ color: accentColor });
     panel.add(new THREE_NS.Mesh(tubeGeo, tubeMat));
 
-    // Axis grid lines
     for (let i = 0; i < 4; i++) {
       const gridLine = new THREE_NS.Mesh(
         new THREE_NS.BoxGeometry(1.2, 0.004, 0.004),
-        new THREE_NS.MeshBasicMaterial({ color: 0x334155, transparent: true, opacity: 0.5 }),
+        new THREE_NS.MeshBasicMaterial({ color: 0x263326, transparent: true, opacity: 0.5 }),
       );
       gridLine.position.set(0, -0.22 + i * 0.12, 0.02);
       panel.add(gridLine);
     }
   } else if (type === "inventory") {
-    // Holographic data bars
     const heights = [0.18, 0.32, 0.46, 0.24, 0.38, 0.54, 0.34, 0.22];
     heights.forEach((h, i) => {
       const barGeo = new THREE_NS.BoxGeometry(0.065, h, 0.015);
       const barMat = new THREE_NS.MeshBasicMaterial({
-        color: i === 5 ? accentColor : 0x00f0ff,
+        color: i === 5 ? accentColor : 0x7cff8a,
         transparent: true,
-        opacity: 0.9,
+        opacity: 0.85,
       });
       const bar = new THREE_NS.Mesh(barGeo, barMat);
       bar.position.set(-0.48 + i * 0.14, -0.18 + h / 2, 0.025);
       panel.add(bar);
     });
   } else {
-    // Cyber dot matrix
     for (let r = 0; r < 3; r++) {
       for (let c = 0; c < 5; c++) {
         const dot = new THREE_NS.Mesh(
           new THREE_NS.SphereGeometry(0.022, 8, 8),
           new THREE_NS.MeshBasicMaterial({
-            color: r === 1 && c === 2 ? accentColor : 0x38bdf8,
+            color: r === 1 && c === 2 ? accentColor : 0x56e39f,
             transparent: true,
-            opacity: 0.85,
+            opacity: 0.8,
           }),
         );
         dot.position.set(-0.42 + c * 0.21, 0.12 - r * 0.18, 0.025);
@@ -155,17 +151,18 @@ export function HeroScene() {
       return;
     }
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    // DPR clamped to 1.5 for performance
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.setSize(host.clientWidth, host.clientHeight);
     renderer.setClearColor(0x000000, 0);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.4;
+    renderer.toneMappingExposure = 1.25;
     renderer.domElement.className = "observatory-canvas";
     host.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x060913, 0.045);
+    scene.fog = new THREE.FogExp2(0x050705, 0.045);
 
     const camera = new THREE.PerspectiveCamera(38, host.clientWidth / Math.max(host.clientHeight, 1), 0.1, 100);
     camera.position.set(0, 2.6, 7.6);
@@ -175,40 +172,42 @@ export function HeroScene() {
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 1.2;
+    controls.autoRotateSpeed = 1.0;
     controls.enableZoom = true;
     controls.minDistance = 3.6;
     controls.maxDistance = 14;
     controls.enablePan = false;
     controls.target.set(0, 1.2, 0);
-    controls.maxPolarAngle = Math.PI / 2 + 0.08;
+    controls.maxPolarAngle = Math.PI / 2 + 0.06;
     controls.minPolarAngle = 0.2;
 
     controls.addEventListener("start", () => setIsInteracting(true));
     controls.addEventListener("end", () => setIsInteracting(false));
 
-    // Dynamic Cyber Studio Lighting
-    const ambientLight = new THREE.AmbientLight(0x0f172a, 2.2);
+    // =========================================================================
+    // PHYSICAL STUDIO LIGHTING (Brief Section 6)
+    // 1. Key light: acid lime #C6FF00, intensity ~3.0
+    // 2. Rim light: neon mint #7CFF8A, intensity ~4.0, behind/side
+    // 3. Fill light: forest green #304B36, intensity ~0.8
+    // 4. Low ambient fill
+    // =========================================================================
+    const ambientLight = new THREE.AmbientLight(0x050705, 1.8);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 2.0);
-    keyLight.position.set(6, 9, 6);
+    const keyLight = new THREE.DirectionalLight(0xc6ff00, 2.8);
+    keyLight.position.set(5, 8, 4);
     scene.add(keyLight);
 
-    const cyanPoint = new THREE.PointLight(0x00f0ff, 35, 14, 1.6);
-    cyanPoint.position.set(3.8, 3.2, 2.8);
-    scene.add(cyanPoint);
+    const rimLight = new THREE.DirectionalLight(0x7cff8a, 4.2);
+    rimLight.position.set(-6, 5, -5);
+    scene.add(rimLight);
 
-    const crimsonPoint = new THREE.PointLight(0xff2a55, 30, 12, 1.6);
-    crimsonPoint.position.set(-3.8, 2.4, -1.8);
-    scene.add(crimsonPoint);
+    const fillLight = new THREE.DirectionalLight(0x304b36, 0.9);
+    fillLight.position.set(0, -3, 3);
+    scene.add(fillLight);
 
-    const violetPoint = new THREE.PointLight(0xa855f7, 24, 10, 1.8);
-    violetPoint.position.set(0, -0.5, 2.0);
-    scene.add(violetPoint);
-
-    // Cursor Follow Light
-    const pointerLight = new THREE.PointLight(0x00f0ff, 20, 8, 2);
+    // Subtle pointer light
+    const pointerLight = new THREE.PointLight(0xc6ff00, 14, 7, 2);
     pointerLight.position.set(0, 2, 4);
     scene.add(pointerLight);
 
@@ -216,50 +215,34 @@ export function HeroScene() {
     scene.add(world);
 
     // =========================================================================
-    // 1. ADVANCED UNDULATING 3D CYBER GRID (The "3D Grid" Upgrade)
+    // 1. 3D CYBER GRID (Obsidian Ground Plane with Acid Lime Wireframe)
     // =========================================================================
-    const gridSegmentsX = 44;
-    const gridSegmentsY = 44;
+    const gridSegmentsX = 40;
+    const gridSegmentsY = 40;
     const gridPlaneGeo = new THREE.PlaneGeometry(10.5, 10.5, gridSegmentsX, gridSegmentsY);
     gridPlaneGeo.rotateX(-Math.PI / 2);
 
-    // Store original vertex positions for wave displacement
     const posAttr = gridPlaneGeo.attributes.position;
     const originalPositions = new Float32Array(posAttr.array);
 
-    // Dynamic Neon Shader/Wireframe Material
     const gridMaterial = new THREE.MeshStandardMaterial({
-      color: 0x00f0ff,
-      emissive: 0x00f0ff,
-      emissiveIntensity: 0.35,
+      color: 0x151d16,
+      emissive: 0xc6ff00,
+      emissiveIntensity: 0.22,
       wireframe: true,
       transparent: true,
-      opacity: 0.65,
+      opacity: 0.55,
     });
 
     const gridMesh = new THREE.Mesh(gridPlaneGeo, gridMaterial);
     gridMesh.position.y = -0.05;
     world.add(gridMesh);
 
-    // Subtle Glowing Radar Scanner Ring on the Grid
-    const radarGeo = new THREE.RingGeometry(0.1, 0.16, 64);
-    radarGeo.rotateX(-Math.PI / 2);
-    const radarMat = new THREE.MeshBasicMaterial({
-      color: 0x00f0ff,
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.7,
-    });
-    const radarMesh = new THREE.Mesh(radarGeo, radarMat);
-    radarMesh.position.y = 0.02;
-    world.add(radarMesh);
-
-    // Central Hexagonal Cyber Dais / Pedestal
+    // Central Hexagonal Metallic Dais
     const daisMat = new THREE.MeshStandardMaterial({
-      color: 0x090d16,
-      roughness: 0.25,
-      metalness: 0.7,
-      wireframe: false,
+      color: 0x0d120d,
+      roughness: 0.22,
+      metalness: 0.85,
     });
 
     const daisGeo = new THREE.CylinderGeometry(2.2, 2.5, 0.16, 6);
@@ -268,16 +251,16 @@ export function HeroScene() {
     world.add(dais);
 
     const daisEdgeGeo = new THREE.EdgesGeometry(daisGeo);
-    const daisEdgeMat = new THREE.LineBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.8 });
+    const daisEdgeMat = new THREE.LineBasicMaterial({ color: 0xc6ff00, transparent: true, opacity: 0.6 });
     const daisEdges = new THREE.LineSegments(daisEdgeGeo, daisEdgeMat);
     dais.add(daisEdges);
 
-    // Inner Neon Ring on Pedestal
+    // Inner Rim on Dais
     const innerRimGeo = new THREE.TorusGeometry(1.9, 0.016, 16, 80);
     const innerRimMat = new THREE.MeshStandardMaterial({
-      color: 0xa855f7,
-      emissive: 0xa855f7,
-      emissiveIntensity: 0.8,
+      color: 0x7cff8a,
+      emissive: 0x7cff8a,
+      emissiveIntensity: 0.5,
     });
     const innerRim = new THREE.Mesh(innerRimGeo, innerRimMat);
     innerRim.rotation.x = Math.PI / 2;
@@ -285,73 +268,71 @@ export function HeroScene() {
     world.add(innerRim);
 
     // =========================================================================
-    // 2. LEVITATING QUANTUM CORE & GYROSCOPIC MATRIX
+    // 2. SIGNATURE MONOLITHIC SCULPTURE: METALLIC GEOMETRIC CORE
     // =========================================================================
     const coreGroup = new THREE.Group();
     coreGroup.position.set(0, 1.55, 0);
     world.add(coreGroup);
 
-    // Outer Crystalline Icosahedron
-    const opticGlassMat = new THREE.MeshPhysicalMaterial({
-      color: 0x1e293b,
-      metalness: 0.15,
-      roughness: 0.05,
-      transmission: 0.88,
-      ior: 1.62,
-      transparent: true,
-      opacity: 0.85,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.04,
-      reflectivity: 0.95,
+    // Dark Metallic Faceted Outer Shell
+    const metallicMat = new THREE.MeshStandardMaterial({
+      color: 0x0d120d,
+      metalness: 0.88,
+      roughness: 0.2,
+      wireframe: false,
     });
 
-    const outerCore = new THREE.Mesh(new THREE.IcosahedronGeometry(0.86, 2), opticGlassMat);
+    const outerCore = new THREE.Mesh(new THREE.IcosahedronGeometry(0.86, 2), metallicMat);
     coreGroup.add(outerCore);
 
-    // Inner Glowing Polyhedral Lattice
+    // Hairline acid lime wireframe edge highlight on core
+    const coreEdgeGeo = new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(0.865, 2));
+    const coreEdgeMat = new THREE.LineBasicMaterial({ color: 0xc6ff00, transparent: true, opacity: 0.75 });
+    const coreEdges = new THREE.LineSegments(coreEdgeGeo, coreEdgeMat);
+    outerCore.add(coreEdges);
+
+    // Inner Glowing Acid Lime Energy Lattice
     const glowCoreMat = new THREE.MeshBasicMaterial({
-      color: 0x00f0ff,
+      color: 0xc6ff00,
       wireframe: true,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.6,
     });
-    const innerCore = new THREE.Mesh(new THREE.IcosahedronGeometry(0.58, 1), glowCoreMat);
+    const innerCore = new THREE.Mesh(new THREE.IcosahedronGeometry(0.56, 1), glowCoreMat);
     coreGroup.add(innerCore);
 
-    // Ultra-Dense Central Energy Singularity
+    // Singularity Core Point
     const singularity = new THREE.Mesh(
-      new THREE.SphereGeometry(0.2, 24, 24),
+      new THREE.SphereGeometry(0.18, 20, 20),
       new THREE.MeshStandardMaterial({
-        color: 0xff2a55,
-        emissive: 0xff2a55,
-        emissiveIntensity: 1.2,
-        roughness: 0.1,
+        color: 0xc6ff00,
+        emissive: 0xc6ff00,
+        emissiveIntensity: 0.9,
       }),
     );
     coreGroup.add(singularity);
 
-    // 4 Multi-Axis Gyroscopic Rings
+    // Multi-Axis Orbital Rings
     const ringGroup = new THREE.Group();
     ringGroup.position.copy(coreGroup.position);
     world.add(ringGroup);
 
     const glyphRings: THREE.Mesh[] = [];
     const ringConfigs = [
-      { r: 1.32, tube: 0.016, color: 0xff2a55, rx: 0.65, ry: 0.2, rz: 0.1 },
-      { r: 1.62, tube: 0.014, color: 0x00f0ff, rx: 1.25, ry: -0.4, rz: -0.3 },
-      { r: 1.94, tube: 0.012, color: 0xa855f7, rx: 0.45, ry: 0.8, rz: 0.5 },
-      { r: 2.24, tube: 0.01, color: 0x10b981, rx: -0.8, ry: 0.3, rz: -0.6 },
+      { r: 1.32, tube: 0.014, color: 0xc6ff00, rx: 0.65, ry: 0.2, rz: 0.1 },
+      { r: 1.62, tube: 0.012, color: 0x7cff8a, rx: 1.25, ry: -0.4, rz: -0.3 },
+      { r: 1.94, tube: 0.01, color: 0x56e39f, rx: 0.45, ry: 0.8, rz: 0.5 },
     ];
 
     ringConfigs.forEach((cfg) => {
       const ringMesh = new THREE.Mesh(
-        new THREE.TorusGeometry(cfg.r, cfg.tube, 16, 140),
+        new THREE.TorusGeometry(cfg.r, cfg.tube, 16, 120),
         new THREE.MeshStandardMaterial({
           color: cfg.color,
           emissive: cfg.color,
-          emissiveIntensity: 0.7,
-          roughness: 0.15,
-          metalness: 0.8,
+          emissiveIntensity: 0.45,
+          roughness: 0.2,
+          metalness: 0.85,
         }),
       );
       ringMesh.rotation.set(cfg.rx, cfg.ry, cfg.rz);
@@ -359,14 +340,14 @@ export function HeroScene() {
       glyphRings.push(ringMesh);
     });
 
-    // Orbiting Micro Probes / Satellites
+    // Orbiting Satellite Probes
     const satellitesGroup = new THREE.Group();
     ringGroup.add(satellitesGroup);
 
     const satellites = [
-      { radius: 1.32, angle: 0, speed: 0.85, color: 0xff2a55, size: 0.075 },
-      { radius: 1.62, angle: 2.2, speed: -0.65, color: 0x00f0ff, size: 0.065 },
-      { radius: 1.94, angle: 4.3, speed: 0.55, color: 0x10b981, size: 0.055 },
+      { radius: 1.32, angle: 0, speed: 0.75, color: 0xc6ff00, size: 0.07 },
+      { radius: 1.62, angle: 2.2, speed: -0.55, color: 0x7cff8a, size: 0.06 },
+      { radius: 1.94, angle: 4.3, speed: 0.45, color: 0x56e39f, size: 0.05 },
     ];
 
     const satelliteMeshes: { mesh: THREE.Group; config: (typeof satellites)[0] }[] = [];
@@ -377,20 +358,18 @@ export function HeroScene() {
         new THREE.MeshStandardMaterial({
           color: sat.color,
           emissive: sat.color,
-          emissiveIntensity: 1.1,
-          metalness: 0.4,
-          roughness: 0.1,
+          emissiveIntensity: 0.8,
+          metalness: 0.6,
+          roughness: 0.2,
         }),
       );
       probeGroup.add(sMesh);
 
-      // Micro Solar Wings
-      const wingGeo = new THREE.BoxGeometry(0.18, 0.012, 0.06);
+      const wingGeo = new THREE.BoxGeometry(0.16, 0.01, 0.05);
       const wingMat = new THREE.MeshStandardMaterial({
-        color: 0x00f0ff,
-        emissive: 0x00f0ff,
-        emissiveIntensity: 0.4,
+        color: 0x151d16,
         metalness: 0.8,
+        roughness: 0.2,
       });
       const wings = new THREE.Mesh(wingGeo, wingMat);
       probeGroup.add(wings);
@@ -400,23 +379,23 @@ export function HeroScene() {
     });
 
     // =========================================================================
-    // 3. FLOATING HOLOGRAPHIC PANELS & SPLINE CONDUITS
+    // 3. FLOATING HOLOGRAPHIC PANELS & CONDUITS
     // =========================================================================
-    const panelLeft = createHoloPanel(THREE, world, -2.15, 1.65, 0.2, 0x10b981, "inventory");
-    const panelRight = createHoloPanel(THREE, world, 2.1, 1.85, -0.2, 0xff2a55, "telemetry");
-    const panelBack = createHoloPanel(THREE, world, 0.15, 2.75, -1.3, 0x00f0ff, "security");
+    const panelLeft = createHoloPanel(THREE, world, -2.15, 1.65, 0.2, 0xc6ff00, "inventory");
+    const panelRight = createHoloPanel(THREE, world, 2.1, 1.85, -0.2, 0x7cff8a, "telemetry");
+    const panelBack = createHoloPanel(THREE, world, 0.15, 2.75, -1.3, 0x56e39f, "security");
     panelBack.scale.setScalar(0.78);
 
-    // Glowing Fiber-Optic Splines with Traveling Photon Pulses
+    // Glowing Fiber-Optic Splines
     const makeConduit = (points: THREE.Vector3[], color: number) => {
       const curve = new THREE.CatmullRomCurve3(points);
-      const tubeGeo = new THREE.TubeGeometry(curve, 48, 0.014, 6, false);
-      const tubeMat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.75 });
+      const tubeGeo = new THREE.TubeGeometry(curve, 44, 0.012, 6, false);
+      const tubeMat = new THREE.MeshBasicMaterial({ color, transparent: true, opacity: 0.6 });
       world.add(new THREE.Mesh(tubeGeo, tubeMat));
 
       const pulseMarker = new THREE.Mesh(
-        new THREE.SphereGeometry(0.048, 12, 12),
-        new THREE.MeshBasicMaterial({ color: 0xffffff }),
+        new THREE.SphereGeometry(0.045, 12, 12),
+        new THREE.MeshBasicMaterial({ color: 0xc6ff00 }),
       );
       world.add(pulseMarker);
       return { curve, marker: pulseMarker };
@@ -425,16 +404,16 @@ export function HeroScene() {
     const conduits = [
       makeConduit(
         [new THREE.Vector3(-1.55, 1.65, 0.2), new THREE.Vector3(-0.8, 1.75, 0.4), new THREE.Vector3(-0.35, 1.55, 0.3)],
-        0x10b981,
+        0xc6ff00,
       ),
       makeConduit(
         [new THREE.Vector3(1.5, 1.85, -0.1), new THREE.Vector3(0.85, 1.65, 0.35), new THREE.Vector3(0.4, 1.55, 0.3)],
-        0xff2a55,
+        0x7cff8a,
       ),
     ];
 
-    // Ambient Stardust Nebula Field
-    const starCount = 380;
+    // Restrained Ambient Stardust
+    const starCount = 200;
     const starPositions = new Float32Array(starCount * 3);
     for (let i = 0; i < starCount; i++) {
       starPositions[i * 3] = (Math.random() - 0.5) * 14;
@@ -444,16 +423,15 @@ export function HeroScene() {
     const starGeo = new THREE.BufferGeometry();
     starGeo.setAttribute("position", new THREE.BufferAttribute(starPositions, 3));
     const starMat = new THREE.PointsMaterial({
-      color: 0x38bdf8,
-      size: 0.024,
+      color: 0x7cff8a,
+      size: 0.02,
       transparent: true,
-      opacity: 0.65,
+      opacity: 0.45,
       sizeAttenuation: true,
     });
     const starField = new THREE.Points(starGeo, starMat);
     world.add(starField);
 
-    // Mouse Tracking for dynamic cursor light and grid wave ripples
     let mouseNormX = 0;
     let mouseNormY = 0;
 
@@ -467,7 +445,6 @@ export function HeroScene() {
     };
     host.addEventListener("pointermove", onPointerMove, { passive: true });
 
-    // Resize handling
     const resize = () => {
       const width = host.clientWidth;
       const height = host.clientHeight;
@@ -481,7 +458,7 @@ export function HeroScene() {
     resizeObserver.observe(host);
 
     // =========================================================================
-    // 4. ANIMATION LOOP WITH 3D GRID WAVE DYNAMICS
+    // 4. ANIMATION LOOP
     // =========================================================================
     const clock = new THREE.Clock();
 
@@ -492,56 +469,41 @@ export function HeroScene() {
 
       const elapsed = clock.getElapsedTime();
 
-      // Controls update
       controls.update();
 
-      // Dynamic Wireframe Shading Toggle
-      opticGlassMat.wireframe = wireframeRef.current;
+      metallicMat.wireframe = wireframeRef.current;
       daisMat.wireframe = wireframeRef.current;
 
-      // -------------------------------------------------------------
-      // 3D GRID VERTEX WAVE DYNAMICS
-      // -------------------------------------------------------------
+      // Grid Wave Dynamics
       const pos = gridMesh.geometry.attributes.position;
-      const waveSpeedMultiplier = gridWaveBoostRef.current ? 2.8 : 1.5;
-      const waveAmpMultiplier = gridWaveBoostRef.current ? 0.38 : 0.22;
+      const waveSpeedMultiplier = gridWaveBoostRef.current ? 2.5 : 1.3;
+      const waveAmpMultiplier = gridWaveBoostRef.current ? 0.32 : 0.18;
 
       for (let i = 0; i < pos.count; i++) {
         const u = originalPositions[i * 3];
-        const v = originalPositions[i * 3 + 2]; // Z on original plane (depth)
-
+        const v = originalPositions[i * 3 + 2];
         const distFromCenter = Math.sqrt(u * u + v * v);
 
-        // Complex harmonic wave equation: traveling sine/cosine waves + ripple
         const wave1 = Math.sin(u * 0.75 + elapsed * waveSpeedMultiplier) * Math.cos(v * 0.75 + elapsed * (waveSpeedMultiplier * 0.8));
-        const wave2 = Math.sin(distFromCenter * 1.5 - elapsed * (waveSpeedMultiplier * 1.4)) * 0.5;
+        const wave2 = Math.sin(distFromCenter * 1.5 - elapsed * (waveSpeedMultiplier * 1.2)) * 0.4;
 
-        // Interactive mouse proximity wave ripple
         const mouseDist = Math.sqrt((u - mouseNormX * 3) ** 2 + (v - mouseNormY * 2) ** 2);
-        const mouseRipple = Math.sin(mouseDist * 2.5 - elapsed * 4) * Math.max(0, 1 - mouseDist / 2.5) * 0.25;
+        const mouseRipple = Math.sin(mouseDist * 2.5 - elapsed * 3.5) * Math.max(0, 1 - mouseDist / 2.5) * 0.2;
 
-        // Apply displaced height (y coordinate in world space)
-        const displacement = (wave1 + wave2 + mouseRipple) * waveAmpMultiplier;
-        pos.setY(i, displacement);
+        pos.setY(i, (wave1 + wave2 + mouseRipple) * waveAmpMultiplier);
       }
       pos.needsUpdate = true;
 
-      // Pulse the radar ring outward
-      const radarScale = 1 + ((elapsed * 0.8) % 3.5);
-      radarMesh.scale.set(radarScale, radarScale, radarScale);
-      radarMat.opacity = Math.max(0, 0.75 - radarScale / 4.5);
+      // Rotate Sculptural Core
+      coreGroup.rotation.y = elapsed * 0.2;
+      outerCore.rotation.x = Math.sin(elapsed * 0.25) * 0.12;
+      innerCore.rotation.y = -elapsed * 0.35;
+      singularity.scale.setScalar(1 + Math.sin(elapsed * 3) * 0.06);
 
-      // Rotate Quantum Core
-      coreGroup.rotation.y = elapsed * 0.26;
-      outerCore.rotation.x = Math.sin(elapsed * 0.35) * 0.18;
-      innerCore.rotation.y = -elapsed * 0.45;
-      singularity.scale.setScalar(1 + Math.sin(elapsed * 4) * 0.08);
-
-      // Rotate Gyro Rings
-      glyphRings[0].rotation.z = elapsed * 0.2;
-      glyphRings[1].rotation.x = 1.25 + Math.sin(elapsed * 0.28) * 0.15;
-      glyphRings[2].rotation.y = elapsed * 0.25;
-      glyphRings[3].rotation.z = -elapsed * 0.22;
+      // Rotate Rings
+      glyphRings[0].rotation.z = elapsed * 0.16;
+      glyphRings[1].rotation.x = 1.25 + Math.sin(elapsed * 0.22) * 0.12;
+      glyphRings[2].rotation.y = elapsed * 0.2;
 
       // Orbit Satellites
       satelliteMeshes.forEach(({ mesh, config }) => {
@@ -549,24 +511,23 @@ export function HeroScene() {
         mesh.position.set(
           Math.cos(curAngle) * config.radius,
           Math.sin(curAngle) * (config.radius * 0.45),
-          Math.sin(curAngle * 0.8) * 0.4,
+          Math.sin(curAngle * 0.8) * 0.35,
         );
         mesh.rotation.y = curAngle + Math.PI / 2;
       });
 
-      // Floating Glass Panels
-      panelLeft.position.y = 1.65 + Math.sin(elapsed * 0.8) * 0.05;
-      panelRight.position.y = 1.85 + Math.sin(elapsed * 0.7 + 1.2) * 0.055;
-      panelBack.position.y = 2.75 + Math.sin(elapsed * 0.65 + 2.4) * 0.045;
+      // Subtle float on panels
+      panelLeft.position.y = 1.65 + Math.sin(elapsed * 0.7) * 0.04;
+      panelRight.position.y = 1.85 + Math.sin(elapsed * 0.65 + 1.2) * 0.045;
+      panelBack.position.y = 2.75 + Math.sin(elapsed * 0.6 + 2.4) * 0.035;
 
-      // Conduit Photon Pulses
+      // Conduits
       conduits.forEach((c, idx) => {
-        const t = (elapsed * 0.35 + idx * 0.5) % 1;
+        const t = (elapsed * 0.3 + idx * 0.5) % 1;
         c.marker.position.copy(c.curve.getPoint(t));
       });
 
-      // Starfield Rotation
-      starField.rotation.y = elapsed * 0.015;
+      starField.rotation.y = elapsed * 0.01;
 
       renderer.render(scene, camera);
     };
@@ -618,11 +579,10 @@ export function HeroScene() {
       <div
         ref={hostRef}
         className="hero-scene"
-        aria-label="Interactive 3D illustration of connected software systems and environmental telemetry on a cyber grid"
+        aria-label="3D metallic sculpture with acid lime rim light representing interconnected systems"
         role="img"
       />
 
-      {/* Futuristic Obsidian Glass Control Pill Overlay */}
       <div className="scene-glass-controls" aria-label="3D scene controls">
         <div className={`scene-mode-pill ${isInteracting ? "active" : ""}`}>
           <span className="live-dot" />
@@ -645,8 +605,8 @@ export function HeroScene() {
             type="button"
             className={`scene-tool-btn ${gridWaveBoost ? "active" : ""}`}
             onClick={handleToggleWaveBoost}
-            title={gridWaveBoost ? "Normal Grid Wave" : "Boost Grid Ripple Waves"}
-            aria-label="Toggle grid wave boost"
+            title={gridWaveBoost ? "Normal Grid Wave" : "Boost Grid Waves"}
+            aria-label="Toggle wave boost"
           >
             <Waves size={13} />
             <span>Wave</span>

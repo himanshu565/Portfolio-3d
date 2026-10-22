@@ -397,7 +397,7 @@ export default function HomePage() {
           <Link href="#top" className="footer-brand">
             HB<span>.</span>
           </Link>
-          <span>ENGINEERED WITH REACT, NEXT.JS & THREE.JS · CYBER OBSIDIAN GLASS</span>
+          <span>ENGINEERED WITH REACT, NEXT.JS & THREE.JS · OBSIDIAN & ACID LIME</span>
           <a href="#top">Back to top ↑</a>
         </div>
       </footer>

@@ -3,7 +3,7 @@ import { siteConfig } from "@/data/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: `${siteConfig.name} — ${siteConfig.role} & 3D Systems`,
+  title: `${siteConfig.name} — ${siteConfig.role} & Scalable Systems`,
   description: siteConfig.description,
   applicationName: `${siteConfig.name} Portfolio`,
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#060913",
+  themeColor: "#050705",
   colorScheme: "dark",
 };
 
