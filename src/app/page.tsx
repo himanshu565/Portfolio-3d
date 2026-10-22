@@ -19,6 +19,7 @@ import { ContactCard } from "@/components/contact-card";
 import { SectionHeading } from "@/components/section-heading";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { GsapAnimator } from "@/components/gsap-animator";
+import { TechStackVisualizer } from "@/components/tech-stack-visualizer";
 import { principles, projects, siteConfig, skillGroups } from "@/data/site";
 
 const engineeringHighlights = [
@@ -295,17 +296,22 @@ export default function HomePage() {
         </section>
 
         {/* =========================================================================
-            5. CAPABILITIES & TECHNICAL ARSENAL
+            5. CAPABILITIES & INTERACTIVE TECH STACK
             ========================================================================= */}
         <section className="section-inexa bg-inexa-secondary" id="capabilities">
           <div className="container-inexa">
             <SectionHeading
               index="03"
-              eyebrow="CAPABILITIES"
-              title="A practical, battle-tested stack."
+              eyebrow="TECH ARSENAL"
+              title="Interactive Stack & Engineering Capabilities."
             >
-              Focusing on fundamental computer science principles, clean abstractions, and maintainable software.
+              Explore my technical proficiencies across languages, frontend, distributed backends, databases, machine learning, and DevOps.
             </SectionHeading>
+
+            {/* Interactive Inverted Pyramid Tech Stack matching the user's reference */}
+            <div className="mb-14">
+              <TechStackVisualizer />
+            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 capabilities-grid">
               {skillGroups.map((group) => (
