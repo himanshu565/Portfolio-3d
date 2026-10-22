@@ -75,19 +75,19 @@ export function Interactive3DLab() {
     controls.maxDistance = 10;
     controls.target.set(0, 0.4, 0);
 
-    // Studio Lights for Light Mode
-    const ambLight = new THREE.AmbientLight(0xffffff, 1.4);
+    // Studio Lights for Cyber Obsidian Mode
+    const ambLight = new THREE.AmbientLight(0x0f172a, 2.2);
     scene.add(ambLight);
 
-    const dirLight = new THREE.DirectionalLight(0xffffff, 2.5);
+    const dirLight = new THREE.DirectionalLight(0xffffff, 2.2);
     dirLight.position.set(5, 8, 4);
     scene.add(dirLight);
 
-    const redLight = new THREE.PointLight(0xff2a55, 20, 10);
+    const redLight = new THREE.PointLight(0xff2a55, 28, 12);
     redLight.position.set(-3, 2, 2);
     scene.add(redLight);
 
-    const cyanLight = new THREE.PointLight(0x0071e3, 25, 10);
+    const cyanLight = new THREE.PointLight(0x00f0ff, 32, 12);
     cyanLight.position.set(3, 2, -2);
     scene.add(cyanLight);
 
@@ -121,7 +121,7 @@ export function Interactive3DLab() {
 
     const wireGlobe = new THREE.Mesh(
       new THREE.SphereGeometry(1.18, 18, 18),
-      new THREE.MeshBasicMaterial({ color: 0x0071e3, wireframe: true, transparent: true, opacity: 0.35 }),
+      new THREE.MeshBasicMaterial({ color: 0x00f0ff, wireframe: true, transparent: true, opacity: 0.45 }),
     );
     telemetryGroup.add(wireGlobe);
 
@@ -135,7 +135,7 @@ export function Interactive3DLab() {
 
     const ring2 = new THREE.Mesh(
       new THREE.TorusGeometry(1.65, 0.01, 12, 80),
-      new THREE.MeshBasicMaterial({ color: 0x0071e3 }),
+      new THREE.MeshBasicMaterial({ color: 0x00f0ff }),
     );
     ring2.rotation.y = Math.PI / 4;
     telemetryGroup.add(ring2);
@@ -165,9 +165,9 @@ export function Interactive3DLab() {
     for (let t = 0; t < tierCount; t++) {
       const tierGeo = new THREE.CylinderGeometry(1.2 - t * 0.12, 1.25 - t * 0.12, 0.28, 36);
       const tierMat = new THREE.MeshStandardMaterial({
-        color: 0xf1f5f9,
-        metalness: 0.5,
-        roughness: 0.25,
+        color: 0x1e293b,
+        metalness: 0.75,
+        roughness: 0.2,
       });
       const tierMesh = new THREE.Mesh(tierGeo, tierMat);
       tierMesh.position.y = -0.5 + t * 0.48;
@@ -177,7 +177,7 @@ export function Interactive3DLab() {
       // Status indicator ring
       const statusRing = new THREE.Mesh(
         new THREE.TorusGeometry(1.22 - t * 0.12, 0.018, 12, 60),
-        new THREE.MeshBasicMaterial({ color: t === 1 ? 0xff2a55 : 0x0071e3 }),
+        new THREE.MeshBasicMaterial({ color: t === 1 ? 0xff2a55 : 0x00f0ff }),
       );
       statusRing.rotation.x = Math.PI / 2;
       statusRing.position.y = tierMesh.position.y;

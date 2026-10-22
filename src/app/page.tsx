@@ -21,38 +21,51 @@ import { SpecsStrip } from "@/components/specs-strip";
 import { ContactCard } from "@/components/contact-card";
 import { AmbientLight } from "@/components/ambient-light";
 import { SectionHeading } from "@/components/section-heading";
+import { SmoothScroll } from "@/components/smooth-scroll";
+import { ParticleBackground } from "@/components/particle-background";
+import { GsapAnimator } from "@/components/gsap-animator";
 import { FaGithub } from "react-icons/fa";
 import { principles, projects, siteConfig, skillGroups } from "@/data/site";
 
 const focusAreas = [
-  { icon: Braces, label: "Product interfaces", detail: "React · Next.js · Glassmorphism" },
+  { icon: Braces, label: "Product interfaces", detail: "React 19 · Next.js · Cyber Glass" },
   { icon: RadioTower, label: "Connected systems", detail: "APIs · WebSockets · Telemetry" },
   { icon: Layers3, label: "Reliable data", detail: "PostgreSQL · ACID · Workflows" },
 ];
 
 export default function HomePage() {
   return (
-    <>
+    <SmoothScroll>
+      <ParticleBackground />
       <AmbientLight />
+      <GsapAnimator />
+
       <a className="skip-link" href="#main">
         Skip to content
       </a>
+
       <SiteHeader />
+
       <main id="main">
-        {/* HERO SECTION WITH 3D OBSERVATORY */}
+        {/* HERO SECTION WITH 3D OBSERVATORY & UNDULATING CYBER GRID */}
         <section className="hero section-shell" id="top">
           <div className="hero-grain" aria-hidden="true" />
           <div className="container hero-layout">
             <div className="hero-copy">
               <div className="eyebrow">
-                <span className="status-pulse" /> FULL-STACK & 3D WEBGL <span className="eyebrow-divider">/</span> INDIA
+                <span className="status-pulse" /> FULL-STACK & 3D WEBGL <span className="eyebrow-divider">/</span> SYS.ONLINE 60 FPS
               </div>
               <h1>
-                I build the systems <span className="hero-serif">behind</span> the screen
-                <span className="hero-period">.</span>
+                I build the systems{" "}
+                <span className="hero-gradient">
+                  behind the{" "}
+                  <span className="inline-block whitespace-nowrap">
+                    screen<span className="hero-period">.</span>
+                  </span>
+                </span>
               </h1>
               <p className="hero-lede">
-                I&apos;m Himanshu — an engineer drawn to the intersection of tactile glass interfaces and robust, scalable backend architectures. I turn mission-critical workflows into software that is reliable, responsive, and intuitive.
+                I&apos;m Himanshu — an engineer drawn to the intersection of tactile cyber interfaces and robust, scalable backend architectures. I turn mission-critical workflows into software that is reliable, responsive, and intuitive.
               </p>
               <div className="hero-actions">
                 <Link className="button button-primary" href="#work">
@@ -120,7 +133,7 @@ export default function HomePage() {
               <div className="scene-coordinate">
                 FLOW ID // 001
                 <br />
-                SYSTEMS MAP
+                CYBER GRID MATRIX
               </div>
             </div>
           </div>
@@ -169,7 +182,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* LUXURY HARDWARE SPECIFICATIONS STRIP */}
+        {/* SYSTEM SPECIFICATIONS STRIP */}
         <SpecsStrip />
 
         {/* SELECTED WORK */}
@@ -371,7 +384,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* LUXURY CONTACT SECTION */}
+        {/* CONTACT SECTION */}
         <section className="contact-section section-shell" id="contact">
           <div className="container">
             <ContactCard />
@@ -384,10 +397,10 @@ export default function HomePage() {
           <Link href="#top" className="footer-brand">
             HB<span>.</span>
           </Link>
-          <span>ENGINEERED WITH REACT, NEXT.JS & THREE.JS · APPLE & NOTHING LIGHT GLASS</span>
+          <span>ENGINEERED WITH REACT, NEXT.JS & THREE.JS · CYBER OBSIDIAN GLASS</span>
           <a href="#top">Back to top ↑</a>
         </div>
       </footer>
-    </>
+    </SmoothScroll>
   );
 }
