@@ -1,43 +1,70 @@
-import Link from "next/link";
 import {
   ArrowDown,
-  ArrowDownRight,
   ArrowRight,
   ArrowUpRight,
-  Braces,
-  Boxes,
   Check,
   Code2,
-  Layers3,
+  Database,
+  Globe2,
+  Layers,
   MapPin,
-  RadioTower,
   Sparkles,
 } from "lucide-react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiteHeader } from "@/components/site-header";
 import { HeroScene } from "@/components/hero-scene";
 import { ProjectCard } from "@/components/project-card";
 import { Interactive3DLab } from "@/components/interactive-3d-lab";
-import { SpecsStrip } from "@/components/specs-strip";
 import { ContactCard } from "@/components/contact-card";
-import { AmbientLight } from "@/components/ambient-light";
 import { SectionHeading } from "@/components/section-heading";
 import { SmoothScroll } from "@/components/smooth-scroll";
-import { ParticleBackground } from "@/components/particle-background";
 import { GsapAnimator } from "@/components/gsap-animator";
-import { FaGithub } from "react-icons/fa";
 import { principles, projects, siteConfig, skillGroups } from "@/data/site";
 
-const focusAreas = [
-  { icon: Braces, label: "Product interfaces", detail: "React 19 · Next.js · Cyber Glass" },
-  { icon: RadioTower, label: "Connected systems", detail: "APIs · WebSockets · Telemetry" },
-  { icon: Layers3, label: "Reliable data", detail: "PostgreSQL · ACID · Workflows" },
+const engineeringHighlights = [
+  {
+    icon: Code2,
+    title: "Product Interfaces",
+    detail: "Next.js, React 19, TypeScript, and accessible kinetic micro-interactions.",
+  },
+  {
+    icon: Database,
+    title: "Backend & Systems",
+    detail: "High-concurrency Node.js APIs, ACID transaction isolation, and PostgreSQL.",
+  },
+  {
+    icon: Globe2,
+    title: "Interactive 3D",
+    detail: "Procedural WebGL graphics, spatial architectures, and Three.js scenes.",
+  },
+];
+
+const processSteps = [
+  {
+    step: "01",
+    title: "Map the problem domain",
+    desc: "Understand real user workflows, physical constraints, edge cases, and failure modes before writing code.",
+  },
+  {
+    step: "02",
+    title: "Design core foundations",
+    desc: "Architect data models, ACID transaction boundaries, idempotency keys, and explicit API contracts.",
+  },
+  {
+    step: "03",
+    title: "Build and validate",
+    desc: "Develop accessible, tactile user interfaces, robust error boundaries, and strict type-checked logic.",
+  },
+  {
+    step: "04",
+    title: "Ship and monitor",
+    desc: "Deploy with continuous integration, verify telemetry, and iterate based on real feedback.",
+  },
 ];
 
 export default function HomePage() {
   return (
     <SmoothScroll>
-      <ParticleBackground />
-      <AmbientLight />
       <GsapAnimator />
 
       <a className="skip-link" href="#main">
@@ -47,358 +74,370 @@ export default function HomePage() {
       <SiteHeader />
 
       <main id="main">
-        {/* HERO SECTION WITH 3D OBSERVATORY & UNDULATING CYBER GRID */}
-        <section className="hero section-shell" id="top">
-          <div className="hero-grain" aria-hidden="true" />
-          <div className="container hero-layout">
-            <div className="hero-copy">
-              <div className="eyebrow">
-                <span className="status-pulse" /> FULL-STACK & 3D WEBGL <span className="eyebrow-divider">/</span> SYS.ONLINE 60 FPS
-              </div>
-              <h1>
-                I build the systems{" "}
-                <span className="hero-gradient">
-                  behind the{" "}
-                  <span className="inline-block whitespace-nowrap">
-                    screen<span className="hero-period">.</span>
+        {/* =========================================================================
+            1. HERO SECTION — Inexa-Inspired Minimal Art Direction
+            ========================================================================= */}
+        <section className="section-inexa pt-12 sm:pt-16 pb-20 sm:pb-28" id="top">
+          <div className="container-inexa">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center hero-content-wrap">
+              {/* Left Column: Editorial Headline & Actions */}
+              <div className="lg:col-span-7 flex flex-col items-start">
+                <div className="hero-badge badge-inexa mb-5">
+                  <span className="w-2 h-2 rounded-full bg-[var(--accent-primary)] animate-pulse" />
+                  <span>Full-Stack Developer · Distributed Systems</span>
+                </div>
+
+                <h1 className="hero-title text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[var(--text-primary)] leading-[1.1] mb-6">
+                  I build thoughtful software for{" "}
+                  <span className="text-[var(--accent-primary)]">
+                    complex workflows.
                   </span>
-                </span>
-              </h1>
-              <p className="hero-lede">
-                I&apos;m Himanshu — an engineer drawn to the intersection of tactile cyber interfaces and robust, scalable backend architectures. I turn mission-critical workflows into software that is reliable, responsive, and intuitive.
-              </p>
-              <div className="hero-actions">
-                <Link className="button button-primary" href="#work">
-                  Explore selected work <ArrowDownRight size={17} />
-                </Link>
-                <Link className="button button-quiet" href="#lab">
-                  Interactive 3D Lab <ArrowRight size={16} />
-                </Link>
-                <a className="button button-quiet" href={siteConfig.github} target="_blank" rel="noreferrer">
-                  <FaGithub size={16} /> GitHub <ArrowUpRight size={14} />
-                </a>
-              </div>
-              <div className="hero-presence">
-                <span className="presence-orbit">
-                  <span />
-                </span>
-                <span>BUILDING · LEARNING · SHIPPING</span>
-                <span className="presence-divider" />
-                <MapPin size={13} />
-                <span>India · Open to opportunities</span>
-              </div>
-            </div>
+                </h1>
 
-            <div className="hero-art-wrap">
-              <div className="scene-label scene-label-top">
-                <span className="scene-label-index">FIG. 01</span>
-                <span>THE SYSTEMS OBSERVATORY // 3D WEBGL</span>
-              </div>
-              <div className="scene-halo scene-halo-one" aria-hidden="true" />
-              <div className="scene-halo scene-halo-two" aria-hidden="true" />
-              <HeroScene />
-              <div className="scene-float-label float-label-left">
-                <span className="float-label-icon lime">
-                  <Boxes size={15} />
-                </span>
-                <span>
-                  <b>Inventory Matrix</b>
-                  <small>Structured operations</small>
-                </span>
-              </div>
-              <div className="scene-float-label float-label-right">
-                <span className="float-label-icon coral">
-                  <RadioTower size={15} />
-                </span>
-                <span>
-                  <b>Live Telemetry</b>
-                  <small>Signal → insight</small>
-                </span>
-              </div>
-              <div className="scene-float-label float-label-bottom">
-                <span className="float-label-icon violet">
-                  <Code2 size={15} />
-                </span>
-                <span>
-                  <b>Backend Logic</b>
-                  <small>Predictable by design</small>
-                </span>
-                <span className="label-arrow">
-                  <ArrowUpRight size={14} />
-                </span>
-              </div>
-              <div className="scene-axis scene-axis-left">
-                DATA IN <span /> DECISIONS OUT
-              </div>
-              <div className="scene-coordinate">
-                FLOW ID // 001
-                <br />
-                CYBER GRID MATRIX
-              </div>
-            </div>
-          </div>
+                <p className="hero-description text-base sm:text-lg lg:text-xl text-[var(--text-secondary)] leading-relaxed mb-8 max-w-xl">
+                  I&apos;m Himanshu — an engineer focused on React, Next.js, reliable Node.js architectures, ACID transaction integrity, and spatial WebGL graphics. I turn domain-heavy systems into software that is reliable, responsive, and intuitive.
+                </p>
 
-          <div className="container hero-bottom">
-            <span className="hero-bottom-label">MY WORK SITS AT THE INTERSECTION OF</span>
-            <div className="hero-tech-list">
-              <span>Frontend Craft</span>
-              <b>×</b>
-              <span>Backend Logic</span>
-              <b>×</b>
-              <span>Real-World 3D Systems</span>
+                <div className="hero-actions flex flex-wrap items-center gap-3 mb-10">
+                  <a href="#work" className="btn-inexa-primary">
+                    Explore Selected Work <ArrowDown size={16} />
+                  </a>
+                  <a href="#contact" className="btn-inexa-outline">
+                    Get in touch <ArrowRight size={15} />
+                  </a>
+                  {siteConfig.github && (
+                    <a
+                      href={siteConfig.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="btn-inexa-ghost"
+                      aria-label="GitHub Profile"
+                    >
+                      <FaGithub size={18} />
+                      <span>GitHub</span>
+                      <ArrowUpRight size={13} />
+                    </a>
+                  )}
+                  {siteConfig.linkedin && (
+                    <a
+                      href={siteConfig.linkedin}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="btn-inexa-ghost"
+                      aria-label="LinkedIn Profile"
+                    >
+                      <FaLinkedin size={18} />
+                      <span>LinkedIn</span>
+                      <ArrowUpRight size={13} />
+                    </a>
+                  )}
+                </div>
+
+                {/* Presence & Location */}
+                <div className="flex items-center gap-2 text-xs font-medium text-[var(--text-muted)] pt-6 border-t border-[var(--border-subtle)] w-full">
+                  <MapPin size={14} className="text-[var(--accent-primary)]" />
+                  <span>{siteConfig.location}</span>
+                  <span className="mx-2">·</span>
+                  <span>React 19 · Node.js · Three.js</span>
+                </div>
+              </div>
+
+              {/* Right Column: Inexa Restrained 3D Visual */}
+              <div className="lg:col-span-5 flex items-center justify-center hero-visual-wrap relative">
+                <div className="w-full max-w-md aspect-square rounded-3xl bg-[var(--bg-subtle)] border border-[var(--border-subtle)] p-4 shadow-[var(--shadow-subtle)] relative overflow-hidden flex items-center justify-center">
+                  <HeroScene />
+                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[11px] font-medium text-[var(--text-muted)] pointer-events-none">
+                    <span className="badge-neutral py-1 px-2.5">
+                      <Sparkles size={11} className="text-[var(--accent-primary)]" />
+                      <span>Procedural WebGL</span>
+                    </span>
+                    <span>Interactive 3D Sheen</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <a href="#work" className="scroll-cue">
-              SCROLL TO EXPLORE{" "}
-              <span>
-                <ArrowDown size={14} />
-              </span>
-            </a>
           </div>
         </section>
 
-        {/* KINETIC MONOSPACE TICKER */}
-        <section className="ticker-section" aria-label="Technologies and areas of focus">
-          <div className="ticker-track">
-            <span>REACT 19 & NEXT.JS</span>
-            <i>✳</i>
-            <span>THREE.JS & WEBGL</span>
-            <i>✳</i>
-            <span>NODE.JS & APIS</span>
-            <i>✳</i>
-            <span>POSTGRESQL & PRISMA</span>
-            <i>✳</i>
-            <span>TRANSACTION ISOLATION</span>
-            <i>✳</i>
-            <span>IOT TELEMETRY</span>
-            <i>✳</i>
-            <span>REACT 19 & NEXT.JS</span>
-            <i>✳</i>
-            <span>THREE.JS & WEBGL</span>
-            <i>✳</i>
-            <span>NODE.JS & APIS</span>
-            <i>✳</i>
-            <span>POSTGRESQL & PRISMA</span>
-            <i>✳</i>
+        {/* =========================================================================
+            2. SMOOTH KINETIC TICKER
+            ========================================================================= */}
+        <div className="marquee-container" aria-label="Core Engineering Domains">
+          <div className="marquee-content">
+            <span>React 19 & Next.js <i className="separator">✦</i></span>
+            <span>Node.js & Express <i className="separator">✦</i></span>
+            <span>PostgreSQL & Prisma <i className="separator">✦</i></span>
+            <span>ACID Transaction Isolation <i className="separator">✦</i></span>
+            <span>Three.js & WebGL <i className="separator">✦</i></span>
+            <span>IoT Telemetry Pipelines <i className="separator">✦</i></span>
+            <span>Practical AI Engineering <i className="separator">✦</i></span>
+            <span>TypeScript & Strict Types <i className="separator">✦</i></span>
+            <span>React 19 & Next.js <i className="separator">✦</i></span>
+            <span>Node.js & Express <i className="separator">✦</i></span>
+            <span>PostgreSQL & Prisma <i className="separator">✦</i></span>
+            <span>ACID Transaction Isolation <i className="separator">✦</i></span>
+            <span>Three.js & WebGL <i className="separator">✦</i></span>
+            <span>IoT Telemetry Pipelines <i className="separator">✦</i></span>
+            <span>Practical AI Engineering <i className="separator">✦</i></span>
+            <span>TypeScript & Strict Types <i className="separator">✦</i></span>
           </div>
-        </section>
+        </div>
 
-        {/* SYSTEM SPECIFICATIONS STRIP */}
-        <SpecsStrip />
-
-        {/* SELECTED WORK */}
-        <section className="work-section section-shell" id="work">
-          <div className="container">
-            <SectionHeading index="01" eyebrow="PORTFOLIO WORKSHOP" title="Engineered around real problems.">
-              Practical production systems with real constraints, thoughtful trade-offs, and verifiable reliability.
+        {/* =========================================================================
+            3. FEATURED WORK / PROJECTS
+            ========================================================================= */}
+        <section className="section-inexa bg-inexa-secondary" id="work">
+          <div className="container-inexa">
+            <SectionHeading
+              index="01"
+              eyebrow="PORTFOLIO"
+              title="Featured engineering projects."
+            >
+              Practical production systems built with real constraints, verifiable correctness, and thoughtful architecture.
             </SectionHeading>
-            <div className="project-intro-line">
-              <span>
-                SELECTED BUILDS <b>({String(projects.length).padStart(2, "0")})</b>
-              </span>
-              <span>
-                INTERACTIVE 3D CARDS · MOVE CURSOR OVER CARDS <ArrowDownRight size={14} />
-              </span>
-            </div>
-            <div className="project-grid">
-              {projects.map((project) => (
-                <ProjectCard key={project.number} project={project} />
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 projects-grid">
+              {projects.map((project, idx) => (
+                <ProjectCard
+                  key={project.number}
+                  project={project}
+                  featured={idx === 0}
+                />
               ))}
             </div>
-            <div className="work-bottom-note">
-              <span className="note-mark">↳</span>
-              <p>
-                Documenting systemic choices: schema migrations, concurrency bottlenecks, error boundaries, audit trails, and performance improvements.
-              </p>
-              <a href={siteConfig.github} target="_blank" rel="noreferrer">
-                Explore repository on GitHub <ArrowUpRight size={15} />
-              </a>
+
+            <div className="mt-12 flex flex-col sm:flex-row sm:items-center justify-between p-6 bg-[var(--bg-card)] border border-[var(--border-main)] rounded-2xl shadow-[var(--shadow-subtle)] gap-4">
+              <div className="flex items-center gap-3">
+                <span className="text-[var(--accent-primary)] font-bold text-lg">↳</span>
+                <p className="text-sm text-[var(--text-secondary)] m-0">
+                  Focusing on systemic trade-offs: concurrency limits, schema migrations, audit trails, and data reliability.
+                </p>
+              </div>
+              {siteConfig.github && (
+                <a
+                  href={siteConfig.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-inexa-outline text-xs py-2 px-4 whitespace-nowrap self-start sm:self-auto"
+                >
+                  Explore repositories on GitHub <ArrowUpRight size={14} />
+                </a>
+              )}
             </div>
           </div>
         </section>
 
-        {/* INTERACTIVE 3D SYSTEMS LAB */}
-        <section className="lab-section section-shell" id="lab">
-          <div className="container">
+        {/* =========================================================================
+            4. ABOUT & PHILOSOPHY
+            ========================================================================= */}
+        <section className="section-inexa" id="about">
+          <div className="container-inexa">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+              {/* Left Column: Context Story */}
+              <div className="lg:col-span-6">
+                <SectionHeading
+                  index="02"
+                  eyebrow="ABOUT ME"
+                  title="Curious about the entire system, not just the surface."
+                />
+
+                <div className="space-y-5 text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed">
+                  <p>
+                    My background spans product delivery, startup environments, and workflows from environmental monitoring. It taught me to look beyond the happy path: data needs to be trustworthy, permissions need to make sense, and the software needs to survive real usage.
+                  </p>
+                  <p>
+                    I focus deeply on full-stack web architectures and spatial 3D experiences. Whether building transactional APIs with strict row locking or interactive WebGL scenes, I emphasize clarity, performance, and long-term maintainability.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 pt-8 border-t border-[var(--border-subtle)]">
+                  {engineeringHighlights.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <div key={item.title} className="p-4 bg-[var(--bg-subtle)] border border-[var(--border-subtle)] rounded-xl">
+                        <Icon size={18} className="text-[var(--accent-primary)] mb-2" />
+                        <h4 className="text-sm font-bold text-[var(--text-primary)] mb-1">
+                          {item.title}
+                        </h4>
+                        <p className="text-xs text-[var(--text-secondary)] leading-relaxed m-0">
+                          {item.detail}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Right Column: Engineering Principles */}
+              <div className="lg:col-span-6 space-y-4 principles-grid">
+                <div className="badge-inexa mb-2">
+                  <span>Guiding Principles</span>
+                </div>
+                {principles.map((principle) => (
+                  <div key={principle.number} className="principle-card">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-mono font-bold text-[var(--accent-primary)]">
+                        PRINCIPLE // {principle.number}
+                      </span>
+                      <ArrowUpRight size={15} className="text-[var(--text-muted)]" />
+                    </div>
+                    <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2 tracking-tight">
+                      {principle.title}
+                    </h3>
+                    <p className="text-sm text-[var(--text-secondary)] leading-relaxed m-0">
+                      {principle.copy}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* =========================================================================
+            5. CAPABILITIES & TECHNICAL ARSENAL
+            ========================================================================= */}
+        <section className="section-inexa bg-inexa-secondary" id="capabilities">
+          <div className="container-inexa">
             <SectionHeading
-              index="02"
-              eyebrow="IMMERSIVE 3D SHOWCASE"
-              title="Interactive 3D Architecture Lab."
+              index="03"
+              eyebrow="CAPABILITIES"
+              title="A practical, battle-tested stack."
             >
-              Real-time WebGL models showcasing the mechanical and systemic concepts behind my builds. Orbit, zoom, and inspect each sub-system.
+              Focusing on fundamental computer science principles, clean abstractions, and maintainable software.
             </SectionHeading>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 capabilities-grid">
+              {skillGroups.map((group) => (
+                <div key={group.number} className="capability-card flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-xs font-mono font-bold text-[var(--accent-primary)]">
+                        {group.number}
+                      </span>
+                      <Layers size={16} className="text-[var(--text-muted)]" />
+                    </div>
+                    <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2 tracking-tight">
+                      {group.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-[var(--text-secondary)] mb-6 leading-relaxed">
+                      {group.description}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1.5 pt-4 border-t border-[var(--border-subtle)]">
+                    {group.skills.map((skill) => (
+                      <span key={skill} className="badge-neutral text-[11px] py-1 px-2.5">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 flex items-center gap-2.5 text-xs text-[var(--text-muted)]">
+              <Check size={14} className="text-emerald-500" />
+              <span>
+                Reflects active production toolchains: Next.js, React 19, TypeScript, PostgreSQL, Prisma, Express, and Three.js.
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* =========================================================================
+            6. INTERACTIVE 3D ARCHITECTURE LAB
+            ========================================================================= */}
+        <section className="section-inexa" id="lab">
+          <div className="container-inexa">
+            <SectionHeading
+              index="04"
+              eyebrow="IMMERSIVE 3D LAB"
+              title="Interactive 3D Systems Inspector."
+            >
+              Real-time WebGL models exploring the mechanical and systemic concepts behind my builds. Orbit, zoom, and inspect subsystems.
+            </SectionHeading>
+
             <Interactive3DLab />
           </div>
         </section>
 
-        {/* ABOUT SECTION */}
-        <section className="about-section section-shell" id="about">
-          <div className="container">
-            <div className="about-topline">
-              <span>03 / CONTEXT & PHILOSOPHY</span>
-              <span>DEVELOPER · SYSTEMS THINKER · BUILDER</span>
-            </div>
-            <div className="about-layout">
-              <div className="about-story">
-                <h2>
-                  Curious about the entire machine, <em>not just the surface.</em>
-                </h2>
-                <p className="body-copy">
-                  My background spans product delivery, startup environments, and workflows from environmental monitoring. It taught me to look beyond the happy path: data needs to be trustworthy, permissions need to make sense, and the software needs to survive real usage.
-                </p>
-                <p className="body-copy">
-                  Now I&apos;m going deeper on full-stack and spatial web engineering—building complete products, sharpening system-design and database fundamentals, and developing interactive 3D WebGL experiences that bring digital tools to life.
-                </p>
-                <div className="about-location">
-                  <MapPin size={15} /> India <span className="location-separator">·</span> Open to full-stack & 3D opportunities
-                </div>
-              </div>
-              <div className="about-visual-panel">
-                <div className="panel-stamp">
-                  <Sparkles size={14} /> HOW I THINK ABOUT SOFTWARE
-                </div>
-                <div className="focus-orbit focus-orbit-one" />
-                <div className="focus-orbit focus-orbit-two" />
-                <div className="focus-core">
-                  <Layers3 size={28} strokeWidth={1.5} />
-                  <span>THE CORE</span>
-                </div>
-                {focusAreas.map(({ icon: Icon, label, detail }, index) => (
-                  <div className={`focus-node focus-node-${index + 1}`} key={label}>
-                    <span>
-                      <Icon size={16} />
-                    </span>
-                    <b>{label}</b>
-                    <small>{detail}</small>
-                  </div>
-                ))}
-                <div className="panel-bottom-line">
-                  <span>LAYER 01 — 03</span>
-                  <span>EVERY COMPONENT HAS PURPOSE</span>
-                </div>
-              </div>
-            </div>
-            <div className="principles-strip">
-              {principles.map((item) => (
-                <div className="principle-item" key={item.number}>
-                  <span className="principle-number">{item.number}</span>
-                  <div>
-                    <h3>{item.title}</h3>
-                    <p>{item.copy}</p>
-                  </div>
-                  <ArrowUpRight size={16} className="principle-arrow" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* TOOLKIT */}
-        <section className="toolkit-section section-shell" id="toolkit">
-          <div className="container">
-            <SectionHeading index="04" eyebrow="TECHNICAL ARSENAL" title="A practical, battle-tested stack.">
-              Focusing on fundamental computer science principles, clean abstractions, and maintainable software.
+        {/* =========================================================================
+            7. ENGINEERING PROCESS
+            ========================================================================= */}
+        <section className="section-inexa bg-inexa-secondary" id="process">
+          <div className="container-inexa">
+            <SectionHeading
+              index="05"
+              eyebrow="METHODOLOGY"
+              title="From problem domain to reliable product."
+            >
+              How I approach software engineering from initial constraints to production deployment.
             </SectionHeading>
-            <div className="toolkit-grid">
-              {skillGroups.map((group) => (
-                <article className="toolkit-card" key={group.number}>
-                  <div className="toolkit-card-top">
-                    <span>{group.number}</span>
-                    <ArrowUpRight size={15} />
-                  </div>
-                  <h3>{group.title}</h3>
-                  <p>{group.description}</p>
-                  <div className="skill-chip-list">
-                    {group.skills.map((skill) => (
-                      <span key={skill}>{skill}</span>
-                    ))}
-                  </div>
-                </article>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 process-grid">
+              {processSteps.map((step) => (
+                <div
+                  key={step.step}
+                  className="process-step bg-[var(--bg-card)] border border-[var(--border-main)] rounded-2xl p-6 shadow-[var(--shadow-subtle)] hover-up"
+                >
+                  <span className="text-xs font-mono font-bold text-[var(--accent-primary)] mb-3 block">
+                    STEP // {step.step}
+                  </span>
+                  <h3 className="text-base font-bold text-[var(--text-primary)] mb-2 tracking-tight">
+                    {step.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed m-0">
+                    {step.desc}
+                  </p>
+                </div>
               ))}
             </div>
-            <div className="toolkit-honesty">
-              <span className="honesty-icon">
-                <Check size={14} />
-              </span>
-              <p>
-                <strong>Reflects active production stacks:</strong> Next.js, Three.js, PostgreSQL, Prisma, Node.js, and TypeScript.
-              </p>
-            </div>
           </div>
         </section>
 
-        {/* APPROACH */}
-        <section className="approach-section section-shell" id="approach">
-          <div className="container approach-inner">
-            <div className="approach-copy">
-              <div className="section-kicker">
-                <span>05</span>
-                <span className="kicker-line" />
-                <span>FROM PROBLEM TO PRODUCT</span>
-              </div>
-              <h2>
-                Understand constraints.
-                <br />
-                <span>Engineer reliability.</span>
-              </h2>
-              <p>
-                My process begins with real workflows and physical constraints—not hype. Then I architect from the data model and API contracts through to resilient UI states, tests, failure modes, and automated CI/CD.
-              </p>
-              <a href={siteConfig.github} target="_blank" rel="noreferrer" className="text-link">
-                Inspect architecture on GitHub <ArrowRight size={16} />
-              </a>
-            </div>
-            <div className="approach-steps">
-              <div className="approach-step">
-                <span>01</span>
-                <div>
-                  <strong>Map the problem domain</strong>
-                  <small>Edge cases · data models · physical constraints</small>
-                </div>
-                <Check size={15} />
-              </div>
-              <div className="approach-step">
-                <span>02</span>
-                <div>
-                  <strong>Design core foundations</strong>
-                  <small>Database schema · idempotency · transaction isolation</small>
-                </div>
-                <Check size={15} />
-              </div>
-              <div className="approach-step">
-                <span>03</span>
-                <div>
-                  <strong>Build and validate</strong>
-                  <small>Glassmorphic UI · Three.js scenes · error bounds</small>
-                </div>
-                <Check size={15} />
-              </div>
-              <div className="approach-step">
-                <span>04</span>
-                <div>
-                  <strong>Ship and monitor</strong>
-                  <small>Vercel deployment · telemetry · iterative feedback</small>
-                </div>
-                <Check size={15} />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CONTACT SECTION */}
-        <section className="contact-section section-shell" id="contact">
-          <div className="container">
+        {/* =========================================================================
+            8. CONTACT SECTION
+            ========================================================================= */}
+        <section className="section-inexa" id="contact">
+          <div className="container-inexa">
             <ContactCard />
           </div>
         </section>
       </main>
 
-      <footer className="site-footer">
-        <div className="container footer-inner">
-          <Link href="#top" className="footer-brand">
-            HB<span>.</span>
-          </Link>
-          <span>ENGINEERED WITH REACT, NEXT.JS & THREE.JS · OBSIDIAN & ACID LIME</span>
-          <a href="#top">Back to top ↑</a>
+      {/* =========================================================================
+          9. FOOTER — Inexa Style Clean Footer
+          ========================================================================= */}
+      <footer className="border-t border-[var(--border-main)] bg-[var(--bg-card)] py-12">
+        <div className="container-inexa flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-3">
+            <span className="w-8 h-8 rounded-full bg-[var(--accent-primary)] text-white font-bold text-xs flex items-center justify-center">
+              {siteConfig.initials}
+            </span>
+            <span className="text-sm font-semibold text-[var(--text-primary)]">
+              {siteConfig.name}
+            </span>
+            <span className="text-xs text-[var(--text-muted)]">
+              © {new Date().getFullYear()} · All rights reserved
+            </span>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-5 text-xs text-[var(--text-secondary)] font-medium">
+            <a href="#work" className="hover:text-[var(--accent-primary)] transition-colors">Work</a>
+            <a href="#about" className="hover:text-[var(--accent-primary)] transition-colors">About</a>
+            <a href="#capabilities" className="hover:text-[var(--accent-primary)] transition-colors">Capabilities</a>
+            <a href="#lab" className="hover:text-[var(--accent-primary)] transition-colors">3D Lab</a>
+            <a href="#process" className="hover:text-[var(--accent-primary)] transition-colors">Process</a>
+            <a href="#contact" className="hover:text-[var(--accent-primary)] transition-colors">Contact</a>
+          </div>
+
+          <a
+            href="#top"
+            className="text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors flex items-center gap-1"
+          >
+            Back to top ↑
+          </a>
         </div>
       </footer>
     </SmoothScroll>

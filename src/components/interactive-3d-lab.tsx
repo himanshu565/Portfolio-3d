@@ -3,28 +3,28 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { RadioTower, Database, Boxes, Rotate3D, Activity } from "lucide-react";
+import { RadioTower, Database, Boxes, Rotate3D } from "lucide-react";
 
 type LabMode = "telemetry" | "backend" | "inventory";
 
 const modes: { id: LabMode; label: string; icon: typeof RadioTower; desc: string }[] = [
   {
     id: "telemetry",
-    label: "IoT Sensor Node",
+    label: "IoT Telemetry Node",
     icon: RadioTower,
-    desc: "Simulated CPCB analyzer telemetry orb with radial signal beams and live data packet broadcast.",
+    desc: "A spatial representation of sensor node data ingestion with dual-stream dispatch and packet transmission rings.",
   },
   {
     id: "backend",
     label: "Transactional Engine",
     icon: Database,
-    desc: "ACID transaction matrix with row-locking relays and idempotent webhook queues.",
+    desc: "Visualizing row-locking concurrency control, atomic transactions, and idempotent webhook queuing.",
   },
   {
     id: "inventory",
-    label: "Spatial Warehouse Matrix",
+    label: "Warehouse Matrix",
     icon: Boxes,
-    desc: "Multi-rack serialized item storage grid with dynamic stock allocation voxels.",
+    desc: "Multi-location serialized item tracking with audited stock allocation voxels.",
   },
 ];
 
@@ -69,33 +69,33 @@ export function Interactive3DLab() {
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 1.4;
+    controls.autoRotateSpeed = 1.2;
     controls.enableZoom = true;
-    controls.minDistance = 3.2;
-    controls.maxDistance = 10;
-    controls.target.set(0, 0.4, 0);
+    controls.minDistance = 3.0;
+    controls.maxDistance = 9;
+    controls.target.set(0, 0.3, 0);
 
-    // Studio Lights for Obsidian / Acid Lime Mode
-    const ambLight = new THREE.AmbientLight(0x050705, 1.8);
+    // Inexa Studio Lighting (Violet / Crisp Neutral)
+    const ambLight = new THREE.AmbientLight(0xffffff, 1.2);
     scene.add(ambLight);
 
-    const dirLight = new THREE.DirectionalLight(0xc6ff00, 2.5);
-    dirLight.position.set(5, 8, 4);
+    const dirLight = new THREE.DirectionalLight(0x8054ff, 3.2);
+    dirLight.position.set(5, 7, 4);
     scene.add(dirLight);
 
-    const rimLight = new THREE.DirectionalLight(0x7cff8a, 3.5);
+    const rimLight = new THREE.DirectionalLight(0xd8cbff, 2.5);
     rimLight.position.set(-4, 3, -4);
     scene.add(rimLight);
 
-    const fillLight = new THREE.DirectionalLight(0x304b36, 0.8);
-    fillLight.position.set(0, -2, 3);
+    const fillLight = new THREE.DirectionalLight(0x5d2fdf, 0.8);
+    fillLight.position.set(0, -3, 2);
     scene.add(fillLight);
 
     // Dynamic model container
     const modeGroup = new THREE.Group();
     scene.add(modeGroup);
 
-    // Build sub-scenes
+    // Sub-scenes
     const telemetryGroup = new THREE.Group();
     const backendGroup = new THREE.Group();
     const inventoryGroup = new THREE.Group();
@@ -104,16 +104,16 @@ export function Interactive3DLab() {
     modeGroup.add(backendGroup);
     modeGroup.add(inventoryGroup);
 
-    // --- 1. TELEMETRY NODE (Light Glass) ---
+    // 1. TELEMETRY NODE (Glass + Violet Accents)
     const globeGeo = new THREE.SphereGeometry(1.15, 32, 32);
     const globeMat = new THREE.MeshPhysicalMaterial({
       color: 0xffffff,
-      roughness: 0.1,
+      roughness: 0.12,
       metalness: 0.1,
-      transmission: 0.9,
+      transmission: 0.88,
       ior: 1.5,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.9,
       clearcoat: 1.0,
     });
     const globe = new THREE.Mesh(globeGeo, globeMat);
@@ -121,26 +121,24 @@ export function Interactive3DLab() {
 
     const wireGlobe = new THREE.Mesh(
       new THREE.SphereGeometry(1.18, 18, 18),
-      new THREE.MeshBasicMaterial({ color: 0xc6ff00, wireframe: true, transparent: true, opacity: 0.4 }),
+      new THREE.MeshBasicMaterial({ color: 0x8054ff, wireframe: true, transparent: true, opacity: 0.3 }),
     );
     telemetryGroup.add(wireGlobe);
 
-    // Latitude & Longitude rings
     const ring1 = new THREE.Mesh(
       new THREE.TorusGeometry(1.42, 0.015, 12, 80),
-      new THREE.MeshBasicMaterial({ color: 0x7cff8a }),
+      new THREE.MeshBasicMaterial({ color: 0x8054ff }),
     );
     ring1.rotation.x = Math.PI / 3;
     telemetryGroup.add(ring1);
 
     const ring2 = new THREE.Mesh(
       new THREE.TorusGeometry(1.65, 0.01, 12, 80),
-      new THREE.MeshBasicMaterial({ color: 0xc6ff00 }),
+      new THREE.MeshBasicMaterial({ color: 0xd8cbff }),
     );
     ring2.rotation.y = Math.PI / 4;
     telemetryGroup.add(ring2);
 
-    // Sensor beacons
     const beaconCount = 8;
     const beacons: THREE.Mesh[] = [];
     for (let i = 0; i < beaconCount; i++) {
@@ -149,8 +147,8 @@ export function Interactive3DLab() {
       const bMesh = new THREE.Mesh(
         new THREE.SphereGeometry(0.065, 12, 12),
         new THREE.MeshStandardMaterial({
-          color: i % 2 === 0 ? 0xff2a55 : 0x059669,
-          emissive: i % 2 === 0 ? 0xff2a55 : 0x059669,
+          color: i % 2 === 0 ? 0x8054ff : 0x5d2fdf,
+          emissive: i % 2 === 0 ? 0x8054ff : 0x5d2fdf,
           emissiveIntensity: 0.8,
         }),
       );
@@ -159,48 +157,44 @@ export function Interactive3DLab() {
       beacons.push(bMesh);
     }
 
-    // --- 2. BACKEND / DATABASE ENGINE (Light Anodized Silver) ---
+    // 2. BACKEND / DATABASE ENGINE (Refined Metallic Tiers + Violet Transmissions)
     const tierCount = 4;
-    const tiers: THREE.Mesh[] = [];
     for (let t = 0; t < tierCount; t++) {
       const tierGeo = new THREE.CylinderGeometry(1.2 - t * 0.12, 1.25 - t * 0.12, 0.28, 36);
       const tierMat = new THREE.MeshStandardMaterial({
-        color: 0x0d120d,
+        color: 0x222533,
         metalness: 0.85,
-        roughness: 0.2,
+        roughness: 0.25,
       });
       const tierMesh = new THREE.Mesh(tierGeo, tierMat);
       tierMesh.position.y = -0.5 + t * 0.48;
       backendGroup.add(tierMesh);
-      tiers.push(tierMesh);
 
-      // Status indicator ring
       const statusRing = new THREE.Mesh(
         new THREE.TorusGeometry(1.22 - t * 0.12, 0.018, 12, 60),
-        new THREE.MeshBasicMaterial({ color: t === 1 ? 0xc6ff00 : 0x7cff8a }),
+        new THREE.MeshBasicMaterial({ color: t === 1 ? 0x8054ff : 0xd8cbff }),
       );
       statusRing.rotation.x = Math.PI / 2;
       statusRing.position.y = tierMesh.position.y;
       backendGroup.add(statusRing);
     }
 
-    // Floating transaction blocks
     const txBlocks: THREE.Mesh[] = [];
     for (let i = 0; i < 6; i++) {
       const bGeo = new THREE.BoxGeometry(0.24, 0.18, 0.12);
       const bMat = new THREE.MeshStandardMaterial({
-        color: 0xc6ff00,
-        emissive: 0xc6ff00,
-        emissiveIntensity: 0.5,
+        color: 0x8054ff,
+        emissive: 0x8054ff,
+        emissiveIntensity: 0.6,
       });
       const bMesh = new THREE.Mesh(bGeo, bMat);
       backendGroup.add(bMesh);
       txBlocks.push(bMesh);
     }
 
-    // --- 3. INVENTORY NEURAL MATRIX (Light Frosted Voxel Glass) ---
-    const voxels: THREE.Mesh[] = [];
+    // 3. INVENTORY NEURAL MATRIX (Frosted Glass Cubes + Violet Nodes)
     const spacing = 0.58;
+    const voxels: THREE.Mesh[] = [];
     for (let x = -1; x <= 1; x++) {
       for (let y = -1; y <= 1; y++) {
         for (let z = -1; z <= 1; z++) {
@@ -208,14 +202,14 @@ export function Interactive3DLab() {
           const vGeo = new THREE.BoxGeometry(0.38, 0.38, 0.38);
           const isAccent = (x + y + z) % 3 === 0;
           const vMat = new THREE.MeshPhysicalMaterial({
-            color: isAccent ? 0xc6ff00 : 0x7cff8a,
-            transmission: 0.75,
+            color: isAccent ? 0x8054ff : 0xffffff,
+            transmission: 0.8,
             roughness: 0.15,
-            metalness: 0.2,
+            metalness: 0.15,
             transparent: true,
             opacity: 0.85,
-            emissive: isAccent ? 0xc6ff00 : 0x7cff8a,
-            emissiveIntensity: 0.3,
+            emissive: isAccent ? 0x8054ff : 0x000000,
+            emissiveIntensity: isAccent ? 0.4 : 0,
           });
           const vMesh = new THREE.Mesh(vGeo, vMat);
           vMesh.position.set(x * spacing, y * spacing + 0.4, z * spacing);
@@ -225,8 +219,8 @@ export function Interactive3DLab() {
       }
     }
 
-    // Atmospheric Stardust in neon mint
-    const dustCount = 140;
+    // Gentle ambient dust in soft violet
+    const dustCount = 100;
     const dustGeo = new THREE.BufferGeometry();
     const dustPos = new Float32Array(dustCount * 3);
     for (let i = 0; i < dustCount; i++) {
@@ -237,11 +231,10 @@ export function Interactive3DLab() {
     dustGeo.setAttribute("position", new THREE.BufferAttribute(dustPos, 3));
     const dustPoints = new THREE.Points(
       dustGeo,
-      new THREE.PointsMaterial({ color: 0x7cff8a, size: 0.02, transparent: true, opacity: 0.4 }),
+      new THREE.PointsMaterial({ color: 0x8054ff, size: 0.02, transparent: true, opacity: 0.35 }),
     );
     scene.add(dustPoints);
 
-    // Resize observer
     const handleResize = () => {
       const w = host.clientWidth;
       const h = host.clientHeight;
@@ -268,27 +261,27 @@ export function Interactive3DLab() {
       inventoryGroup.visible = curMode === "inventory";
 
       if (curMode === "telemetry") {
-        wireGlobe.rotation.y = elapsed * 0.25;
-        ring1.rotation.z = elapsed * 0.4;
-        ring2.rotation.x = elapsed * 0.35;
+        wireGlobe.rotation.y = elapsed * 0.2;
+        ring1.rotation.z = elapsed * 0.3;
+        ring2.rotation.x = elapsed * 0.25;
         beacons.forEach((b, idx) => {
-          const s = 1 + Math.sin(elapsed * 4 + idx) * 0.25;
+          const s = 1 + Math.sin(elapsed * 3.5 + idx) * 0.2;
           b.scale.set(s, s, s);
         });
       } else if (curMode === "backend") {
         txBlocks.forEach((b, i) => {
-          const angle = elapsed * 1.2 + (i * Math.PI * 2) / txBlocks.length;
-          b.position.set(Math.cos(angle) * 1.55, Math.sin(elapsed * 2 + i) * 0.4, Math.sin(angle) * 1.55);
+          const angle = elapsed * 1.0 + (i * Math.PI * 2) / txBlocks.length;
+          b.position.set(Math.cos(angle) * 1.55, Math.sin(elapsed * 1.8 + i) * 0.35, Math.sin(angle) * 1.55);
           b.rotation.y = angle;
         });
       } else if (curMode === "inventory") {
         voxels.forEach((v, idx) => {
-          v.rotation.x = Math.sin(elapsed * 0.8 + idx * 0.3) * 0.15;
-          v.rotation.y = Math.cos(elapsed * 0.8 + idx * 0.3) * 0.15;
+          v.rotation.x = Math.sin(elapsed * 0.6 + idx * 0.3) * 0.12;
+          v.rotation.y = Math.cos(elapsed * 0.6 + idx * 0.3) * 0.12;
         });
       }
 
-      dustPoints.rotation.y = elapsed * 0.02;
+      dustPoints.rotation.y = elapsed * 0.015;
       renderer.render(scene, camera);
     };
     animate();
@@ -311,21 +304,22 @@ export function Interactive3DLab() {
   }, []);
 
   return (
-    <div className="lab-card-shell">
-      <div className="lab-header">
-        <div className="lab-title-wrap">
-          <div className="glyph-badge">
-            <span className="live-dot" />
-            <span>3D SYSTEM INSPECTOR // REAL-TIME WEBGL</span>
+    <div className="bg-[var(--bg-card)] border border-[var(--border-main)] rounded-3xl p-6 sm:p-8 lg:p-10 shadow-[var(--shadow-card)]">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-[var(--border-subtle)]">
+        <div>
+          <div className="badge-inexa mb-3">
+            <span>3D System Inspector</span>
           </div>
-          <h3>Interactive Architecture Visualizer</h3>
-          <p>
-            Explore live 3D models representing telemetry pipelines, transactional database workflows, and spatial
-            inventory structures. Drag to orbit 360°, zoom in to inspect details.
+          <h3 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] tracking-tight">
+            Interactive Architecture Visualizer
+          </h3>
+          <p className="text-sm text-[var(--text-secondary)] mt-1 max-w-xl">
+            Live procedural WebGL models depicting full-stack architectural concepts.
           </p>
         </div>
 
-        <div className="lab-tabs" role="tablist">
+        {/* Tab Controls */}
+        <div className="flex flex-wrap items-center gap-2 p-1.5 bg-[var(--bg-subtle)] border border-[var(--border-subtle)] rounded-2xl" role="tablist">
           {modes.map((m) => {
             const Icon = m.icon;
             const isActive = activeMode === m.id;
@@ -334,10 +328,14 @@ export function Interactive3DLab() {
                 key={m.id}
                 role="tab"
                 aria-selected={isActive}
-                className={`lab-tab-btn ${isActive ? "active" : ""}`}
                 onClick={() => setActiveMode(m.id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
+                  isActive
+                    ? "bg-[var(--bg-card)] text-[var(--accent-primary)] shadow-sm border border-[var(--border-main)]"
+                    : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+                }`}
               >
-                <Icon size={14} />
+                <Icon size={15} />
                 <span>{m.label}</span>
               </button>
             );
@@ -345,33 +343,26 @@ export function Interactive3DLab() {
         </div>
       </div>
 
-      <div className="lab-viewport-wrap">
-        <div ref={hostRef} className="lab-canvas" />
+      {/* 3D Viewport */}
+      <div className="relative mt-6 rounded-2xl overflow-hidden bg-[var(--bg-subtle)] border border-[var(--border-subtle)] h-[380px] sm:h-[450px]">
+        <div ref={hostRef} className="w-full h-full cursor-grab active:cursor-grabbing" />
 
-        {/* Technical HUD Overlay in Light Mode */}
-        <div className="lab-hud-overlay">
-          <div className="hud-corner-tl">
-            <span className="hud-bracket">[</span>
-            <span>MODEL: {activeMode.toUpperCase()}</span>
-          </div>
-
-          <div className="hud-corner-tr">
-            <Activity size={12} className="spin-slow" />
-            <span>60 FPS · DYNAMIC SHADER</span>
-          </div>
-
-          <div className="hud-bottom-bar">
-            <span className="hud-hint">
-              <Rotate3D size={13} /> CLICK & DRAG TO ORBIT 360° · SCROLL TO ZOOM
-            </span>
-            <span className="hud-metric">ACTIVE NODE ID // 0{activeMode === "telemetry" ? "1" : activeMode === "backend" ? "2" : "3"}</span>
-          </div>
+        {/* Floating helper badge */}
+        <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
+          <span className="badge-neutral text-xs backdrop-blur-md bg-[var(--bg-card)]/90 py-1.5 px-3">
+            <Rotate3D size={13} className="text-[var(--accent-primary)]" />
+            <span>Drag to rotate · Scroll to zoom</span>
+          </span>
+          <span className="badge-inexa text-xs backdrop-blur-md bg-[var(--bg-card)]/90 py-1.5 px-3">
+            <span>WebGL 60fps</span>
+          </span>
         </div>
       </div>
 
-      <div className="lab-footer-desc">
-        <span className="desc-mark">↳</span>
-        <p>{modes.find((m) => m.id === activeMode)?.desc}</p>
+      {/* Description */}
+      <div className="mt-5 flex items-start gap-3 p-4 bg-[var(--bg-subtle)] border border-[var(--border-subtle)] rounded-2xl text-sm text-[var(--text-secondary)]">
+        <span className="text-[var(--accent-primary)] font-bold text-base leading-none">↳</span>
+        <p className="m-0 leading-relaxed">{modes.find((m) => m.id === activeMode)?.desc}</p>
       </div>
     </div>
   );

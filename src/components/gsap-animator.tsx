@@ -8,170 +8,117 @@ export function GsapAnimator() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    // Honor reduced motion
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      // 1. HERO ENTRANCE TIMELINE
+      // 1. Hero Entrance
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      tl.from(".hero-copy .eyebrow", {
-        y: -18,
-        opacity: 0,
-        duration: 0.8,
-      })
-        .from(
-          ".hero-copy h1",
-          {
-            y: 35,
-            opacity: 0,
-            duration: 1.0,
-            ease: "power4.out",
-          },
-          "-=0.5",
-        )
-        .from(
-          ".hero-lede",
-          {
-            y: 20,
-            opacity: 0,
-            duration: 0.8,
-          },
-          "-=0.6",
-        )
-        .from(
-          ".hero-actions .button",
-          {
-            y: 20,
-            opacity: 0,
-            stagger: 0.1,
-            duration: 0.6,
-            ease: "back.out(1.5)",
-          },
-          "-=0.5",
-        )
-        .from(
-          ".hero-presence",
-          {
-            opacity: 0,
-            y: 12,
-            duration: 0.6,
-          },
-          "-=0.4",
-        )
-        .from(
-          ".hero-art-wrap",
-          {
-            scale: 0.94,
-            opacity: 0,
-            duration: 1.2,
-          },
-          0.2,
-        )
-        .from(
-          ".scene-float-label",
-          {
-            scale: 0.85,
-            opacity: 0,
-            stagger: 0.15,
-            duration: 0.7,
-            ease: "back.out(1.8)",
-          },
-          "-=0.6",
-        );
+      if (document.querySelector(".hero-content-wrap")) {
+        tl.from(".hero-badge", {
+          y: -14,
+          opacity: 0,
+          duration: 0.6,
+        })
+          .from(
+            ".hero-title",
+            {
+              y: 28,
+              opacity: 0,
+              duration: 0.9,
+              ease: "power4.out",
+            },
+            "-=0.4",
+          )
+          .from(
+            ".hero-description",
+            {
+              y: 18,
+              opacity: 0,
+              duration: 0.7,
+            },
+            "-=0.6",
+          )
+          .from(
+            ".hero-actions",
+            {
+              y: 16,
+              opacity: 0,
+              duration: 0.6,
+            },
+            "-=0.4",
+          )
+          .from(
+            ".hero-visual-wrap",
+            {
+              scale: 0.94,
+              opacity: 0,
+              duration: 1.0,
+              ease: "power2.out",
+            },
+            0.2,
+          );
+      }
 
-      // 2. CONTINUOUS FLOATING BREATHING MOTION FOR LABELS
-      gsap.to(".float-label-left", {
-        y: "-=8",
-        duration: 3,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-
-      gsap.to(".float-label-right", {
-        y: "+=10",
-        duration: 3.4,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        delay: 0.5,
-      });
-
-      gsap.to(".float-label-bottom", {
-        y: "-=6",
-        duration: 2.8,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        delay: 1,
-      });
-
-      // 3. SCROLL-TRIGGERED SECTION REVEALS
-      if (document.querySelector(".specs-grid")) {
-        gsap.from(".spec-card", {
+      // 2. Project Cards Reveal
+      if (document.querySelector(".projects-grid")) {
+        gsap.from(".project-card-inexa", {
           scrollTrigger: {
-            trigger: ".specs-grid",
-            start: "top 85%",
+            trigger: ".projects-grid",
+            start: "top 82%",
           },
           y: 35,
           opacity: 0,
-          stagger: 0.1,
-          duration: 0.7,
+          stagger: 0.15,
+          duration: 0.75,
           ease: "power2.out",
         });
       }
 
-      if (document.querySelector(".project-grid")) {
-        gsap.from(".project-card", {
+      // 3. Capabilities Cards Reveal
+      if (document.querySelector(".capabilities-grid")) {
+        gsap.from(".capability-card", {
           scrollTrigger: {
-            trigger: ".project-grid",
-            start: "top 80%",
-          },
-          y: 45,
-          opacity: 0,
-          stagger: 0.15,
-          duration: 0.8,
-          ease: "power3.out",
-        });
-      }
-
-      if (document.querySelector(".toolkit-grid")) {
-        gsap.from(".toolkit-card", {
-          scrollTrigger: {
-            trigger: ".toolkit-grid",
+            trigger: ".capabilities-grid",
             start: "top 85%",
           },
           y: 30,
           opacity: 0,
-          stagger: 0.1,
-          duration: 0.7,
-          ease: "power2.out",
-        });
-      }
-
-      if (document.querySelector(".approach-steps")) {
-        gsap.from(".approach-step", {
-          scrollTrigger: {
-            trigger: ".approach-steps",
-            start: "top 85%",
-          },
-          x: 25,
-          opacity: 0,
           stagger: 0.12,
-          duration: 0.6,
+          duration: 0.65,
           ease: "power2.out",
         });
       }
 
-      if (document.querySelector(".principles-strip")) {
-        gsap.from(".principle-item", {
+      // 4. Principles Reveal
+      if (document.querySelector(".principles-grid")) {
+        gsap.from(".principle-card", {
           scrollTrigger: {
-            trigger: ".principles-strip",
+            trigger: ".principles-grid",
             start: "top 85%",
           },
           y: 25,
           opacity: 0,
           stagger: 0.12,
+          duration: 0.65,
+          ease: "power2.out",
+        });
+      }
+
+      // 5. Process Steps Reveal
+      if (document.querySelector(".process-grid")) {
+        gsap.from(".process-step", {
+          scrollTrigger: {
+            trigger: ".process-grid",
+            start: "top 85%",
+          },
+          y: 20,
+          opacity: 0,
+          stagger: 0.1,
           duration: 0.6,
           ease: "power2.out",
         });
@@ -183,4 +130,3 @@ export function GsapAnimator() {
 
   return null;
 }
-
