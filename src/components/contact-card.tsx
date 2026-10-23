@@ -25,7 +25,7 @@ export function ContactCard() {
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[var(--text-primary)] tracking-tight mb-4 leading-tight">
-            Have a problem worth solving? <span className="text-[var(--accent-primary)]">Let&apos;s build.</span>
+            Have a problem worth solving? <span className="underline decoration-[var(--border-main)] decoration-2 underline-offset-8">Let&apos;s build.</span>
           </h2>
 
           <p className="text-base sm:text-lg text-[var(--text-secondary)] mb-8 max-w-xl leading-relaxed">
@@ -110,7 +110,7 @@ export function ContactCard() {
 
           <div className="pt-6 border-t border-[var(--border-subtle)] flex items-center justify-between text-xs text-[var(--text-muted)]">
             <span className="flex items-center gap-1.5 font-medium">
-              <MapPin size={14} className="text-[var(--accent-primary)]" />
+              <MapPin size={14} className="text-[var(--text-primary)]" />
               <span>India · Open to Remote</span>
             </span>
             <span className="font-mono font-medium">

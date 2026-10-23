@@ -90,7 +90,7 @@ export default function HomePage() {
 
                 <h1 className="hero-title text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[var(--text-primary)] leading-[1.1] mb-6">
                   I build thoughtful software for{" "}
-                  <span className="text-[var(--accent-primary)]">
+                  <span className="text-[var(--text-primary)] underline decoration-[var(--border-main)] decoration-2 underline-offset-8">
                     complex workflows.
                   </span>
                 </h1>
@@ -149,10 +149,10 @@ export default function HomePage() {
                   <HeroScene />
                   <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[11px] font-medium text-[var(--text-muted)] pointer-events-none">
                     <span className="badge-neutral py-1 px-2.5">
-                      <Sparkles size={11} className="text-[var(--accent-primary)]" />
-                      <span>Procedural WebGL</span>
+                      <Sparkles size={11} className="text-[var(--text-primary)]" />
+                      <span>Kinetic Torus & Gyro</span>
                     </span>
-                    <span>Interactive 3D Sheen</span>
+                    <span>Obsidian & Off-White</span>
                   </div>
                 </div>
               </div>
@@ -418,7 +418,7 @@ export default function HomePage() {
       <footer className="border-t border-[var(--border-main)] bg-[var(--bg-card)] py-12">
         <div className="container-inexa flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <span className="w-8 h-8 rounded-full bg-[var(--accent-primary)] text-white font-bold text-xs flex items-center justify-center">
+            <span className="w-8 h-8 rounded-full bg-[var(--text-primary)] text-[var(--bg-page)] font-bold text-xs flex items-center justify-center">
               {siteConfig.initials}
             </span>
             <span className="text-sm font-semibold text-[var(--text-primary)]">
@@ -430,17 +430,17 @@ export default function HomePage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-5 text-xs text-[var(--text-secondary)] font-medium">
-            <a href="#work" className="hover:text-[var(--accent-primary)] transition-colors">Work</a>
-            <a href="#about" className="hover:text-[var(--accent-primary)] transition-colors">About</a>
-            <a href="#capabilities" className="hover:text-[var(--accent-primary)] transition-colors">Capabilities</a>
-            <a href="#lab" className="hover:text-[var(--accent-primary)] transition-colors">3D Lab</a>
-            <a href="#process" className="hover:text-[var(--accent-primary)] transition-colors">Process</a>
-            <a href="#contact" className="hover:text-[var(--accent-primary)] transition-colors">Contact</a>
+            <a href="#work" className="hover:text-[var(--text-primary)] transition-colors">Work</a>
+            <a href="#about" className="hover:text-[var(--text-primary)] transition-colors">About</a>
+            <a href="#capabilities" className="hover:text-[var(--text-primary)] transition-colors">Capabilities</a>
+            <a href="#lab" className="hover:text-[var(--text-primary)] transition-colors">3D Lab</a>
+            <a href="#process" className="hover:text-[var(--text-primary)] transition-colors">Process</a>
+            <a href="#contact" className="hover:text-[var(--text-primary)] transition-colors">Contact</a>
           </div>
 
           <a
             href="#top"
-            className="text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--accent-primary)] transition-colors flex items-center gap-1"
+            className="text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors flex items-center gap-1"
           >
             Back to top ↑
           </a>

@@ -86,10 +86,10 @@ function ProjectVisual({ project }: { project: Project }) {
             {[45, 62, 58, 75, 42, 68, 85, 72, 60, 90, 78, 64, 82, 95, 70, 88].map((val, idx) => (
               <div
                 key={idx}
-                className="flex-1 rounded-t-sm transition-all hover:bg-[var(--accent-primary)]"
+                className="flex-1 rounded-t-sm transition-all hover:bg-[var(--text-primary)]"
                 style={{
                   height: `${val}%`,
-                  backgroundColor: idx % 3 === 0 ? "var(--accent-primary)" : "var(--accent-border)",
+                  backgroundColor: idx % 3 === 0 ? "var(--text-primary)" : "var(--accent-border)",
                 }}
               />
             ))}
