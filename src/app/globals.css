@@ -3,67 +3,75 @@
 :root {
   color-scheme: light dark;
 
-  /* Inexa Design Tokens — Light Mode (Default) */
-  --bg-page: #ffffff;
-  --bg-secondary: #f0f4e9; /* Inexa's signature warm pale sage surface */
-  --bg-card: #ffffff;
-  --bg-card-hover: #fafcf8;
-  --bg-subtle: #f4f6f0;
+  /* Black & Off-White Design Tokens — Light Mode (Warm Alabaster & Deep Ink) */
+  --bg-page: #f8f7f4; /* Warm off-white canvas */
+  --bg-secondary: #eeece6; /* Soft linen stone surface */
+  --bg-card: #ffffff; /* Crisp white card against off-white canvas */
+  --bg-card-hover: #fcfbfa;
+  --bg-subtle: #f2f0ea;
   
-  --text-primary: #111216; /* Deep charcoal for crisp reading */
-  --text-secondary: #525866; /* WCAG AA compliant slate */
-  --text-muted: #798094;
+  --text-primary: #09090b; /* Deep ink black */
+  --text-secondary: #52525b; /* Zinc charcoal body text */
+  --text-muted: #71717a;
   
-  --border-main: #e2e6de;
-  --border-subtle: #ebefe7;
+  --border-main: #dedcd4; /* Soft warm stone border */
+  --border-subtle: #e8e6df;
   
-  --accent-primary: #8054ff; /* Inexa signature electric violet */
-  --accent-hover: #693bee;
-  --accent-dark: #5d2fdf;
-  --accent-light: rgba(128, 84, 255, 0.08);
-  --accent-pill: #ede8ff;
-  --accent-border: rgba(128, 84, 255, 0.28);
-  --accent-secondary: #4a8268; /* Subtle sage accent */
+  --accent-primary: #09090b; /* Deep ink accent */
+  --accent-hover: #18181b;
+  --accent-dark: #27272a;
+  --accent-light: rgba(9, 9, 11, 0.05);
+  --accent-pill: rgba(9, 9, 11, 0.08);
+  --accent-border: rgba(9, 9, 11, 0.18);
+  --accent-secondary: #3f3f46;
+  
+  --btn-primary-bg: #09090b;
+  --btn-primary-text: #f8f7f4;
+  --btn-primary-hover: #18181b;
   
   --shadow-subtle: 0 4px 16px -2px rgba(0, 0, 0, 0.04);
   --shadow-card: 0 12px 32px -8px rgba(0, 0, 0, 0.06), 0 2px 8px -2px rgba(0, 0, 0, 0.02);
-  --shadow-card-hover: 0 22px 48px -12px rgba(128, 84, 255, 0.12), 0 4px 16px -2px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 20px 44px -10px rgba(0, 0, 0, 0.12), 0 4px 14px -2px rgba(0, 0, 0, 0.04);
 
-  --header-bg: rgba(255, 255, 255, 0.88);
-  --header-border: rgba(226, 230, 222, 0.8);
+  --header-bg: rgba(248, 247, 244, 0.88);
+  --header-border: rgba(222, 220, 212, 0.8);
   
   --font-family: var(--font-dm-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 html.dark {
-  /* Inexa Design Tokens — Dark Mode */
-  --bg-page: #0c0d12;
-  --bg-secondary: #141622;
-  --bg-card: #181b28;
-  --bg-card-hover: #1f2334;
-  --bg-subtle: #12141d;
+  /* Black & Off-White Design Tokens — Dark Mode (Default: Sleek Obsidian & Off-White) */
+  --bg-page: #09090b; /* Deep obsidian black */
+  --bg-secondary: #121215; /* Off-black secondary surface */
+  --bg-card: #16161a; /* Elevated dark card surface */
+  --bg-card-hover: #1c1c22;
+  --bg-subtle: #111114;
   
-  --text-primary: #f3f4f8;
-  --text-secondary: #9ca3af;
-  --text-muted: #6b7280;
+  --text-primary: #f5f5f2; /* Warm off-white */
+  --text-secondary: #a1a1aa; /* Zinc muted off-white (WCAG AA compliant) */
+  --text-muted: #71717a;
   
-  --border-main: #272b3c;
-  --border-subtle: #1f2231;
+  --border-main: #27272a; /* Crisp dark graphite border */
+  --border-subtle: #1e1e22;
   
-  --accent-primary: #8054ff;
-  --accent-hover: #9873ff;
-  --accent-dark: #5d2fdf;
-  --accent-light: rgba(128, 84, 255, 0.16);
-  --accent-pill: rgba(128, 84, 255, 0.2);
-  --accent-border: rgba(128, 84, 255, 0.38);
-  --accent-secondary: #65b891;
+  --accent-primary: #f5f5f2; /* Off-white accent highlight */
+  --accent-hover: #ffffff;
+  --accent-dark: #d4d4d8;
+  --accent-light: rgba(245, 245, 242, 0.08);
+  --accent-pill: rgba(245, 245, 242, 0.12);
+  --accent-border: rgba(245, 245, 242, 0.22);
+  --accent-secondary: #d4d4d8;
   
-  --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
-  --shadow-card: 0 16px 40px -10px rgba(0, 0, 0, 0.45);
-  --shadow-card-hover: 0 24px 50px -10px rgba(128, 84, 255, 0.22);
+  --btn-primary-bg: #f5f5f2;
+  --btn-primary-text: #09090b;
+  --btn-primary-hover: #ffffff;
+  
+  --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 16px 40px -10px rgba(0, 0, 0, 0.55);
+  --shadow-card-hover: 0 24px 50px -10px rgba(0, 0, 0, 0.7);
 
-  --header-bg: rgba(12, 13, 18, 0.85);
-  --header-border: rgba(39, 43, 60, 0.8);
+  --header-bg: rgba(9, 9, 11, 0.85);
+  --header-border: rgba(39, 39, 42, 0.85);
 }
 
 * {
@@ -94,8 +102,8 @@ body {
 }
 
 ::selection {
-  background-color: var(--accent-primary);
-  color: #ffffff;
+  background-color: var(--text-primary);
+  color: var(--bg-page);
 }
 
 a {
@@ -106,7 +114,7 @@ a {
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid var(--accent-primary);
+  outline: 2px solid var(--text-primary);
   outline-offset: 3px;
 }
 
@@ -122,14 +130,14 @@ button {
   left: 14px;
   z-index: 1000;
   padding: 10px 20px;
-  background: var(--accent-primary);
-  color: #ffffff;
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
   border-radius: 9999px;
   font-weight: 600;
   font-size: 14px;
   transform: translateY(-150%);
   transition: transform 0.2s ease;
-  box-shadow: 0 8px 24px rgba(128, 84, 255, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 .skip-link:focus {
   transform: translateY(0);
@@ -147,7 +155,7 @@ button {
   }
 }
 
-/* Inexa Section Rhythm */
+/* Section Rhythm */
 .section-inexa {
   padding-block: 6rem;
   position: relative;
@@ -164,7 +172,7 @@ button {
   transition: background-color 0.25s ease;
 }
 
-/* Inexa Badges */
+/* Badges */
 .badge-inexa {
   display: inline-flex;
   align-items: center;
@@ -174,7 +182,7 @@ button {
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--accent-primary);
+  color: var(--text-primary);
   background-color: var(--accent-light);
   border: 1px solid var(--accent-border);
   border-radius: 9999px;
@@ -195,7 +203,7 @@ button {
   line-height: 1.2;
 }
 
-/* Inexa Buttons */
+/* High-Contrast Black & Off-White Buttons */
 .btn-inexa-primary {
   display: inline-flex;
   align-items: center;
@@ -204,19 +212,19 @@ button {
   padding: 0.75rem 1.6rem;
   font-size: 0.9375rem;
   font-weight: 600;
-  color: #ffffff !important;
-  background-color: var(--accent-primary);
-  border: 1px solid var(--accent-primary);
+  color: var(--btn-primary-text) !important;
+  background-color: var(--btn-primary-bg);
+  border: 1px solid var(--btn-primary-bg);
   border-radius: 9999px;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, box-shadow 0.25s ease;
-  box-shadow: 0 4px 14px rgba(128, 84, 255, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
 }
 
 .btn-inexa-primary:hover {
-  background-color: var(--accent-hover);
-  border-color: var(--accent-hover);
+  background-color: var(--btn-primary-hover);
+  border-color: var(--btn-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(128, 84, 255, 0.38);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .btn-inexa-outline {
@@ -236,8 +244,8 @@ button {
 }
 
 .btn-inexa-outline:hover {
-  border-color: var(--accent-primary);
-  color: var(--accent-primary);
+  border-color: var(--text-primary);
+  color: var(--text-primary);
   transform: translateY(-2px);
 }
 
@@ -283,7 +291,7 @@ button {
 .section-header-inexa .eyebrow-line {
   height: 1px;
   width: 36px;
-  background-color: var(--accent-primary);
+  background-color: var(--text-primary);
 }
 
 .section-header-inexa h2 {
@@ -335,7 +343,8 @@ button {
 }
 
 .marquee-content .separator {
-  color: var(--accent-primary);
+  color: var(--text-primary);
+  opacity: 0.6;
   font-size: 0.75rem;
 }
 
@@ -367,12 +376,12 @@ button {
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid var(--header-border);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   border-radius: 9999px;
   transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Inexa Project Cards */
+/* Project Cards */
 .project-card-inexa {
   background-color: var(--bg-card);
   border: 1px solid var(--border-main);
@@ -394,7 +403,7 @@ button {
   box-shadow: var(--shadow-card-hover);
 }
 
-/* Inexa Capabilities Card */
+/* Capabilities Card */
 .capability-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-main);
@@ -410,7 +419,7 @@ button {
   box-shadow: var(--shadow-card-hover);
 }
 
-/* Inexa Principles Card */
+/* Principles Card */
 .principle-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-main);
@@ -424,7 +433,7 @@ button {
   transform: translateY(-2px);
 }
 
-/* Inexa Contact Card */
+/* Contact Card */
 .contact-box {
   background-color: var(--bg-card);
   border: 1px solid var(--border-main);

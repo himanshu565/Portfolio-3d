@@ -38,75 +38,83 @@ export function HeroScene() {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(38, host.clientWidth / Math.max(host.clientHeight, 1), 0.1, 100);
-    camera.position.set(0, 0, 5.2);
+    camera.position.set(0, 0, 5.6);
 
-    // Inexa Light Rig (Violet / Crisp White)
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
+    // Studio Lighting in Black & Off-White
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0x8054ff, 3.0);
+    const keyLight = new THREE.DirectionalLight(0xfafafa, 3.8);
     keyLight.position.set(4, 5, 4);
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0xd8cbff, 2.5);
+    const rimLight = new THREE.DirectionalLight(0xe4e4e7, 2.4);
     rimLight.position.set(-4, -2, -3);
     scene.add(rimLight);
 
-    // Group for the sculpture
+    const bottomFill = new THREE.DirectionalLight(0x27272a, 0.9);
+    bottomFill.position.set(0, -4, 2);
+    scene.add(bottomFill);
+
+    // Root Group
     const group = new THREE.Group();
     scene.add(group);
 
-    // Primary Faceted Crystal Geometry
-    const geometry = new THREE.IcosahedronGeometry(1.4, 0);
-    
-    // Inexa Aesthetic Material: Translucent Glass with violet refraction
-    const material = new THREE.MeshPhysicalMaterial({
-      color: 0xffffff,
-      metalness: 0.1,
-      roughness: 0.15,
-      transmission: 0.85,
-      ior: 1.52,
-      thickness: 1.2,
-      clearcoat: 1.0,
+    // 1. Continuous Sculptural Torus Knot (Obsidian Chrome)
+    const knotGeo = new THREE.TorusKnotGeometry(1.15, 0.32, 140, 36, 2, 3);
+    const knotMat = new THREE.MeshPhysicalMaterial({
+      color: 0x121216,
+      metalness: 0.94,
+      roughness: 0.14,
+      clearcoat: 0.9,
       clearcoatRoughness: 0.1,
-      wireframe: false,
+      reflectivity: 0.95,
     });
+    const knotMesh = new THREE.Mesh(knotGeo, knotMat);
+    group.add(knotMesh);
 
-    const mesh = new THREE.Mesh(geometry, material);
-    group.add(mesh);
-
-    // Delicate wireframe outline ring
-    const wireGeo = new THREE.IcosahedronGeometry(1.42, 0);
-    const wireMat = new THREE.MeshBasicMaterial({
-      color: 0x8054ff,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.35,
+    // 2. Dual Gyroscopic Orbital Rings (Off-White & Silver)
+    const ring1Geo = new THREE.TorusGeometry(1.82, 0.016, 16, 120);
+    const ring1Mat = new THREE.MeshStandardMaterial({
+      color: 0xf5f5f0,
+      metalness: 0.95,
+      roughness: 0.18,
     });
-    const wireMesh = new THREE.Mesh(wireGeo, wireMat);
-    group.add(wireMesh);
+    const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
+    ring1.rotation.x = Math.PI / 3;
+    group.add(ring1);
 
-    // Inner glowing core
-    const coreGeo = new THREE.OctahedronGeometry(0.65, 0);
+    const ring2Geo = new THREE.TorusGeometry(1.98, 0.012, 16, 120);
+    const ring2Mat = new THREE.MeshStandardMaterial({
+      color: 0xd4d4d8,
+      metalness: 0.9,
+      roughness: 0.22,
+    });
+    const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
+    ring2.rotation.y = Math.PI / 4;
+    group.add(ring2);
+
+    // 3. Floating Inner Silver Core
+    const coreGeo = new THREE.OctahedronGeometry(0.38, 0);
     const coreMat = new THREE.MeshStandardMaterial({
-      color: 0x8054ff,
-      emissive: 0x8054ff,
-      emissiveIntensity: 0.6,
+      color: 0xf5f5f0,
+      metalness: 0.9,
       roughness: 0.2,
-      metalness: 0.8,
+      emissive: 0x222225,
+      emissiveIntensity: 0.4,
     });
     const coreMesh = new THREE.Mesh(coreGeo, coreMat);
     group.add(coreMesh);
 
-    // Interactive mouse damping
+    // Interactive mouse tracking with damping
     const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = host.getBoundingClientRect();
       const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       const y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-      mouse.targetX = x * 0.8;
-      mouse.targetY = y * 0.8;
+      mouse.targetX = x * 0.7;
+      mouse.targetY = y * 0.7;
     };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
@@ -122,7 +130,6 @@ export function HeroScene() {
 
     window.addEventListener("resize", handleResize);
 
-    // Animation Loop
     const clock = new THREE.Clock();
 
     const animate = () => {
@@ -135,15 +142,23 @@ export function HeroScene() {
       mouse.y += (mouse.targetY - mouse.y) * 0.05;
 
       if (!prefersReducedMotion) {
-        group.rotation.y = elapsed * 0.25 + mouse.x * 0.5;
-        group.rotation.x = Math.sin(elapsed * 0.2) * 0.15 + mouse.y * 0.4;
-        group.position.y = Math.sin(elapsed * 0.8) * 0.08;
+        // Sculptural kinetic rotation
+        knotMesh.rotation.y = elapsed * 0.28 + mouse.x * 0.4;
+        knotMesh.rotation.x = Math.sin(elapsed * 0.2) * 0.2 + mouse.y * 0.35;
+        group.position.y = Math.sin(elapsed * 0.9) * 0.06;
 
-        coreMesh.rotation.y = -elapsed * 0.5;
-        coreMesh.rotation.z = elapsed * 0.3;
+        // Counter-rotating gyroscopic rings
+        ring1.rotation.z = elapsed * 0.35;
+        ring1.rotation.x = Math.PI / 3 + mouse.y * 0.2;
+
+        ring2.rotation.z = -elapsed * 0.25;
+        ring2.rotation.y = Math.PI / 4 + mouse.x * 0.2;
+
+        coreMesh.rotation.y = -elapsed * 0.6;
+        coreMesh.rotation.x = elapsed * 0.4;
       } else {
-        group.rotation.y = mouse.x * 0.3;
-        group.rotation.x = mouse.y * 0.3;
+        knotMesh.rotation.y = mouse.x * 0.3;
+        knotMesh.rotation.x = mouse.y * 0.3;
       }
 
       renderer.render(scene, camera);
@@ -158,10 +173,12 @@ export function HeroScene() {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
 
-      geometry.dispose();
-      material.dispose();
-      wireGeo.dispose();
-      wireMat.dispose();
+      knotGeo.dispose();
+      knotMat.dispose();
+      ring1Geo.dispose();
+      ring1Mat.dispose();
+      ring2Geo.dispose();
+      ring2Mat.dispose();
       coreGeo.dispose();
       coreMat.dispose();
       renderer.dispose();

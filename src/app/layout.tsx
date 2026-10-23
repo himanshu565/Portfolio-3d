@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#09090b",
   colorScheme: "light dark",
 };
 
@@ -41,11 +41,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             __html: `(function() {
               try {
                 var stored = localStorage.getItem('theme');
-                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (stored === 'dark' || (!stored && prefersDark)) {
-                  document.documentElement.classList.add('dark');
-                } else {
+                if (stored === 'light') {
                   document.documentElement.classList.remove('dark');
+                } else {
+                  document.documentElement.classList.add('dark');
                 }
               } catch (e) {}
             })();`,

@@ -75,19 +75,19 @@ export function Interactive3DLab() {
     controls.maxDistance = 9;
     controls.target.set(0, 0.3, 0);
 
-    // Inexa Studio Lighting (Violet / Crisp Neutral)
-    const ambLight = new THREE.AmbientLight(0xffffff, 1.2);
+    // Studio Lighting in Black & Off-White
+    const ambLight = new THREE.AmbientLight(0xffffff, 1.0);
     scene.add(ambLight);
 
-    const dirLight = new THREE.DirectionalLight(0x8054ff, 3.2);
+    const dirLight = new THREE.DirectionalLight(0xfafafa, 3.4);
     dirLight.position.set(5, 7, 4);
     scene.add(dirLight);
 
-    const rimLight = new THREE.DirectionalLight(0xd8cbff, 2.5);
+    const rimLight = new THREE.DirectionalLight(0xe4e4e7, 2.5);
     rimLight.position.set(-4, 3, -4);
     scene.add(rimLight);
 
-    const fillLight = new THREE.DirectionalLight(0x5d2fdf, 0.8);
+    const fillLight = new THREE.DirectionalLight(0x27272a, 0.9);
     fillLight.position.set(0, -3, 2);
     scene.add(fillLight);
 
@@ -104,7 +104,7 @@ export function Interactive3DLab() {
     modeGroup.add(backendGroup);
     modeGroup.add(inventoryGroup);
 
-    // 1. TELEMETRY NODE (Glass + Violet Accents)
+    // 1. TELEMETRY NODE (Glass + Off-White / Silver Accents)
     const globeGeo = new THREE.SphereGeometry(1.15, 32, 32);
     const globeMat = new THREE.MeshPhysicalMaterial({
       color: 0xffffff,
@@ -121,20 +121,20 @@ export function Interactive3DLab() {
 
     const wireGlobe = new THREE.Mesh(
       new THREE.SphereGeometry(1.18, 18, 18),
-      new THREE.MeshBasicMaterial({ color: 0x8054ff, wireframe: true, transparent: true, opacity: 0.3 }),
+      new THREE.MeshBasicMaterial({ color: 0xd4d4d8, wireframe: true, transparent: true, opacity: 0.25 }),
     );
     telemetryGroup.add(wireGlobe);
 
     const ring1 = new THREE.Mesh(
       new THREE.TorusGeometry(1.42, 0.015, 12, 80),
-      new THREE.MeshBasicMaterial({ color: 0x8054ff }),
+      new THREE.MeshBasicMaterial({ color: 0xf5f5f0 }),
     );
     ring1.rotation.x = Math.PI / 3;
     telemetryGroup.add(ring1);
 
     const ring2 = new THREE.Mesh(
       new THREE.TorusGeometry(1.65, 0.01, 12, 80),
-      new THREE.MeshBasicMaterial({ color: 0xd8cbff }),
+      new THREE.MeshBasicMaterial({ color: 0xd4d4d8 }),
     );
     ring2.rotation.y = Math.PI / 4;
     telemetryGroup.add(ring2);
@@ -147,8 +147,8 @@ export function Interactive3DLab() {
       const bMesh = new THREE.Mesh(
         new THREE.SphereGeometry(0.065, 12, 12),
         new THREE.MeshStandardMaterial({
-          color: i % 2 === 0 ? 0x8054ff : 0x5d2fdf,
-          emissive: i % 2 === 0 ? 0x8054ff : 0x5d2fdf,
+          color: i % 2 === 0 ? 0xf5f5f0 : 0xa1a1aa,
+          emissive: i % 2 === 0 ? 0x222225 : 0x111114,
           emissiveIntensity: 0.8,
         }),
       );
@@ -157,14 +157,14 @@ export function Interactive3DLab() {
       beacons.push(bMesh);
     }
 
-    // 2. BACKEND / DATABASE ENGINE (Refined Metallic Tiers + Violet Transmissions)
+    // 2. BACKEND / DATABASE ENGINE (Obsidian Metallic Tiers + Off-White Relays)
     const tierCount = 4;
     for (let t = 0; t < tierCount; t++) {
       const tierGeo = new THREE.CylinderGeometry(1.2 - t * 0.12, 1.25 - t * 0.12, 0.28, 36);
       const tierMat = new THREE.MeshStandardMaterial({
-        color: 0x222533,
-        metalness: 0.85,
-        roughness: 0.25,
+        color: 0x18181c,
+        metalness: 0.9,
+        roughness: 0.2,
       });
       const tierMesh = new THREE.Mesh(tierGeo, tierMat);
       tierMesh.position.y = -0.5 + t * 0.48;
@@ -172,7 +172,7 @@ export function Interactive3DLab() {
 
       const statusRing = new THREE.Mesh(
         new THREE.TorusGeometry(1.22 - t * 0.12, 0.018, 12, 60),
-        new THREE.MeshBasicMaterial({ color: t === 1 ? 0x8054ff : 0xd8cbff }),
+        new THREE.MeshBasicMaterial({ color: t === 1 ? 0xf5f5f0 : 0x71717a }),
       );
       statusRing.rotation.x = Math.PI / 2;
       statusRing.position.y = tierMesh.position.y;
@@ -183,16 +183,18 @@ export function Interactive3DLab() {
     for (let i = 0; i < 6; i++) {
       const bGeo = new THREE.BoxGeometry(0.24, 0.18, 0.12);
       const bMat = new THREE.MeshStandardMaterial({
-        color: 0x8054ff,
-        emissive: 0x8054ff,
-        emissiveIntensity: 0.6,
+        color: 0xf5f5f0,
+        metalness: 0.8,
+        roughness: 0.2,
+        emissive: 0x222225,
+        emissiveIntensity: 0.5,
       });
       const bMesh = new THREE.Mesh(bGeo, bMat);
       backendGroup.add(bMesh);
       txBlocks.push(bMesh);
     }
 
-    // 3. INVENTORY NEURAL MATRIX (Frosted Glass Cubes + Violet Nodes)
+    // 3. INVENTORY NEURAL MATRIX (Frosted Glass Cubes + Obsidian Nodes)
     const spacing = 0.58;
     const voxels: THREE.Mesh[] = [];
     for (let x = -1; x <= 1; x++) {
@@ -202,14 +204,14 @@ export function Interactive3DLab() {
           const vGeo = new THREE.BoxGeometry(0.38, 0.38, 0.38);
           const isAccent = (x + y + z) % 3 === 0;
           const vMat = new THREE.MeshPhysicalMaterial({
-            color: isAccent ? 0x8054ff : 0xffffff,
+            color: isAccent ? 0xf5f5f0 : 0x18181b,
             transmission: 0.8,
             roughness: 0.15,
             metalness: 0.15,
             transparent: true,
             opacity: 0.85,
-            emissive: isAccent ? 0x8054ff : 0x000000,
-            emissiveIntensity: isAccent ? 0.4 : 0,
+            emissive: isAccent ? 0x222225 : 0x000000,
+            emissiveIntensity: isAccent ? 0.3 : 0,
           });
           const vMesh = new THREE.Mesh(vGeo, vMat);
           vMesh.position.set(x * spacing, y * spacing + 0.4, z * spacing);
@@ -219,7 +221,7 @@ export function Interactive3DLab() {
       }
     }
 
-    // Gentle ambient dust in soft violet
+    // Gentle ambient dust in soft silver
     const dustCount = 100;
     const dustGeo = new THREE.BufferGeometry();
     const dustPos = new Float32Array(dustCount * 3);
@@ -231,7 +233,7 @@ export function Interactive3DLab() {
     dustGeo.setAttribute("position", new THREE.BufferAttribute(dustPos, 3));
     const dustPoints = new THREE.Points(
       dustGeo,
-      new THREE.PointsMaterial({ color: 0x8054ff, size: 0.02, transparent: true, opacity: 0.35 }),
+      new THREE.PointsMaterial({ color: 0xd4d4d8, size: 0.02, transparent: true, opacity: 0.35 }),
     );
     scene.add(dustPoints);
 

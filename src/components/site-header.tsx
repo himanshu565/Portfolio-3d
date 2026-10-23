@@ -88,7 +88,7 @@ export function SiteHeader() {
           aria-label={`${siteConfig.name}, return to top`}
           onClick={() => setMenuOpen(false)}
         >
-          <span className="w-9 h-9 rounded-full bg-[var(--accent-primary)] text-white font-bold text-xs flex items-center justify-center transition-transform duration-300 group-hover:scale-105 shadow-sm">
+          <span className="w-9 h-9 rounded-full bg-[var(--text-primary)] text-[var(--bg-page)] font-bold text-xs flex items-center justify-center transition-transform duration-300 group-hover:scale-105 shadow-sm">
             {siteConfig.initials}
           </span>
           <div className="flex flex-col">

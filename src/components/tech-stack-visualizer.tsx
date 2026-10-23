@@ -535,13 +535,13 @@ export function TechStackVisualizer() {
     const camera = new THREE.PerspectiveCamera(45, host.clientWidth / Math.max(host.clientHeight, 1), 0.1, 100);
     camera.position.set(0, 0, 7.5);
 
-    // Wireframe Hemisphere Dome matching the screenshot
+    // Wireframe Hemisphere Dome in Off-White & Silver
     const domeGeo = new THREE.SphereGeometry(3.6, 24, 16, 0, Math.PI * 2, 0, Math.PI * 0.7);
     const domeMat = new THREE.MeshBasicMaterial({
-      color: 0x8054ff,
+      color: 0xd4d4d8,
       wireframe: true,
       transparent: true,
-      opacity: 0.16,
+      opacity: 0.15,
     });
     const domeMesh = new THREE.Mesh(domeGeo, domeMat);
     domeMesh.rotation.x = Math.PI / 4;
@@ -550,9 +550,9 @@ export function TechStackVisualizer() {
     // Outer subtle rings
     const ringGeo = new THREE.TorusGeometry(3.9, 0.015, 12, 64);
     const ringMat = new THREE.MeshBasicMaterial({
-      color: 0xa855f7,
+      color: 0xf5f5f0,
       transparent: true,
-      opacity: 0.22,
+      opacity: 0.2,
     });
     const ring = new THREE.Mesh(ringGeo, ringMat);
     ring.rotation.x = Math.PI / 3;
@@ -569,7 +569,7 @@ export function TechStackVisualizer() {
     }
     pGeo.setAttribute("position", new THREE.BufferAttribute(pPos, 3));
     const pMat = new THREE.PointsMaterial({
-      color: 0xa855f7,
+      color: 0xf5f5f0,
       size: 0.03,
       transparent: true,
       opacity: 0.35,
@@ -652,7 +652,7 @@ export function TechStackVisualizer() {
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(circle_at_center,rgba(128,84,255,0.18)_0%,rgba(128,84,255,0.04)_50%,transparent_75%)]"
+        className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(circle_at_center,rgba(245,245,242,0.12)_0%,rgba(245,245,242,0.02)_50%,transparent_75%)]"
         aria-hidden="true"
       />
 
@@ -679,9 +679,9 @@ export function TechStackVisualizer() {
                 key={cat.id}
                 type="button"
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
                   isCurrent
-                    ? "bg-[var(--accent-primary)] text-white shadow-md shadow-[rgba(128,84,255,0.35)] scale-105"
+                    ? "bg-[var(--text-primary)] text-[var(--bg-page)] shadow-md shadow-black/25 scale-105"
                     : "bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--accent-light)] border border-[var(--border-subtle)]"
                 }`}
               >
