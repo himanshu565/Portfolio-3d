@@ -1,14 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans } from "next/font/google";
 import { siteConfig } from "@/data/site";
 import "./globals.css";
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-dm-sans",
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: `${siteConfig.name} — ${siteConfig.role} & Distributed Systems`,
@@ -34,7 +26,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={dmSans.variable} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
