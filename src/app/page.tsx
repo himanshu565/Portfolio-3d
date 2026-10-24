@@ -8,7 +8,6 @@ import {
   Globe2,
   Layers,
   MapPin,
-  Sparkles,
 } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiteHeader } from "@/components/site-header";
@@ -143,17 +142,10 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Right Column: Inexa Restrained 3D Visual */}
+              {/* Right Column: Interactive 3D Architectural Showcase */}
               <div className="lg:col-span-5 flex items-center justify-center hero-visual-wrap relative">
-                <div className="w-full max-w-md aspect-square rounded-3xl bg-[var(--bg-subtle)] border border-[var(--border-subtle)] p-4 shadow-[var(--shadow-subtle)] relative overflow-hidden flex items-center justify-center">
+                <div className="w-full max-w-md aspect-square rounded-3xl bg-[var(--bg-subtle)] border border-[var(--border-subtle)] p-2 sm:p-3 shadow-[var(--shadow-subtle)] relative overflow-hidden flex items-center justify-center">
                   <HeroScene />
-                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[11px] font-medium text-[var(--text-muted)] pointer-events-none">
-                    <span className="badge-neutral py-1 px-2.5">
-                      <Sparkles size={11} className="text-[var(--text-primary)]" />
-                      <span>Kinetic Torus & Gyro</span>
-                    </span>
-                    <span>Obsidian & Off-White</span>
-                  </div>
                 </div>
               </div>
             </div>
