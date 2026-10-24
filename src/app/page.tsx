@@ -143,7 +143,7 @@ export default function HomePage() {
 
               {/* Right Column: Interactive 3D Architectural Showcase */}
               <div className="lg:col-span-5 flex items-center justify-center hero-visual-wrap relative">
-                <div className="w-full max-w-md aspect-square rounded-3xl bg-[var(--bg-subtle)] border border-[var(--border-subtle)] p-2 sm:p-3 shadow-[var(--shadow-subtle)] relative overflow-hidden flex items-center justify-center">
+                <div className="w-full max-w-lg min-h-[460px] sm:min-h-[500px] aspect-[4/5] sm:aspect-square lg:aspect-[4/4.5] rounded-3xl bg-[var(--bg-subtle)] border border-[var(--border-subtle)] p-2 sm:p-3 shadow-[var(--shadow-subtle)] relative overflow-hidden flex items-center justify-center">
                   <HeroScene />
                 </div>
               </div>

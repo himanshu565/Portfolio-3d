@@ -4,103 +4,113 @@
 :root {
   color-scheme: light dark;
 
-  /* Black, Green & Red Theme — Light Mode */
-  --bg-page: #f6f9f7;
-  --bg-secondary: #ebf2ed;
+  /* Lemon (#FFF21A), Charcoal Black (#171717) & Electric Lavender (#A66BFF) — Light Mode */
+  --bg-page: #faf8ee;
+  --bg-secondary: #f2efe1;
   --bg-card: #ffffff;
-  --bg-card-hover: #fafffc;
-  --bg-subtle: #eef5f0;
+  --bg-card-hover: #fffef8;
+  --bg-subtle: #f5f2e6;
   
-  --text-primary: #0a110d;
-  --text-secondary: #49574f;
-  --text-muted: #6f7e75;
+  --text-primary: #171717;
+  --text-secondary: #525252;
+  --text-muted: #737373;
   
-  --border-main: #d5e0d8;
-  --border-subtle: #e1ece4;
+  --border-main: #e4e0cd;
+  --border-subtle: #ece9dc;
   
-  --accent-green: #059669;
-  --accent-green-hover: #047857;
-  --accent-green-light: rgba(5, 150, 105, 0.08);
-  --accent-green-border: rgba(5, 150, 105, 0.25);
+  --lemon: #FFF21A;
+  --lemon-hover: #eedf00;
+  --lemon-light: rgba(255, 242, 26, 0.15);
+  --lemon-border: rgba(255, 242, 26, 0.45);
   
-  --accent-red: #dc2626;
-  --accent-red-hover: #b91c1c;
-  --accent-red-light: rgba(220, 38, 38, 0.08);
-  --accent-red-border: rgba(220, 38, 38, 0.25);
+  --lavender: #A66BFF;
+  --lavender-hover: #9352f5;
+  --lavender-light: rgba(166, 107, 255, 0.12);
+  --lavender-border: rgba(166, 107, 255, 0.35);
   
-  --accent-primary: #059669;
-  --accent-hover: #047857;
-  --accent-dark: #065f46;
-  --accent-light: rgba(5, 150, 105, 0.08);
-  --accent-pill: rgba(5, 150, 105, 0.12);
-  --accent-border: rgba(5, 150, 105, 0.25);
-  --accent-secondary: #dc2626;
+  --charcoal: #171717;
+  --charcoal-hover: #262626;
   
-  --btn-primary-bg: #059669;
-  --btn-primary-text: #ffffff;
-  --btn-primary-hover: #047857;
+  --accent-primary: #c99b00; /* Legible deep lemon gold on white */
+  --accent-hover: #a88100;
+  --accent-dark: #8c6b00;
+  --accent-light: rgba(255, 242, 26, 0.18);
+  --accent-pill: rgba(255, 242, 26, 0.22);
+  --accent-border: rgba(201, 155, 0, 0.35);
+  --accent-secondary: #8842f5;
   
-  --btn-red-bg: #dc2626;
-  --btn-red-text: #ffffff;
-  --btn-red-hover: #b91c1c;
+  --btn-primary-bg: #171717;
+  --btn-primary-text: #FFF21A;
+  --btn-primary-hover: #2b2b2b;
   
-  --shadow-subtle: 0 4px 16px -2px rgba(0, 0, 0, 0.05);
-  --shadow-card: 0 12px 32px -8px rgba(0, 0, 0, 0.06), 0 2px 8px -2px rgba(0, 0, 0, 0.02);
-  --shadow-card-hover: 0 20px 44px -10px rgba(5, 150, 105, 0.15), 0 4px 14px -2px rgba(0, 0, 0, 0.04);
+  --btn-lavender-bg: #A66BFF;
+  --btn-lavender-text: #ffffff;
+  --btn-lavender-hover: #9352f5;
+  
+  --shadow-subtle: 0 4px 16px -2px rgba(23, 23, 23, 0.05);
+  --shadow-card: 0 12px 32px -8px rgba(23, 23, 23, 0.06), 0 2px 8px -2px rgba(23, 23, 23, 0.02);
+  --shadow-card-hover: 0 20px 44px -10px rgba(166, 107, 255, 0.15), 0 4px 14px -2px rgba(23, 23, 23, 0.04);
 
-  --header-bg: rgba(246, 249, 247, 0.88);
-  --header-border: rgba(213, 224, 216, 0.85);
+  --header-bg: rgba(250, 248, 238, 0.88);
+  --header-border: rgba(228, 224, 205, 0.85);
   
   --font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 html.dark {
-  /* Black, Green & Red Theme — Dark Mode (Default) */
-  --bg-page: #070908; /* Obsidian black */
-  --bg-secondary: #0d100e; /* Dark charcoal */
-  --bg-card: #121614; /* Elevated dark card surface */
-  --bg-card-hover: #171c19;
-  --bg-subtle: #0f1210;
+  /* Lemon (#FFF21A), Charcoal Black (#171717) & Electric Lavender (#A66BFF) — Dark Mode (Default) */
+  --bg-page: #121212; /* Deep foundation charcoal */
+  --bg-secondary: #171717; /* Signature Charcoal Black */
+  --bg-card: #1c1c1c; /* Elevated Charcoal card surface */
+  --bg-card-hover: #242424;
+  --bg-subtle: #161616;
   
-  --text-primary: #f3f6f4; /* Crisp off-white */
-  --text-secondary: #9ca7a0; /* Muted silver sage */
-  --text-muted: #6b7770;
+  --text-primary: #ffffff; /* Crisp white */
+  --text-secondary: #a3a3a3; /* Neutral silver grey */
+  --text-muted: #6e6e6e;
   
-  --border-main: #1e2621; /* Graphite emerald border */
-  --border-subtle: #161d19;
+  --border-main: #2b2b2b; /* Clean charcoal border */
+  --border-subtle: #212121;
   
-  --accent-green: #00e599; /* Vibrant emerald green */
-  --accent-green-hover: #00c985;
-  --accent-green-light: rgba(0, 229, 153, 0.1);
-  --accent-green-border: rgba(0, 229, 153, 0.32);
+  --lemon: #FFF21A; /* Vibrant Electric Lemon */
+  --lemon-hover: #eedf00;
+  --lemon-light: rgba(255, 242, 26, 0.12);
+  --lemon-border: rgba(255, 242, 26, 0.38);
   
-  --accent-red: #ef4444; /* Vibrant crimson red */
-  --accent-red-hover: #dc2626;
-  --accent-red-light: rgba(239, 68, 68, 0.1);
-  --accent-red-border: rgba(239, 68, 68, 0.32);
+  --lavender: #A66BFF; /* Radiant Electric Lavender */
+  --lavender-hover: #9554f7;
+  --lavender-light: rgba(166, 107, 255, 0.14);
+  --lavender-border: rgba(166, 107, 255, 0.38);
   
-  --accent-primary: #00e599; /* Primary accent is Emerald Green */
-  --accent-hover: #00c985;
-  --accent-dark: #059669;
-  --accent-light: rgba(0, 229, 153, 0.1);
-  --accent-pill: rgba(0, 229, 153, 0.15);
-  --accent-border: rgba(0, 229, 153, 0.32);
-  --accent-secondary: #ef4444; /* Secondary accent is Crimson Red */
+  --charcoal: #171717;
+  --charcoal-hover: #262626;
   
-  --btn-primary-bg: #00e599;
-  --btn-primary-text: #070908;
-  --btn-primary-hover: #00c985;
+  --accent-primary: #FFF21A; /* Primary Accent: Lemon Yellow */
+  --accent-hover: #eedf00;
+  --accent-dark: #c9bc00;
+  --accent-light: rgba(255, 242, 26, 0.12);
+  --accent-pill: rgba(255, 242, 26, 0.16);
+  --accent-border: rgba(255, 242, 26, 0.38);
   
-  --btn-red-bg: #ef4444;
-  --btn-red-text: #ffffff;
-  --btn-red-hover: #dc2626;
+  --accent-secondary: #A66BFF; /* Secondary Accent: Electric Lavender */
+  --accent-secondary-hover: #9554f7;
+  --accent-secondary-light: rgba(166, 107, 255, 0.14);
+  --accent-secondary-border: rgba(166, 107, 255, 0.38);
   
-  --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
-  --shadow-card: 0 16px 40px -10px rgba(0, 0, 0, 0.65);
-  --shadow-card-hover: 0 24px 50px -10px rgba(0, 229, 153, 0.22);
+  --btn-primary-bg: #FFF21A;
+  --btn-primary-text: #171717;
+  --btn-primary-hover: #eedf00;
+  
+  --btn-lavender-bg: #A66BFF;
+  --btn-lavender-text: #ffffff;
+  --btn-lavender-hover: #9554f7;
+  
+  --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.55);
+  --shadow-card: 0 16px 40px -10px rgba(0, 0, 0, 0.7);
+  --shadow-card-hover: 0 24px 50px -10px rgba(166, 107, 255, 0.22), 0 8px 24px -4px rgba(255, 242, 26, 0.12);
 
-  --header-bg: rgba(7, 9, 8, 0.88);
-  --header-border: rgba(30, 38, 33, 0.85);
+  --header-bg: rgba(23, 23, 23, 0.88);
+  --header-border: rgba(43, 43, 43, 0.85);
 }
 
 * {
@@ -131,8 +141,8 @@ body {
 }
 
 ::selection {
-  background-color: var(--text-primary);
-  color: var(--bg-page);
+  background-color: var(--accent-primary);
+  color: #171717;
 }
 
 a {
@@ -143,7 +153,7 @@ a {
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid var(--text-primary);
+  outline: 2px solid var(--accent-primary);
   outline-offset: 3px;
 }
 
@@ -162,11 +172,11 @@ button {
   background: var(--btn-primary-bg);
   color: var(--btn-primary-text);
   border-radius: 9999px;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
   transform: translateY(-150%);
   transition: transform 0.2s ease;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
 .skip-link:focus {
   transform: translateY(0);
@@ -208,28 +218,28 @@ button {
   gap: 0.5rem;
   padding: 0.35rem 0.85rem;
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--accent-primary);
-  background-color: var(--accent-light);
-  border: 1px solid var(--accent-border);
+  color: var(--accent-secondary);
+  background-color: var(--accent-secondary-light);
+  border: 1px solid var(--accent-secondary-border);
   border-radius: 9999px;
   line-height: 1.2;
 }
 
-.badge-red {
+.badge-lemon {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   padding: 0.35rem 0.85rem;
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--accent-red);
-  background-color: var(--accent-red-light);
-  border: 1px solid var(--accent-red-border);
+  color: var(--accent-primary);
+  background-color: var(--accent-light);
+  border: 1px solid var(--accent-border);
   border-radius: 9999px;
   line-height: 1.2;
 }
@@ -248,7 +258,7 @@ button {
   line-height: 1.2;
 }
 
-/* High-Contrast Black & Off-White Buttons */
+/* High-Contrast Lemon & Charcoal Buttons */
 .btn-inexa-primary {
   display: inline-flex;
   align-items: center;
@@ -256,20 +266,20 @@ button {
   gap: 0.5rem;
   padding: 0.75rem 1.6rem;
   font-size: 0.9375rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--btn-primary-text) !important;
   background-color: var(--btn-primary-bg);
   border: 1px solid var(--btn-primary-bg);
   border-radius: 9999px;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, box-shadow 0.25s ease;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 4px 18px rgba(255, 242, 26, 0.25);
 }
 
 .btn-inexa-primary:hover {
-  background-color: var(--btn-primary-hover);
-  border-color: var(--btn-primary-hover);
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 26px rgba(255, 242, 26, 0.38);
 }
 
 .btn-inexa-outline {
@@ -289,8 +299,8 @@ button {
 }
 
 .btn-inexa-outline:hover {
-  border-color: var(--text-primary);
-  color: var(--text-primary);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
   transform: translateY(-2px);
 }
 
@@ -334,14 +344,14 @@ button {
 }
 
 .section-header-inexa .eyebrow-line {
-  height: 1px;
+  height: 2px;
   width: 36px;
   background-color: var(--accent-primary);
 }
 
 .section-header-inexa h2 {
   font-size: clamp(2rem, 4vw, 3.25rem);
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.025em;
   color: var(--text-primary);
@@ -378,7 +388,7 @@ button {
 
 .marquee-content span {
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-secondary);
@@ -389,8 +399,8 @@ button {
 
 .marquee-content .separator {
   color: var(--accent-secondary);
-  opacity: 0.9;
-  font-size: 0.75rem;
+  opacity: 1;
+  font-size: 0.85rem;
 }
 
 @keyframes marqueeScroll {
@@ -421,7 +431,7 @@ button {
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid var(--header-border);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
   border-radius: 9999px;
   transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
@@ -444,7 +454,7 @@ button {
 
 .project-card-inexa:hover {
   transform: translateY(-4px);
-  border-color: var(--accent-border);
+  border-color: var(--accent-secondary);
   box-shadow: var(--shadow-card-hover);
 }
 
