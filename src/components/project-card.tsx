@@ -43,12 +43,12 @@ function ProjectVisual({ project }: { project: Project }) {
           <div className="grid grid-cols-3 px-3 py-2 border-b border-[var(--border-subtle)]/60">
             <span className="font-mono text-[var(--text-primary)]">EZ-SEN-902</span>
             <span>Sector A-12</span>
-            <span className="text-emerald-600 dark:text-emerald-400 font-medium">✓ Verified</span>
+            <span className="text-[var(--accent-secondary)] font-medium">✓ Verified</span>
           </div>
           <div className="grid grid-cols-3 px-3 py-2">
             <span className="font-mono text-[var(--text-primary)]">EZ-VAL-441</span>
             <span>Main Depot</span>
-            <span className="text-emerald-600 dark:text-emerald-400 font-medium">✓ In Stock</span>
+            <span className="text-[var(--accent-secondary)] font-medium">✓ In Stock</span>
           </div>
         </div>
       </div>
@@ -118,17 +118,17 @@ function ProjectVisual({ project }: { project: Project }) {
         <p className="pl-3"><span className="text-[var(--accent-primary)] font-bold">return</span> db.transaction(<span className="text-[var(--text-secondary)]">async</span> (tx) =&gt; &#123;</p>
         <p className="pl-6"><span className="text-[var(--text-muted)]">&#47;&#47; Row-level lock prevents overselling</span></p>
         <p className="pl-6"><span className="text-[var(--accent-primary)] font-bold">const</span> hold = <span className="text-[var(--text-secondary)]">await</span> tx.lock(holdId);</p>
-        <p className="pl-6"><span className="text-[var(--accent-primary)] font-bold">if</span> (hold.status !== <span className="text-emerald-600 dark:text-emerald-400">&quot;pending&quot;</span>) &#123;</p>
+        <p className="pl-6"><span className="text-[var(--accent-primary)] font-bold">if</span> (hold.status !== <span className="text-[var(--accent-secondary)]">&quot;pending&quot;</span>) &#123;</p>
         <p className="pl-9"><span className="text-[var(--accent-primary)] font-bold">throw new</span> ConflictError();</p>
         <p className="pl-6">&#125;</p>
-        <p className="pl-6"><span className="text-[var(--text-secondary)]">await</span> tx.update(&#123; status: <span className="text-emerald-600 dark:text-emerald-400">&quot;confirmed&quot;</span> &#125;);</p>
+        <p className="pl-6"><span className="text-[var(--text-secondary)]">await</span> tx.update(&#123; status: <span className="text-[var(--accent-secondary)]">&quot;confirmed&quot;</span> &#125;);</p>
         <p className="pl-3">&#125;);</p>
         <p>&#125;</p>
       </div>
 
       <div className="flex items-center justify-between mt-3 text-[11px] font-sans text-[var(--text-muted)]">
         <span className="flex items-center gap-1.5"><Database size={13} className="text-[var(--accent-primary)]" /> ACID Serializable</span>
-        <span className="flex items-center gap-1.5"><Check size={13} className="text-emerald-600 dark:text-emerald-400" /> Idempotent webhook</span>
+        <span className="flex items-center gap-1.5"><Check size={13} className="text-[var(--accent-secondary)]" /> Idempotent webhook</span>
       </div>
     </div>
   );

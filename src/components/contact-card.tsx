@@ -95,7 +95,7 @@ export function ContactCard() {
                 Availability Status
               </span>
               <span className="badge-inexa text-[11px] py-1 px-3">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-[var(--accent-primary)] animate-pulse" />
                 <span>Open for roles</span>
               </span>
             </div>

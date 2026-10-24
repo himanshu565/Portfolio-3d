@@ -581,41 +581,41 @@ export function TechStackVisualizer() {
     const camera = new THREE.PerspectiveCamera(45, host.clientWidth / Math.max(host.clientHeight, 1), 0.1, 100);
     camera.position.set(0, 0, 7.8);
 
-    // Wireframe Hemisphere Dome in Emerald Green
+    // Wireframe Hemisphere Dome in Electric Lavender
     const domeGeo = new THREE.SphereGeometry(3.8, 24, 16, 0, Math.PI * 2, 0, Math.PI * 0.72);
     const domeMat = new THREE.MeshBasicMaterial({
-      color: 0x00e599,
+      color: 0xa66bff,
       wireframe: true,
       transparent: true,
-      opacity: 0.18,
+      opacity: 0.2,
     });
     const domeMesh = new THREE.Mesh(domeGeo, domeMat);
     domeMesh.rotation.x = Math.PI / 3.8;
     scene.add(domeMesh);
 
-    // Outer subtle orbital ring in Crimson Red
+    // Outer subtle orbital ring in Lemon Yellow
     const ringGeo = new THREE.TorusGeometry(4.2, 0.015, 12, 80);
     const ringMat = new THREE.MeshBasicMaterial({
-      color: 0xef4444,
+      color: 0xfff21a,
       transparent: true,
-      opacity: 0.22,
+      opacity: 0.28,
     });
     const ring = new THREE.Mesh(ringGeo, ringMat);
     ring.rotation.x = Math.PI / 3;
     scene.add(ring);
 
-    // Inner subtle secondary ring in Emerald Green
+    // Inner subtle secondary ring in Electric Lavender
     const ringInnerGeo = new THREE.TorusGeometry(3.3, 0.012, 12, 64);
     const ringInnerMat = new THREE.MeshBasicMaterial({
-      color: 0x00e599,
+      color: 0xa66bff,
       transparent: true,
-      opacity: 0.16,
+      opacity: 0.18,
     });
     const ringInner = new THREE.Mesh(ringInnerGeo, ringInnerMat);
     ringInner.rotation.y = Math.PI / 4;
     scene.add(ringInner);
 
-    // Floating particles (emerald & crimson)
+    // Floating particles (Electric Lavender & Lemon Yellow)
     const particleCount = 70;
     const pGeo = new THREE.BufferGeometry();
     const pPos = new Float32Array(particleCount * 3);
@@ -627,13 +627,15 @@ export function TechStackVisualizer() {
       pPos[i * 3 + 2] = (Math.random() - 0.5) * 6;
 
       if (i % 2 === 0) {
-        pColors[i * 3] = 0.0;
-        pColors[i * 3 + 1] = 0.9;
-        pColors[i * 3 + 2] = 0.6;
+        // Electric Lavender
+        pColors[i * 3] = 0.65;
+        pColors[i * 3 + 1] = 0.42;
+        pColors[i * 3 + 2] = 1.0;
       } else {
-        pColors[i * 3] = 0.94;
-        pColors[i * 3 + 1] = 0.27;
-        pColors[i * 3 + 2] = 0.27;
+        // Lemon Yellow
+        pColors[i * 3] = 1.0;
+        pColors[i * 3 + 1] = 0.95;
+        pColors[i * 3 + 2] = 0.1;
       }
     }
 
@@ -721,14 +723,14 @@ export function TechStackVisualizer() {
 
   return (
     <div className="relative w-full overflow-hidden rounded-3xl bg-[var(--bg-card)] border border-[var(--border-main)] shadow-[var(--shadow-card)] py-12 px-3 sm:px-8 lg:px-12">
-      {/* Background 3D Wireframe & Dual Emerald-Crimson Ambient Aura */}
+      {/* Background 3D Wireframe & Dual Electric Lavender + Lemon Ambient Aura */}
       <div
         ref={canvasRef}
         className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(circle_at_center,rgba(0,229,153,0.08)_0%,rgba(239,68,68,0.04)_45%,transparent_75%)]"
+        className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(circle_at_center,rgba(166,107,255,0.1)_0%,rgba(255,242,26,0.05)_45%,transparent_75%)]"
         aria-hidden="true"
       />
 
@@ -756,9 +758,9 @@ export function TechStackVisualizer() {
                 key={cat.id}
                 type="button"
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
+                className={`px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-xs font-bold transition-all duration-200 ${
                   isCurrent
-                    ? "bg-[var(--accent-primary)] text-[#070908] shadow-md shadow-emerald-500/25 scale-105"
+                    ? "bg-[var(--accent-primary)] text-[#171717] shadow-md shadow-yellow-500/25 scale-105"
                     : "bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--accent-light)] border border-[var(--border-subtle)]"
                 }`}
               >
@@ -827,7 +829,7 @@ export function TechStackVisualizer() {
 
                     {/* Popover Tooltip on Hover matching user screenshot */}
                     {isHovered && (
-                      <div className="absolute -top-9 left-1/2 -translate-x-1/2 z-40 px-2.5 py-1 rounded-md bg-[#0a0f0d] text-[#f3f6f4] border border-[#2a3830] text-[11px] font-bold whitespace-nowrap shadow-xl pointer-events-none animate-in fade-in zoom-in-95 duration-150 flex items-center gap-1.5">
+                      <div className="absolute -top-9 left-1/2 -translate-x-1/2 z-40 px-2.5 py-1 rounded-md bg-[#171717] text-[#ffffff] border border-[#2e2e2e] text-[11px] font-bold whitespace-nowrap shadow-xl pointer-events-none animate-in fade-in zoom-in-95 duration-150 flex items-center gap-1.5">
                         <span>{item.name}</span>
                         <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: item.color }} />
                       </div>
@@ -884,7 +886,7 @@ export function TechStackVisualizer() {
         href={siteConfig.resumePath || "#contact"}
         target={siteConfig.resumePath ? "_blank" : undefined}
         rel="noreferrer"
-        className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-20 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg font-mono text-[11px] sm:text-xs font-bold tracking-widest uppercase transition-all duration-200 text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent-primary)] bg-[var(--bg-subtle)]/90 backdrop-blur-md border border-[var(--border-main)] shadow-sm hover:shadow-[0_0_14px_rgba(0,229,153,0.3)]"
+        className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-20 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg font-mono text-[11px] sm:text-xs font-bold tracking-widest uppercase transition-all duration-200 text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent-primary)] bg-[var(--bg-subtle)]/90 backdrop-blur-md border border-[var(--border-main)] shadow-sm hover:shadow-[0_0_14px_rgba(255,242,26,0.3)]"
         aria-label="View Resume"
       >
         <span>RESUME</span>

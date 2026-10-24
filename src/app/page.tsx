@@ -334,7 +334,7 @@ export default function HomePage() {
             </div>
 
             <div className="mt-8 flex items-center gap-2.5 text-xs text-[var(--text-muted)]">
-              <Check size={14} className="text-emerald-500" />
+              <Check size={14} className="text-[var(--accent-primary)]" />
               <span>
                 Reflects active production toolchains: Next.js, React 19, TypeScript, PostgreSQL, Prisma, Express, and Three.js.
               </span>
