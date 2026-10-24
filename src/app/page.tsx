@@ -13,7 +13,6 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiteHeader } from "@/components/site-header";
 import { HeroScene } from "@/components/hero-scene";
 import { ProjectCard } from "@/components/project-card";
-import { Interactive3DLab } from "@/components/interactive-3d-lab";
 import { ContactCard } from "@/components/contact-card";
 import { SectionHeading } from "@/components/section-heading";
 import { SmoothScroll } from "@/components/smooth-scroll";
@@ -344,29 +343,12 @@ export default function HomePage() {
         </section>
 
         {/* =========================================================================
-            6. INTERACTIVE 3D ARCHITECTURE LAB
-            ========================================================================= */}
-        <section className="section-inexa" id="lab">
-          <div className="container-inexa">
-            <SectionHeading
-              index="04"
-              eyebrow="IMMERSIVE 3D LAB"
-              title="Interactive 3D Systems Inspector."
-            >
-              Real-time WebGL models exploring the mechanical and systemic concepts behind my builds. Orbit, zoom, and inspect subsystems.
-            </SectionHeading>
-
-            <Interactive3DLab />
-          </div>
-        </section>
-
-        {/* =========================================================================
-            7. ENGINEERING PROCESS
+            6. ENGINEERING PROCESS
             ========================================================================= */}
         <section className="section-inexa bg-inexa-secondary" id="process">
           <div className="container-inexa">
             <SectionHeading
-              index="05"
+              index="04"
               eyebrow="METHODOLOGY"
               title="From problem domain to reliable product."
             >
@@ -395,7 +377,7 @@ export default function HomePage() {
         </section>
 
         {/* =========================================================================
-            8. CONTACT SECTION
+            7. CONTACT SECTION
             ========================================================================= */}
         <section className="section-inexa" id="contact">
           <div className="container-inexa">
@@ -405,7 +387,7 @@ export default function HomePage() {
       </main>
 
       {/* =========================================================================
-          9. FOOTER — Inexa Style Clean Footer
+          8. FOOTER — Inexa Style Clean Footer
           ========================================================================= */}
       <footer className="border-t border-[var(--border-main)] bg-[var(--bg-card)] py-12">
         <div className="container-inexa flex flex-col md:flex-row items-center justify-between gap-6">
@@ -425,7 +407,6 @@ export default function HomePage() {
             <a href="#work" className="hover:text-[var(--text-primary)] transition-colors">Work</a>
             <a href="#about" className="hover:text-[var(--text-primary)] transition-colors">About</a>
             <a href="#capabilities" className="hover:text-[var(--text-primary)] transition-colors">Capabilities</a>
-            <a href="#lab" className="hover:text-[var(--text-primary)] transition-colors">3D Lab</a>
             <a href="#process" className="hover:text-[var(--text-primary)] transition-colors">Process</a>
             <a href="#contact" className="hover:text-[var(--text-primary)] transition-colors">Contact</a>
           </div>

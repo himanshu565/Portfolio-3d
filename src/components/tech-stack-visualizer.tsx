@@ -11,12 +11,13 @@ import {
   SiKotlin,
   SiHtml5,
   SiCss,
+  SiGnubash,
   SiReact,
   SiNextdotjs,
   SiBootstrap,
   SiNodedotjs,
-  SiExpress,
   SiDjango,
+  SiFlask,
   SiFastapi,
   SiTensorflow,
   SiPytorch,
@@ -39,25 +40,69 @@ import {
   SiFigma,
   SiPostman,
   SiHuggingface,
-  SiPrisma,
-  SiThreedotjs,
 } from "react-icons/si";
 import { FaAws } from "react-icons/fa";
-import { VscCode, VscTerminal, VscAzure } from "react-icons/vsc";
+import { VscCode, VscAzure } from "react-icons/vsc";
+import { FileText, Sparkles } from "lucide-react";
 import type { IconType } from "react-icons";
+import { siteConfig } from "@/data/site";
+
+// Custom Brand Icons for Photoshop & MS Office
+function PhotoshopIcon({ className, style }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      className={className}
+      style={style}
+      aria-hidden="true"
+    >
+      <rect x="2.5" y="2.5" width="19" height="19" rx="4" fill="#001E36" stroke="#31A8FF" strokeWidth="1.5" />
+      <text
+        x="6"
+        y="15.8"
+        fill="#31A8FF"
+        fontSize="8.5"
+        fontWeight="bold"
+        fontFamily="system-ui, -apple-system, sans-serif"
+        letterSpacing="-0.5px"
+      >
+        Ps
+      </text>
+    </svg>
+  );
+}
+
+function MsOfficeIcon({ className, style }: { className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      style={style}
+      aria-hidden="true"
+    >
+      <path d="M21.17 3.25L13.83.67c-.36-.13-.76-.02-1.01.27L7.33 6.05H3.5a1.5 1.5 0 0 0-1.5 1.5v8.9a1.5 1.5 0 0 0 1.5 1.5h3.83l5.49 5.11c.25.29.65.4 1.01.27l7.34-2.58A1.5 1.5 0 0 0 22 19.33V4.67a1.5 1.5 0 0 0-.83-1.42zM12.5 19.18l-4.17-3.88V8.7l4.17-3.88v14.36zm8 0l-6.5 2.29V2.53l6.5 2.29v14.36z" />
+    </svg>
+  );
+}
+
+export type TechCategory = "languages" | "frontend" | "backend" | "database" | "ai" | "devops" | "tools";
 
 export interface TechItem {
   id: string;
   name: string;
-  category: "languages" | "frontend" | "backend" | "database" | "ai" | "devops" | "tools";
+  category: TechCategory;
   categoryLabel: string;
-  icon: IconType;
+  icon: IconType | React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
   color: string;
   description: string;
   row: number;
 }
 
-const techItems: TechItem[] = [
+export const techItems: TechItem[] = [
   // --- ROW 1 (12 items) ---
   {
     id: "python",
@@ -120,18 +165,18 @@ const techItems: TechItem[] = [
     row: 1,
   },
   {
-    id: "html5",
-    name: "HTML5",
+    id: "html",
+    name: "HTML",
     category: "frontend",
     categoryLabel: "Web Semantics",
     icon: SiHtml5,
     color: "#E34F26",
-    description: "Accessible DOM structure, WCAG AA compliance, and SEO markup.",
+    description: "Accessible DOM structure, semantic HTML5 tags, and WCAG AA compliance.",
     row: 1,
   },
   {
-    id: "css3",
-    name: "CSS3",
+    id: "css",
+    name: "CSS",
     category: "frontend",
     categoryLabel: "Styling & Motion",
     icon: SiCss,
@@ -142,9 +187,9 @@ const techItems: TechItem[] = [
   {
     id: "bash",
     name: "Bash",
-    category: "devops",
+    category: "tools",
     categoryLabel: "Shell Automation",
-    icon: VscTerminal,
+    icon: SiGnubash,
     color: "#4EAA25",
     description: "Command-line automation, environment setup, and deployment scripting.",
     row: 1,
@@ -165,7 +210,7 @@ const techItems: TechItem[] = [
     category: "frontend",
     categoryLabel: "Full-Stack Framework",
     icon: SiNextdotjs,
-    color: "#ffffff",
+    color: "#f3f6f4",
     description: "App Router, Server Components, Route Handlers, and static/edge rendering.",
     row: 1,
   },
@@ -192,16 +237,6 @@ const techItems: TechItem[] = [
     row: 2,
   },
   {
-    id: "express",
-    name: "Express.js",
-    category: "backend",
-    categoryLabel: "API Server",
-    icon: SiExpress,
-    color: "#ffffff",
-    description: "Lightweight middleware pipelines, authentication, and microservice endpoints.",
-    row: 2,
-  },
-  {
     id: "django",
     name: "Django",
     category: "backend",
@@ -209,6 +244,16 @@ const techItems: TechItem[] = [
     icon: SiDjango,
     color: "#092E20",
     description: "Batteries-included backend development, ORM models, and robust admin tooling.",
+    row: 2,
+  },
+  {
+    id: "flask",
+    name: "Flask",
+    category: "backend",
+    categoryLabel: "Microframework",
+    icon: SiFlask,
+    color: "#f3f6f4",
+    description: "Lightweight Python microservices, modular blueprints, and REST endpoints.",
     row: 2,
   },
   {
@@ -243,12 +288,12 @@ const techItems: TechItem[] = [
   },
   {
     id: "scikitlearn",
-    name: "Scikit-Learn",
+    name: "Scikit-learn",
     category: "ai",
     categoryLabel: "Machine Learning",
     icon: SiScikitlearn,
     color: "#F7931E",
-    description: "Predictive data modeling, classification, regression, and clustering algorithms.",
+    description: "Classical classification, regression, clustering algorithms, and model validation.",
     row: 2,
   },
   {
@@ -258,7 +303,7 @@ const techItems: TechItem[] = [
     categoryLabel: "Computer Vision",
     icon: SiOpencv,
     color: "#5C3EE8",
-    description: "Image processing, feature extraction, and real-time visual recognition.",
+    description: "Real-time image filtering, edge detection, feature extraction, and matrix manipulation.",
     row: 2,
   },
   {
@@ -267,18 +312,18 @@ const techItems: TechItem[] = [
     category: "ai",
     categoryLabel: "Numerical Computing",
     icon: SiNumpy,
-    color: "#013243",
-    description: "N-dimensional vector arrays, linear algebra, and mathematical operations.",
+    color: "#4DABCF",
+    description: "N-dimensional array computation, linear algebra, vectorization, and scientific operations.",
     row: 2,
   },
   {
     id: "tailwind",
-    name: "Tailwind CSS",
+    name: "Tailwind",
     category: "frontend",
-    categoryLabel: "Utility Styling",
+    categoryLabel: "CSS Framework",
     icon: SiTailwindcss,
     color: "#06B6D4",
-    description: "Utility-first design tokens, responsive breakpoints, and custom animations.",
+    description: "Utility-first design tokens, responsive breakpoints, and dark mode theming.",
     row: 2,
   },
 
@@ -287,10 +332,10 @@ const techItems: TechItem[] = [
     id: "pandas",
     name: "Pandas",
     category: "ai",
-    categoryLabel: "Data Engineering",
+    categoryLabel: "Data Manipulation",
     icon: SiPandas,
     color: "#150458",
-    description: "DataFrame manipulation, ETL pipeline processing, and data cleansing.",
+    description: "DataFrame transformations, timeseries parsing, data cleaning, and CSV/SQL ingestion.",
     row: 3,
   },
   {
@@ -381,7 +426,7 @@ const techItems: TechItem[] = [
     category: "tools",
     categoryLabel: "Collaboration & CI",
     icon: SiGithub,
-    color: "#ffffff",
+    color: "#f3f6f4",
     description: "GitHub Actions CI/CD workflows, pull requests, issue tracking, and code reviews.",
     row: 4,
   },
@@ -421,7 +466,7 @@ const techItems: TechItem[] = [
     category: "devops",
     categoryLabel: "Edge Deployment",
     icon: SiVercel,
-    color: "#ffffff",
+    color: "#f3f6f4",
     description: "Zero-configuration deployments, edge networks, serverless functions, and analytics.",
     row: 4,
   },
@@ -458,13 +503,13 @@ const techItems: TechItem[] = [
     row: 5,
   },
   {
-    id: "threejs",
-    name: "Three.js",
-    category: "frontend",
-    categoryLabel: "3D & WebGL",
-    icon: SiThreedotjs,
-    color: "#8054ff",
-    description: "Procedural geometry, PBR physical shaders, OrbitControls, and 60fps WebGL scenes.",
+    id: "photoshop",
+    name: "Photoshop",
+    category: "tools",
+    categoryLabel: "Visual Editing",
+    icon: PhotoshopIcon,
+    color: "#31A8FF",
+    description: "High-resolution graphic assets, raster editing, composition, and presentation mockups.",
     row: 5,
   },
 
@@ -480,13 +525,13 @@ const techItems: TechItem[] = [
     row: 6,
   },
   {
-    id: "prisma",
-    name: "Prisma ORM",
-    category: "database",
-    categoryLabel: "Type-Safe ORM",
-    icon: SiPrisma,
-    color: "#2D3748",
-    description: "Schema-driven modeling, automated PostgreSQL migrations, and type-safe relational queries.",
+    id: "msoffice",
+    name: "MS Office",
+    category: "tools",
+    categoryLabel: "Productivity Suite",
+    icon: MsOfficeIcon,
+    color: "#D83B01",
+    description: "Spreadsheet modeling, technical documentation, operational presentations, and reporting.",
     row: 6,
   },
 ];
@@ -498,17 +543,17 @@ const categoryFilters = [
   { id: "backend", label: "Backend" },
   { id: "database", label: "Database" },
   { id: "ai", label: "AI & ML" },
-  { id: "devops", label: "Cloud & DevOps" },
+  { id: "devops", label: "DevOps & Cloud" },
   { id: "tools", label: "Tools" },
 ] as const;
 
 export function TechStackVisualizer() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [hoveredItem, setHoveredItem] = useState<TechItem | null>(null);
-  const [selectedItem, setSelectedItem] = useState<TechItem>(techItems[0]);
+  const [selectedItem, setSelectedItem] = useState<TechItem>(techItems[16]); // TensorFlow default
   const canvasRef = useRef<HTMLDivElement>(null);
 
-  // 3D Wireframe Dome Background in Three.js
+  // 3D Wireframe Dome Background in Three.js (Emerald Green & Crimson Red Aesthetic)
   useEffect(() => {
     const host = canvasRef.current;
     if (!host) return;
@@ -521,6 +566,7 @@ export function TechStackVisualizer() {
       renderer = new THREE.WebGLRenderer({
         alpha: true,
         antialias: true,
+        powerPreference: "high-performance",
       });
     } catch {
       return;
@@ -533,58 +579,84 @@ export function TechStackVisualizer() {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, host.clientWidth / Math.max(host.clientHeight, 1), 0.1, 100);
-    camera.position.set(0, 0, 7.5);
+    camera.position.set(0, 0, 7.8);
 
-    // Wireframe Hemisphere Dome in Off-White & Silver
-    const domeGeo = new THREE.SphereGeometry(3.6, 24, 16, 0, Math.PI * 2, 0, Math.PI * 0.7);
+    // Wireframe Hemisphere Dome in Emerald Green
+    const domeGeo = new THREE.SphereGeometry(3.8, 24, 16, 0, Math.PI * 2, 0, Math.PI * 0.72);
     const domeMat = new THREE.MeshBasicMaterial({
-      color: 0xd4d4d8,
+      color: 0x00e599,
       wireframe: true,
       transparent: true,
-      opacity: 0.15,
+      opacity: 0.18,
     });
     const domeMesh = new THREE.Mesh(domeGeo, domeMat);
-    domeMesh.rotation.x = Math.PI / 4;
+    domeMesh.rotation.x = Math.PI / 3.8;
     scene.add(domeMesh);
 
-    // Outer subtle rings
-    const ringGeo = new THREE.TorusGeometry(3.9, 0.015, 12, 64);
+    // Outer subtle orbital ring in Crimson Red
+    const ringGeo = new THREE.TorusGeometry(4.2, 0.015, 12, 80);
     const ringMat = new THREE.MeshBasicMaterial({
-      color: 0xf5f5f0,
+      color: 0xef4444,
       transparent: true,
-      opacity: 0.2,
+      opacity: 0.22,
     });
     const ring = new THREE.Mesh(ringGeo, ringMat);
     ring.rotation.x = Math.PI / 3;
     scene.add(ring);
 
-    // Floating particles
-    const particleCount = 80;
+    // Inner subtle secondary ring in Emerald Green
+    const ringInnerGeo = new THREE.TorusGeometry(3.3, 0.012, 12, 64);
+    const ringInnerMat = new THREE.MeshBasicMaterial({
+      color: 0x00e599,
+      transparent: true,
+      opacity: 0.16,
+    });
+    const ringInner = new THREE.Mesh(ringInnerGeo, ringInnerMat);
+    ringInner.rotation.y = Math.PI / 4;
+    scene.add(ringInner);
+
+    // Floating particles (emerald & crimson)
+    const particleCount = 70;
     const pGeo = new THREE.BufferGeometry();
     const pPos = new Float32Array(particleCount * 3);
+    const pColors = new Float32Array(particleCount * 3);
+
     for (let i = 0; i < particleCount; i++) {
-      pPos[i * 3] = (Math.random() - 0.5) * 10;
-      pPos[i * 3 + 1] = (Math.random() - 0.5) * 7;
+      pPos[i * 3] = (Math.random() - 0.5) * 11;
+      pPos[i * 3 + 1] = (Math.random() - 0.5) * 8;
       pPos[i * 3 + 2] = (Math.random() - 0.5) * 6;
+
+      if (i % 2 === 0) {
+        pColors[i * 3] = 0.0;
+        pColors[i * 3 + 1] = 0.9;
+        pColors[i * 3 + 2] = 0.6;
+      } else {
+        pColors[i * 3] = 0.94;
+        pColors[i * 3 + 1] = 0.27;
+        pColors[i * 3 + 2] = 0.27;
+      }
     }
+
     pGeo.setAttribute("position", new THREE.BufferAttribute(pPos, 3));
+    pGeo.setAttribute("color", new THREE.BufferAttribute(pColors, 3));
+
     const pMat = new THREE.PointsMaterial({
-      color: 0xf5f5f0,
-      size: 0.03,
+      size: 0.035,
+      vertexColors: true,
       transparent: true,
-      opacity: 0.35,
+      opacity: 0.4,
     });
     const particles = new THREE.Points(pGeo, pMat);
     scene.add(particles);
 
-    // Mouse tracking
+    // Mouse tracking for reactive parallax
     const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
     const handleMouseMove = (e: MouseEvent) => {
       const rect = host.getBoundingClientRect();
       const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       const y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-      mouse.targetX = x * 0.4;
-      mouse.targetY = y * 0.4;
+      mouse.targetX = x * 0.35;
+      mouse.targetY = y * 0.35;
     };
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
@@ -606,10 +678,11 @@ export function TechStackVisualizer() {
       mouse.x += (mouse.targetX - mouse.x) * 0.05;
       mouse.y += (mouse.targetY - mouse.y) * 0.05;
 
-      domeMesh.rotation.y = elapsed * 0.06 + mouse.x * 0.5;
-      domeMesh.rotation.x = Math.PI / 4 + Math.sin(elapsed * 0.3) * 0.08 + mouse.y * 0.3;
+      domeMesh.rotation.y = elapsed * 0.05 + mouse.x * 0.4;
+      domeMesh.rotation.x = Math.PI / 3.8 + Math.sin(elapsed * 0.25) * 0.06 + mouse.y * 0.25;
 
-      ring.rotation.z = elapsed * 0.08;
+      ring.rotation.z = elapsed * 0.07;
+      ringInner.rotation.x = -elapsed * 0.05;
       particles.rotation.y = elapsed * 0.02;
 
       renderer.render(scene, camera);
@@ -626,6 +699,8 @@ export function TechStackVisualizer() {
       domeMat.dispose();
       ringGeo.dispose();
       ringMat.dispose();
+      ringInnerGeo.dispose();
+      ringInnerMat.dispose();
       pGeo.dispose();
       pMat.dispose();
       renderer.dispose();
@@ -635,6 +710,7 @@ export function TechStackVisualizer() {
     };
   }, []);
 
+  // Partition into the 6 Inverted-Pyramid Rows: 12 -> 10 -> 8 -> 6 -> 4 -> 2
   const rows = useMemo(() => {
     return [1, 2, 3, 4, 5, 6].map((rowNum) =>
       techItems.filter((item) => item.row === rowNum),
@@ -644,34 +720,35 @@ export function TechStackVisualizer() {
   const activeDisplay = hoveredItem || selectedItem;
 
   return (
-    <div className="relative w-full overflow-hidden rounded-3xl bg-[var(--bg-card)] border border-[var(--border-main)] shadow-[var(--shadow-card)] py-12 px-4 sm:px-8 lg:px-12">
-      {/* Background 3D Wireframe & Violet Ambient Aura */}
+    <div className="relative w-full overflow-hidden rounded-3xl bg-[var(--bg-card)] border border-[var(--border-main)] shadow-[var(--shadow-card)] py-12 px-3 sm:px-8 lg:px-12">
+      {/* Background 3D Wireframe & Dual Emerald-Crimson Ambient Aura */}
       <div
         ref={canvasRef}
         className="absolute inset-0 pointer-events-none z-0 overflow-hidden"
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(circle_at_center,rgba(245,245,242,0.12)_0%,rgba(245,245,242,0.02)_50%,transparent_75%)]"
+        className="absolute inset-0 pointer-events-none z-0 bg-[radial-gradient(circle_at_center,rgba(0,229,153,0.08)_0%,rgba(239,68,68,0.04)_45%,transparent_75%)]"
         aria-hidden="true"
       />
 
+      {/* Top Header */}
       <div className="relative z-10 flex flex-col items-center">
-        {/* Title matching the reference */}
         <div className="text-center mb-6">
           <span className="badge-inexa text-xs uppercase tracking-widest font-semibold mb-3">
-            Technical Arsenal
+            <Sparkles size={12} className="text-[var(--accent-primary)]" />
+            <span>Technical Arsenal</span>
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[var(--text-primary)]">
             TECH STACK
           </h2>
           <p className="text-xs sm:text-sm text-[var(--text-secondary)] mt-2 max-w-lg mx-auto">
-            Interactive overview of my core programming languages, frameworks, databases, and engineering tools.
+            Interactive pyramid map of core engineering technologies, ML frameworks, databases, and DevOps toolchains.
           </p>
         </div>
 
         {/* Filter Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mb-10 max-w-3xl">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-10 max-w-3xl">
           {categoryFilters.map((cat) => {
             const isCurrent = activeCategory === cat.id;
             return (
@@ -679,9 +756,9 @@ export function TechStackVisualizer() {
                 key={cat.id}
                 type="button"
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
+                className={`px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
                   isCurrent
-                    ? "bg-[var(--text-primary)] text-[var(--bg-page)] shadow-md shadow-black/25 scale-105"
+                    ? "bg-[var(--accent-primary)] text-[#070908] shadow-md shadow-emerald-500/25 scale-105"
                     : "bg-[var(--bg-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--accent-light)] border border-[var(--border-subtle)]"
                 }`}
               >
@@ -692,7 +769,7 @@ export function TechStackVisualizer() {
         </div>
 
         {/* Inverted Pyramid Tapering Rows: 12 -> 10 -> 8 -> 6 -> 4 -> 2 */}
-        <div className="w-full flex flex-col items-center gap-3 sm:gap-4 my-2">
+        <div className="w-full flex flex-col items-center gap-2.5 sm:gap-3.5 my-2">
           {rows.map((rowItems, rowIndex) => (
             <div
               key={rowIndex}
@@ -716,22 +793,26 @@ export function TechStackVisualizer() {
                     <button
                       type="button"
                       aria-label={`${item.name} (${item.categoryLabel})`}
-                      className={`w-12 h-12 sm:w-16 sm:h-16 lg:w-[72px] lg:h-[72px] rounded-2xl flex flex-col items-center justify-center p-1.5 sm:p-2 transition-all duration-300 relative ${
+                      className={`w-11 h-11 sm:w-16 sm:h-16 lg:w-[68px] lg:h-[68px] rounded-2xl flex flex-col items-center justify-center p-1 sm:p-2 transition-all duration-250 relative ${
                         matchesFilter
                           ? "opacity-100"
-                          : "opacity-35 grayscale hover:grayscale-0 hover:opacity-90"
+                          : "opacity-30 grayscale hover:grayscale-0 hover:opacity-85"
                       } ${
                         isHovered || isSelected
-                          ? "scale-110 z-30 bg-[var(--bg-card)] border-2 shadow-lg shadow-[rgba(128,84,255,0.35)]"
-                          : "bg-[var(--bg-card)]/80 backdrop-blur-md border border-[var(--border-main)] hover:border-[var(--accent-primary)] shadow-sm"
+                          ? "scale-110 z-30 bg-[var(--bg-card)] border-2 shadow-xl"
+                          : "bg-[var(--bg-subtle)]/80 backdrop-blur-md border border-[var(--border-main)] hover:border-[var(--accent-primary)] shadow-sm"
                       }`}
                       style={{
                         borderColor:
                           isHovered || isSelected ? item.color || "var(--accent-primary)" : undefined,
+                        boxShadow:
+                          isHovered || isSelected
+                            ? `0 0 18px ${item.color}40, 0 8px 24px rgba(0,0,0,0.4)`
+                            : undefined,
                       }}
                     >
                       <Icon
-                        className="text-xl sm:text-2xl lg:text-3xl transition-transform duration-300 group-hover:scale-110"
+                        className="text-lg sm:text-2xl lg:text-[26px] transition-transform duration-250 group-hover:scale-110"
                         style={{
                           color:
                             matchesFilter || isHovered
@@ -739,14 +820,14 @@ export function TechStackVisualizer() {
                               : "var(--text-muted)",
                         }}
                       />
-                      <span className="text-[9px] sm:text-[10px] font-medium text-[var(--text-primary)] mt-1 truncate max-w-full leading-none">
+                      <span className="text-[8px] sm:text-[9.5px] font-medium text-[var(--text-primary)] mt-1 truncate max-w-full leading-none">
                         {item.name}
                       </span>
                     </button>
 
-                    {/* Popover Tooltip on Hover */}
+                    {/* Popover Tooltip on Hover matching user screenshot */}
                     {isHovered && (
-                      <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-40 px-2.5 py-1 rounded-lg bg-[var(--text-primary)] text-[var(--bg-page)] text-[11px] font-bold whitespace-nowrap shadow-xl pointer-events-none animate-in fade-in duration-150 flex items-center gap-1.5">
+                      <div className="absolute -top-9 left-1/2 -translate-x-1/2 z-40 px-2.5 py-1 rounded-md bg-[#0a0f0d] text-[#f3f6f4] border border-[#2a3830] text-[11px] font-bold whitespace-nowrap shadow-xl pointer-events-none animate-in fade-in zoom-in-95 duration-150 flex items-center gap-1.5">
                         <span>{item.name}</span>
                         <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: item.color }} />
                       </div>
@@ -760,7 +841,7 @@ export function TechStackVisualizer() {
 
         {/* Detailed Inspector Card */}
         {activeDisplay && (
-          <div className="w-full max-w-2xl mt-10 p-5 sm:p-6 rounded-2xl bg-[var(--bg-subtle)] border border-[var(--border-main)] shadow-sm transition-all duration-300">
+          <div className="w-full max-w-2xl mt-8 sm:mt-10 p-5 sm:p-6 rounded-2xl bg-[var(--bg-subtle)] border border-[var(--border-main)] shadow-sm transition-all duration-300">
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-[var(--border-subtle)]">
               <div className="flex items-center gap-3">
                 <span
@@ -797,7 +878,18 @@ export function TechStackVisualizer() {
           </div>
         )}
       </div>
+
+      {/* Bottom Right "RESUME" Button matching user reference screenshot */}
+      <a
+        href={siteConfig.resumePath || "#contact"}
+        target={siteConfig.resumePath ? "_blank" : undefined}
+        rel="noreferrer"
+        className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-20 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg font-mono text-[11px] sm:text-xs font-bold tracking-widest uppercase transition-all duration-200 text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent-primary)] bg-[var(--bg-subtle)]/90 backdrop-blur-md border border-[var(--border-main)] shadow-sm hover:shadow-[0_0_14px_rgba(0,229,153,0.3)]"
+        aria-label="View Resume"
+      >
+        <span>RESUME</span>
+        <FileText size={13} className="text-[var(--accent-primary)]" />
+      </a>
     </div>
   );
 }
-
