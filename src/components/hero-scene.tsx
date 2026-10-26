@@ -49,32 +49,28 @@ export function HeroScene() {
     camera.position.set(0, 0, 6.2);
 
     // =========================================================================
-    // STUDIO LIGHTING (Electric Lavender #A66BFF & Lemon #FFF21A on Charcoal #171717)
+    // LIGHTING (Adaptive: Dark Mode vs Light Mode)
     // =========================================================================
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
     scene.add(ambientLight);
 
-    // Primary Electric Lavender directional key light
     const lavenderLight = new THREE.DirectionalLight(0xa66bff, 5.0);
     lavenderLight.position.set(4.5, 4.0, 3.5);
     scene.add(lavenderLight);
 
-    // Contrasting Lemon Yellow directional rim light
     const lemonLight = new THREE.DirectionalLight(0xfff21a, 4.5);
     lemonLight.position.set(-4.5, -3.5, -3.0);
     scene.add(lemonLight);
 
-    // Cool subtle fill light from above
     const fillLight = new THREE.DirectionalLight(0x28233a, 1.2);
     fillLight.position.set(0, 5, 2);
     scene.add(fillLight);
 
-    // Root Group for interactive rotation
     const rootGroup = new THREE.Group();
     scene.add(rootGroup);
 
     // =========================================================================
-    // 1. CENTRAL TRANSLUCENT CHARCOAL GLASS SPHERE
+    // 1. CENTRAL TRANSLUCENT GLASS SPHERE (Ultra-Clear Crystal in Light Mode)
     // =========================================================================
     const glassGeo = new THREE.SphereGeometry(1.28, 48, 48);
     const glassMat = new THREE.MeshPhysicalMaterial({
@@ -92,23 +88,34 @@ export function HeroScene() {
     const glassSphere = new THREE.Mesh(glassGeo, glassMat);
     rootGroup.add(glassSphere);
 
+    // Subtle crystal equator rim ring for crisp optical contour definition
+    const rimGeo = new THREE.TorusGeometry(1.285, 0.006, 16, 96);
+    const rimMat = new THREE.MeshBasicMaterial({
+      color: 0xa66bff,
+      transparent: true,
+      opacity: 0.22,
+    });
+    const rimMesh = new THREE.Mesh(rimGeo, rimMat);
+    rimMesh.rotation.x = Math.PI / 2.3;
+    rootGroup.add(rimMesh);
+
     // =========================================================================
-    // 2. INNER WAVE-RIPPLE PARTICLE CORE (Lavender & Lemon Harmonics)
+    // 2. INNER WAVE-RIPPLE PARTICLE CORE
     // =========================================================================
     const coreParticleCount = 1800;
     const corePositions = new Float32Array(coreParticleCount * 3);
     const coreBasePositions = new Float32Array(coreParticleCount * 3);
     const coreColors = new Float32Array(coreParticleCount * 3);
+    const coreColorsDark = new Float32Array(coreParticleCount * 3);
+    const coreColorsLight = new Float32Array(coreParticleCount * 3);
     const corePhaseOffsets = new Float32Array(coreParticleCount);
 
-    // Stratified Fibonacci Sphere generation
     const phiAngle = Math.PI * (Math.sqrt(5) - 1);
     for (let i = 0; i < coreParticleCount; i++) {
       const y = 1 - (i / (coreParticleCount - 1)) * 2;
       const radiusAtY = Math.sqrt(Math.max(0, 1 - y * y));
       const theta = phiAngle * i;
 
-      // Concentric internal radii from 0.45 to 1.18
       const radiusFactor = 0.45 + (i % 6) * 0.14;
       const x = Math.cos(theta) * radiusAtY * radiusFactor;
       const z = Math.sin(theta) * radiusAtY * radiusFactor;
@@ -124,23 +131,43 @@ export function HeroScene() {
 
       corePhaseOffsets[i] = Math.atan2(z, x) + finalY * 2.5;
 
-      // Palette: 65% Electric Lavender (#A66BFF), 25% Lemon Yellow (#FFF21A), 10% Radiant White
+      // Dark Mode Palette: Luminous Electric Lavender & Electric Lemon
       if (i % 4 === 0) {
-        // Lemon Yellow highlights
-        coreColors[i * 3] = 1.0;
-        coreColors[i * 3 + 1] = 0.95;
-        coreColors[i * 3 + 2] = 0.1;
+        coreColorsDark[i * 3] = 1.0;
+        coreColorsDark[i * 3 + 1] = 0.95;
+        coreColorsDark[i * 3 + 2] = 0.1;
       } else if (i % 9 === 0) {
-        // Radiant White crests
-        coreColors[i * 3] = 1.0;
-        coreColors[i * 3 + 1] = 1.0;
-        coreColors[i * 3 + 2] = 1.0;
+        coreColorsDark[i * 3] = 1.0;
+        coreColorsDark[i * 3 + 1] = 1.0;
+        coreColorsDark[i * 3 + 2] = 1.0;
       } else {
-        // Electric Lavender core
-        coreColors[i * 3] = 0.65;
-        coreColors[i * 3 + 1] = 0.42;
-        coreColors[i * 3 + 2] = 1.0;
+        coreColorsDark[i * 3] = 0.65;
+        coreColorsDark[i * 3 + 1] = 0.42;
+        coreColorsDark[i * 3 + 2] = 1.0;
       }
+
+      // Light Mode Palette: Rich Electric Violet & Deep Lemon Gold on Crisp Onyx
+      if (i % 4 === 0) {
+        // Warm Lemon Gold
+        coreColorsLight[i * 3] = 0.88;
+        coreColorsLight[i * 3 + 1] = 0.60;
+        coreColorsLight[i * 3 + 2] = 0.05;
+      } else if (i % 9 === 0) {
+        // Deep Charcoal Onyx
+        coreColorsLight[i * 3] = 0.12;
+        coreColorsLight[i * 3 + 1] = 0.12;
+        coreColorsLight[i * 3 + 2] = 0.12;
+      } else {
+        // Deep Electric Violet
+        coreColorsLight[i * 3] = 0.48;
+        coreColorsLight[i * 3 + 1] = 0.20;
+        coreColorsLight[i * 3 + 2] = 0.92;
+      }
+
+      // Default to dark palette initially
+      coreColors[i * 3] = coreColorsDark[i * 3];
+      coreColors[i * 3 + 1] = coreColorsDark[i * 3 + 1];
+      coreColors[i * 3 + 2] = coreColorsDark[i * 3 + 2];
     }
 
     const coreGeo = new THREE.BufferGeometry();
@@ -158,7 +185,7 @@ export function HeroScene() {
     rootGroup.add(coreParticles);
 
     // =========================================================================
-    // 3. NESTED ORBITAL THREAD RINGS (Spirograph Gimbal Orbits)
+    // 3. NESTED ORBITAL THREAD RINGS
     // =========================================================================
     const ringGroup = new THREE.Group();
     rootGroup.add(ringGroup);
@@ -189,7 +216,6 @@ export function HeroScene() {
       });
       const rMesh = new THREE.LineLoop(rGeo, rMat);
 
-      // Varying initial 3D inclinations
       const euler = new THREE.Euler(
         (idx * Math.PI) / 5 + 0.2,
         (idx * Math.PI) / 4 + 0.3,
@@ -201,13 +227,13 @@ export function HeroScene() {
       rings.push({
         mesh: rMesh,
         radius: r,
-        speed: (idx % 2 === 0 ? 1 : -1) * (0.15 + (idx * 0.03)),
+        speed: (idx % 2 === 0 ? 1 : -1) * (0.15 + idx * 0.03),
         euler,
       });
     });
 
     // =========================================================================
-    // 4. METALLIC BEAD NODES (Threaded Pearls Orbiting Along the Rings)
+    // 4. METALLIC BEAD NODES
     // =========================================================================
     const beadsGroup = new THREE.Group();
     rootGroup.add(beadsGroup);
@@ -269,7 +295,7 @@ export function HeroScene() {
     }
 
     // =========================================================================
-    // 5. MAGNETIC ATTRACTION FILAMENTS (Elastic Streamers Pulling Toward Cursor)
+    // 5. MAGNETIC ATTRACTION FILAMENTS
     // =========================================================================
     const filamentCount = 42;
     const segmentsPerFilament = 14;
@@ -277,6 +303,8 @@ export function HeroScene() {
 
     const filamentPositions = new Float32Array(totalFilamentVertices * 3);
     const filamentColors = new Float32Array(totalFilamentVertices * 3);
+    const filamentColorsDark = new Float32Array(totalFilamentVertices * 3);
+    const filamentColorsLight = new Float32Array(totalFilamentVertices * 3);
 
     const filamentAnchors: THREE.Vector3[] = [];
     const filamentCurrentHeads: THREE.Vector3[] = [];
@@ -294,22 +322,35 @@ export function HeroScene() {
       filamentCurrentHeads.push(anchor.clone().multiplyScalar(1.2));
       filamentTargetHeads.push(anchor.clone().multiplyScalar(1.2));
 
-      // Color gradient: Electric Lavender base flowing into Lemon Yellow tip
       for (let s = 0; s < segmentsPerFilament; s++) {
         const idx = (f * segmentsPerFilament + s) * 3;
         const progress = s / (segmentsPerFilament - 1);
 
+        // Dark palette
         if (f % 4 === 0) {
-          // Lemon streamers
-          filamentColors[idx] = THREE.MathUtils.lerp(1.0, 1.0, progress);
-          filamentColors[idx + 1] = THREE.MathUtils.lerp(0.85, 0.98, progress);
-          filamentColors[idx + 2] = THREE.MathUtils.lerp(0.1, 0.6, progress);
+          filamentColorsDark[idx] = THREE.MathUtils.lerp(1.0, 1.0, progress);
+          filamentColorsDark[idx + 1] = THREE.MathUtils.lerp(0.85, 0.98, progress);
+          filamentColorsDark[idx + 2] = THREE.MathUtils.lerp(0.1, 0.6, progress);
         } else {
-          // Lavender to Lemon gradient
-          filamentColors[idx] = THREE.MathUtils.lerp(0.65, 1.0, progress);
-          filamentColors[idx + 1] = THREE.MathUtils.lerp(0.42, 0.95, progress);
-          filamentColors[idx + 2] = THREE.MathUtils.lerp(1.0, 0.1, progress);
+          filamentColorsDark[idx] = THREE.MathUtils.lerp(0.65, 1.0, progress);
+          filamentColorsDark[idx + 1] = THREE.MathUtils.lerp(0.42, 0.95, progress);
+          filamentColorsDark[idx + 2] = THREE.MathUtils.lerp(1.0, 0.1, progress);
         }
+
+        // Light palette: Deep Electric Violet to Rich Lemon Gold
+        if (f % 4 === 0) {
+          filamentColorsLight[idx] = THREE.MathUtils.lerp(0.88, 0.88, progress);
+          filamentColorsLight[idx + 1] = THREE.MathUtils.lerp(0.58, 0.65, progress);
+          filamentColorsLight[idx + 2] = THREE.MathUtils.lerp(0.04, 0.15, progress);
+        } else {
+          filamentColorsLight[idx] = THREE.MathUtils.lerp(0.48, 0.88, progress);
+          filamentColorsLight[idx + 1] = THREE.MathUtils.lerp(0.20, 0.60, progress);
+          filamentColorsLight[idx + 2] = THREE.MathUtils.lerp(0.92, 0.05, progress);
+        }
+
+        filamentColors[idx] = filamentColorsDark[idx];
+        filamentColors[idx + 1] = filamentColorsDark[idx + 1];
+        filamentColors[idx + 2] = filamentColorsDark[idx + 2];
       }
     }
 
@@ -337,7 +378,139 @@ export function HeroScene() {
     rootGroup.add(filamentLines);
 
     // =========================================================================
-    // 6. INTERACTIVE CURSOR TRACKING & ELASTIC PHYSICS
+    // 6. THEME ADAPTATION (Dynamically Switches Between Dark & Light Mode)
+    // =========================================================================
+    const applyTheme = (isDark: boolean) => {
+      const coreColorAttr = coreGeo.attributes.color as THREE.BufferAttribute;
+      const filColorAttr = filamentGeo.attributes.color as THREE.BufferAttribute;
+
+      if (isDark) {
+        // --- DARK MODE ---
+        glassMat.color.setHex(0x171717);
+        glassMat.metalness = 0.15;
+        glassMat.roughness = 0.08;
+        glassMat.transmission = 0.62;
+        glassMat.opacity = 0.32;
+        glassMat.clearcoat = 1.0;
+        glassMat.clearcoatRoughness = 0.04;
+        glassMat.needsUpdate = true;
+
+        rimMat.color.setHex(0xa66bff);
+        rimMat.opacity = 0.22;
+        rimMat.needsUpdate = true;
+
+        coreMat.blending = THREE.AdditiveBlending;
+        coreMat.opacity = 0.88;
+        coreMat.size = 0.04;
+        coreMat.needsUpdate = true;
+        coreColorAttr.copyArray(coreColorsDark);
+        coreColorAttr.needsUpdate = true;
+
+        rings.forEach((r, idx) => {
+          const isLemon = idx === 1 || idx === 4;
+          const mat = r.mesh.material as THREE.LineBasicMaterial;
+          mat.color.setHex(isLemon ? 0xfff21a : 0xa66bff);
+          mat.opacity = isLemon ? 0.32 : 0.26;
+          mat.needsUpdate = true;
+        });
+
+        beadMatChrome.color.setHex(0xf5f5f5);
+        beadMatLavender.color.setHex(0xa66bff);
+        beadMatLavender.emissive.setHex(0xa66bff);
+        beadMatLemon.color.setHex(0xfff21a);
+        beadMatLemon.emissive.setHex(0xfff21a);
+
+        filamentMat.blending = THREE.AdditiveBlending;
+        filamentMat.opacity = 0.72;
+        filamentMat.needsUpdate = true;
+        filColorAttr.copyArray(filamentColorsDark);
+        filColorAttr.needsUpdate = true;
+
+        ambientLight.color.setHex(0xffffff);
+        ambientLight.intensity = 0.7;
+        lavenderLight.color.setHex(0xa66bff);
+        lavenderLight.intensity = 5.0;
+        lemonLight.color.setHex(0xfff21a);
+        lemonLight.intensity = 4.5;
+        fillLight.color.setHex(0x28233a);
+        fillLight.intensity = 1.2;
+      } else {
+        // --- LIGHT MODE (Crystal Clear Optical Glass Orb — No Muddy Grey Wash!) ---
+        glassMat.color.setHex(0xffffff); // Pure crystal transparency
+        glassMat.metalness = 0.02;
+        glassMat.roughness = 0.02;
+        glassMat.transmission = 0.98; // Completely crystal clear center
+        glassMat.opacity = 0.92;
+        glassMat.ior = 1.52;
+        glassMat.clearcoat = 1.0;
+        glassMat.clearcoatRoughness = 0.02;
+        glassMat.needsUpdate = true;
+
+        rimMat.color.setHex(0x7c3aed);
+        rimMat.opacity = 0.45;
+        rimMat.needsUpdate = true;
+
+        // NormalBlending + rich saturated jewel tones for crisp clarity against light card
+        coreMat.blending = THREE.NormalBlending;
+        coreMat.opacity = 0.96;
+        coreMat.size = 0.046;
+        coreMat.needsUpdate = true;
+        coreColorAttr.copyArray(coreColorsLight);
+        coreColorAttr.needsUpdate = true;
+
+        // High contrast rings
+        rings.forEach((r, idx) => {
+          const isLemon = idx === 1 || idx === 4;
+          const mat = r.mesh.material as THREE.LineBasicMaterial;
+          mat.color.setHex(isLemon ? 0xd97706 : 0x7c3aed);
+          mat.opacity = isLemon ? 0.68 : 0.62;
+          mat.needsUpdate = true;
+        });
+
+        // Sharp metallic beads with deep specular reflections
+        beadMatChrome.color.setHex(0x1a1a1a);
+        beadMatLavender.color.setHex(0x7c3aed);
+        beadMatLavender.emissive.setHex(0x5b21b6);
+        beadMatLemon.color.setHex(0xd97706);
+        beadMatLemon.emissive.setHex(0xb45309);
+
+        // High contrast normal-blended streamers
+        filamentMat.blending = THREE.NormalBlending;
+        filamentMat.opacity = 0.84;
+        filamentMat.needsUpdate = true;
+        filColorAttr.copyArray(filamentColorsLight);
+        filColorAttr.needsUpdate = true;
+
+        ambientLight.color.setHex(0xffffff);
+        ambientLight.intensity = 1.35;
+        lavenderLight.color.setHex(0x7c3aed);
+        lavenderLight.intensity = 4.2;
+        lemonLight.color.setHex(0xd97706);
+        lemonLight.intensity = 3.8;
+        fillLight.color.setHex(0xe8e2d2);
+        fillLight.intensity = 1.0;
+      }
+    };
+
+    // Initialize theme based on current document class
+    const checkIsDark = () => document.documentElement.classList.contains("dark");
+    let currentIsDark = checkIsDark();
+    applyTheme(currentIsDark);
+
+    const themeObserver = new MutationObserver(() => {
+      const nextIsDark = checkIsDark();
+      if (nextIsDark !== currentIsDark) {
+        currentIsDark = nextIsDark;
+        applyTheme(nextIsDark);
+      }
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    // =========================================================================
+    // 7. INTERACTIVE CURSOR TRACKING & ELASTIC PHYSICS
     // =========================================================================
     const mouseNdc = new THREE.Vector2(0, 0);
     const targetNdc = new THREE.Vector2(0, 0);
@@ -420,7 +593,7 @@ export function HeroScene() {
     window.addEventListener("resize", handleResize);
 
     // =========================================================================
-    // 7. ANIMATION LOOP WITH MAGNETIC PHYSICS & WAVE RIPPLES
+    // 8. ANIMATION LOOP
     // =========================================================================
     const clock = new THREE.Clock();
 
@@ -431,11 +604,9 @@ export function HeroScene() {
       const elapsed = clock.getElapsedTime();
       const currentMode = activeStateRef.current;
 
-      // Smooth pointer interpolation
       mouseNdc.lerp(targetNdc, 0.08);
       pointerWorld.lerp(targetPointerWorld, 0.1);
 
-      // Smooth drag orbit damping
       dragRotation.x += (dragRotation.targetX - dragRotation.x) * 0.08;
       dragRotation.y += (dragRotation.targetY - dragRotation.y) * 0.08;
 
@@ -443,7 +614,7 @@ export function HeroScene() {
       rootGroup.rotation.x = dragRotation.x - mouseNdc.y * 0.25;
 
       if (!prefersReducedMotion) {
-        // --- A. INNER WAVE RIPPLE (Harmonic Waves Through Core) ---
+        // --- A. INNER WAVE RIPPLE ---
         const corePosAttr = coreGeo.attributes.position as THREE.BufferAttribute;
         const posArray = corePosAttr.array as Float32Array;
 
@@ -475,7 +646,7 @@ export function HeroScene() {
           r.mesh.rotation.z = r.euler.z + elapsed * r.speed;
         });
 
-        // --- C. METALLIC BEAD NODES WITH ELASTIC MAGNETIC PULL ---
+        // --- C. METALLIC BEAD NODES WITH ELASTIC PULL ---
         const isAttractMode = currentMode === "attract" || isHovering;
         const attractStrength = isAttractMode ? 0.55 : 0.1;
 
@@ -565,6 +736,7 @@ export function HeroScene() {
     return () => {
       isDisposed = true;
       cancelAnimationFrame(animationFrame);
+      themeObserver.disconnect();
       host.removeEventListener("pointerenter", onPointerEnter);
       host.removeEventListener("pointermove", onPointerMove);
       host.removeEventListener("pointerleave", onPointerLeave);
@@ -574,6 +746,8 @@ export function HeroScene() {
 
       glassGeo.dispose();
       glassMat.dispose();
+      rimGeo.dispose();
+      rimMat.dispose();
       coreGeo.dispose();
       coreMat.dispose();
       rings.forEach((r) => {

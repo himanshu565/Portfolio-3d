@@ -651,6 +651,42 @@ export function TechStackVisualizer() {
     const particles = new THREE.Points(pGeo, pMat);
     scene.add(particles);
 
+    // Adaptive Theme for Tech Stack 3D Scene
+    const applyStackTheme = (isDark: boolean) => {
+      if (isDark) {
+        domeMat.color.setHex(0xa66bff);
+        domeMat.opacity = 0.2;
+        ringMat.color.setHex(0xfff21a);
+        ringMat.opacity = 0.28;
+        ringInnerMat.color.setHex(0xa66bff);
+        ringInnerMat.opacity = 0.18;
+        pMat.opacity = 0.4;
+      } else {
+        domeMat.color.setHex(0x7c3aed);
+        domeMat.opacity = 0.28;
+        ringMat.color.setHex(0xd97706);
+        ringMat.opacity = 0.36;
+        ringInnerMat.color.setHex(0x7c3aed);
+        ringInnerMat.opacity = 0.22;
+        pMat.opacity = 0.6;
+      }
+      domeMat.needsUpdate = true;
+      ringMat.needsUpdate = true;
+      ringInnerMat.needsUpdate = true;
+      pMat.needsUpdate = true;
+    };
+
+    const checkIsDark = () => document.documentElement.classList.contains("dark");
+    applyStackTheme(checkIsDark());
+
+    const stackThemeObserver = new MutationObserver(() => {
+      applyStackTheme(checkIsDark());
+    });
+    stackThemeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
     // Mouse tracking for reactive parallax
     const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
     const handleMouseMove = (e: MouseEvent) => {
@@ -695,6 +731,7 @@ export function TechStackVisualizer() {
     return () => {
       isDisposed = true;
       cancelAnimationFrame(animationFrame);
+      stackThemeObserver.disconnect();
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("resize", handleResize);
       domeGeo.dispose();
