@@ -31,18 +31,18 @@ export const projects = [
   },
   {
     number: "02",
-    name: "EnviroTrack Monitoring Platform",
-    type: "Domain-focused system",
-    status: "In progress",
+    name: "Project Management System",
+    type: "Full-stack application",
+    status: "Active build",
     description:
-      "A monitoring and data-transmission platform concept for environmental analyzers, designed around live dashboards, reliable delivery, and separate CPCB and local-server paths.",
+      "A collaborative project and task management workspace built for agile engineering teams, featuring sprint tracking, interactive Kanban boards, milestone planning, and role-based permissions.",
     problem:
-      "Design a dependable path from device readings to dashboards and downstream systems, with validation and traceable transmission attempts.",
-    stack: ["Next.js", "Node.js / APIs", "IoT telemetry"],
-    href: "",
-    linkLabel: "Project notes coming soon",
-    accent: "blue",
-    visual: "monitoring",
+      "Coordinate multi-user task lifecycles, nested subtask dependencies, and state synchronization with optimistic client mutations, audit histories, and dependable relational data integrity.",
+    stack: ["React / Next.js", "TypeScript", "Node.js API", "PostgreSQL", "Tailwind CSS"],
+    href: "https://github.com/himanshu565/project-management-system",
+    linkLabel: "View repository",
+    accent: "lavender",
+    visual: "management",
   },
   {
     number: "03",

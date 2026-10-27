@@ -25,7 +25,7 @@ Open `http://localhost:3000`.
 1. Open `src/data/site.ts` and add your real email and LinkedIn profile URL. These links are intentionally hidden until you fill them in.
 2. Add your resume PDF to `public/` and set `resumePath` to its path, for example `/Himanshu-Bisht-Resume.pdf`.
 3. Set `NEXT_PUBLIC_SITE_URL` to your production origin (for example, `https://your-domain.com`) in your deployment environment. Metadata, sitemap, and robots output use this value.
-4. Review project descriptions and status labels so they accurately reflect what is complete at the time you publish. EnviroTrack is explicitly marked as in progress.
+4. Review project descriptions and status labels so they accurately reflect what is complete at the time you publish. The Project Management System links directly to your public repository.
 5. Add screenshots or project demo URLs once you have stable public deployments. The project illustration panels are CSS-built mockups, not screenshots of live products.
 
 ## Edit content
@@ -48,8 +48,8 @@ Open `http://localhost:3000`.
 ## Notes
 
 - The contact links and resume download are driven by `src/data/site.ts` and stay hidden while empty.
-- Project metrics have not been fabricated. The environmental monitoring card describes the design scope and labels the work as in progress.
-- The telemetry and inventory visual panels are illustrative UI concepts, not claims of live data. The small inventory counts are decorative mockup data.
+- Project metrics have not been fabricated. The project cards describe real architectural scope and link directly to active repositories.
+- The project visual panels (inventory, project management, and transaction API) are illustrative UI concepts and system architectures.
 - No backend or third-party analytics are required for this static portfolio.
 
 ## Validation status

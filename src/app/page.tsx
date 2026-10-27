@@ -161,7 +161,7 @@ export default function HomePage() {
             <span>PostgreSQL & Prisma <i className="separator">✦</i></span>
             <span>ACID Transaction Isolation <i className="separator">✦</i></span>
             <span>Three.js & WebGL <i className="separator">✦</i></span>
-            <span>IoT Telemetry Pipelines <i className="separator">✦</i></span>
+            <span>Agile Project Workflows <i className="separator">✦</i></span>
             <span>Practical AI Engineering <i className="separator">✦</i></span>
             <span>TypeScript & Strict Types <i className="separator">✦</i></span>
             <span>React 19 & Next.js <i className="separator">✦</i></span>
@@ -169,7 +169,7 @@ export default function HomePage() {
             <span>PostgreSQL & Prisma <i className="separator">✦</i></span>
             <span>ACID Transaction Isolation <i className="separator">✦</i></span>
             <span>Three.js & WebGL <i className="separator">✦</i></span>
-            <span>IoT Telemetry Pipelines <i className="separator">✦</i></span>
+            <span>Agile Project Workflows <i className="separator">✦</i></span>
             <span>Practical AI Engineering <i className="separator">✦</i></span>
             <span>TypeScript & Strict Types <i className="separator">✦</i></span>
           </div>

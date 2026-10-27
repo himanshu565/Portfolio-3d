@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, Check, Code2, Database, RadioTower } from "lucide-react";
+import { ArrowUpRight, Check, CheckCircle2, Clock, Code2, Database, FolderKanban } from "lucide-react";
 import type { projects } from "@/data/site";
 
 export type Project = (typeof projects)[number];
@@ -55,48 +55,80 @@ function ProjectVisual({ project }: { project: Project }) {
     );
   }
 
-  if (project.visual === "monitoring") {
+  if (project.visual === "management") {
     return (
       <div className="w-full bg-[var(--bg-subtle)] border border-[var(--border-main)] rounded-2xl p-4 sm:p-5 text-xs text-[var(--text-secondary)]">
         <div className="flex items-center justify-between pb-3 mb-3 border-b border-[var(--border-subtle)]">
           <div className="flex items-center gap-2 font-medium text-[var(--text-primary)]">
-            <RadioTower size={14} className="text-[var(--accent-primary)]" />
-            <span>Telemetry Pipeline Stream</span>
+            <FolderKanban size={14} className="text-[var(--accent-primary)]" />
+            <span className="font-mono text-[11px]">Workspace // Sprint-04</span>
           </div>
-          <span className="badge-inexa text-[10px] py-0.5 px-2">CPCB + Local Gateway</span>
+          <span className="badge-inexa text-[10px] py-0.5 px-2">Active Sprint</span>
         </div>
 
         <div className="grid grid-cols-3 gap-2 mb-3">
           <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] p-2 rounded-xl">
-            <span className="block text-[10px] text-[var(--text-muted)]">SOx Reading</span>
-            <strong className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">7.79 mg/Nm³</strong>
+            <span className="block text-[10px] text-[var(--text-muted)] uppercase">Tasks in Flight</span>
+            <strong className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">24 Active</strong>
           </div>
           <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] p-2 rounded-xl">
-            <span className="block text-[10px] text-[var(--text-muted)]">NOx Reading</span>
-            <strong className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">25.5 mg/Nm³</strong>
+            <span className="block text-[10px] text-[var(--text-muted)] uppercase">Team Velocity</span>
+            <strong className="text-xs sm:text-sm font-bold text-[var(--text-primary)]">94% On Track</strong>
           </div>
           <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] p-2 rounded-xl">
-            <span className="block text-[10px] text-[var(--text-muted)]">PM2.5</span>
-            <strong className="text-xs sm:text-sm font-bold text-[var(--accent-primary)]">9.77 mg/Nm³</strong>
+            <span className="block text-[10px] text-[var(--text-muted)] uppercase">Milestones</span>
+            <strong className="text-xs sm:text-sm font-bold text-[var(--accent-secondary)]">8/10 Shipped</strong>
           </div>
         </div>
 
         <div className="bg-[var(--bg-card)] border border-[var(--border-subtle)] p-3 rounded-xl">
-          <div className="h-16 w-full flex items-end gap-1">
-            {[45, 62, 58, 75, 42, 68, 85, 72, 60, 90, 78, 64, 82, 95, 70, 88].map((val, idx) => (
-              <div
-                key={idx}
-                className="flex-1 rounded-t-sm transition-all hover:bg-[var(--text-primary)]"
-                style={{
-                  height: `${val}%`,
-                  backgroundColor: idx % 3 === 0 ? "var(--text-primary)" : "var(--accent-border)",
-                }}
-              />
-            ))}
+          <div className="grid grid-cols-3 gap-2 text-[10px]">
+            {/* Column 1: Backlog */}
+            <div className="bg-[var(--bg-subtle)]/70 p-2 rounded-lg border border-[var(--border-subtle)]">
+              <div className="flex items-center justify-between font-bold text-[var(--text-muted)] mb-1.5 uppercase tracking-wider text-[9px]">
+                <span>To Do</span>
+                <span className="w-4 h-4 rounded-full bg-[var(--bg-card)] flex items-center justify-center text-[9px]">4</span>
+              </div>
+              <div className="p-1.5 bg-[var(--bg-card)] rounded-md border border-[var(--border-subtle)] mb-1">
+                <span className="font-medium text-[var(--text-primary)] block truncate">RBAC Auth Guard</span>
+                <span className="text-[8px] text-[var(--accent-primary)] font-semibold">P1 · High</span>
+              </div>
+            </div>
+
+            {/* Column 2: In Progress */}
+            <div className="bg-[var(--bg-subtle)]/70 p-2 rounded-lg border border-[var(--border-subtle)]">
+              <div className="flex items-center justify-between font-bold text-[var(--text-muted)] mb-1.5 uppercase tracking-wider text-[9px]">
+                <span>In Progress</span>
+                <span className="w-4 h-4 rounded-full bg-[var(--accent-primary)] text-[#171717] flex items-center justify-center text-[9px] font-bold">2</span>
+              </div>
+              <div className="p-1.5 bg-[var(--bg-card)] rounded-md border border-[var(--border-subtle)] mb-1">
+                <span className="font-medium text-[var(--text-primary)] block truncate">Kanban Drag & Drop</span>
+                <span className="text-[8px] text-[var(--accent-secondary)] font-semibold">In Review</span>
+              </div>
+            </div>
+
+            {/* Column 3: Completed */}
+            <div className="bg-[var(--bg-subtle)]/70 p-2 rounded-lg border border-[var(--border-subtle)]">
+              <div className="flex items-center justify-between font-bold text-[var(--text-muted)] mb-1.5 uppercase tracking-wider text-[9px]">
+                <span>Done</span>
+                <span className="w-4 h-4 rounded-full bg-[var(--bg-card)] flex items-center justify-center text-[9px]">18</span>
+              </div>
+              <div className="p-1.5 bg-[var(--bg-card)] rounded-md border border-[var(--border-subtle)] mb-1">
+                <span className="font-medium text-[var(--text-primary)] block truncate">Optimistic Mutations</span>
+                <span className="text-[8px] text-[var(--accent-secondary)] font-semibold">✓ Shipped</span>
+              </div>
+            </div>
           </div>
-          <div className="flex justify-between text-[10px] text-[var(--text-muted)] mt-2 font-mono">
-            <span>Transmission queue</span>
-            <span>Zero drop guarantee</span>
+
+          <div className="flex items-center justify-between text-[10px] text-[var(--text-muted)] mt-2.5 pt-2 border-t border-[var(--border-subtle)] font-mono">
+            <span className="flex items-center gap-1.5">
+              <Clock size={11} className="text-[var(--accent-primary)]" />
+              <span>Real-time state sync</span>
+            </span>
+            <span className="flex items-center gap-1 text-[var(--text-muted)]">
+              <CheckCircle2 size={11} className="text-[var(--accent-primary)]" />
+              <span>Audit trail logged</span>
+            </span>
           </div>
         </div>
       </div>
